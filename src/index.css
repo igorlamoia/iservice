@@ -21,8 +21,17 @@
 	--color-text-button: #111111;
 	--color-text-comment: #474f60;
 	--color-shape: #ffff;
+	--color-bk-light: #f4f5f6;
+	--color-bk-dark: #d9d9d9;
 }
-
+input {
+	font-family: 'Quicksand', Inter, Avenir, Helvetica, Arial, sans-serif;
+	background: var(--color-shape);
+	border: none;
+	outline: none;
+	color: var(--color-text-button);
+	font-size: 1rem;
+}
 a {
 	font-weight: 500;
 	color: var(--color-text-button);
