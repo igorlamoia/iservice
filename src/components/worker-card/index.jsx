@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.scss';
+import './style.scss';
 import { ReactComponent as StartSVG } from './../../assets/star.svg';
 import { ReactComponent as LocationSVG } from './../../assets/location.svg';
 import { ReactComponent as MoreSVG } from './../../assets/more.svg';
