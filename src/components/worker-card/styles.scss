@@ -1,0 +1,97 @@
+.card-body {
+	background-color: var(--color-shape);
+	// min-width: 200px;
+	width: 330px;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+	border-radius: 0.7rem;
+	// font-size: 0.9rem;
+}
+.card-body h5 {
+	color: var(--color-text-button);
+	font-weight: 500;
+	font-size: 1.1rem;
+}
+
+header.profile {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 1rem;
+	align-items: center;
+	& > .profile-img {
+		border-radius: 100%;
+		max-height: 120px;
+		max-width: 120px;
+	}
+}
+
+.profile-info {
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	margin-left: 0.6rem;
+}
+.profile-name {
+	color: var(--color-text-button);
+	font-weight: 500;
+	font-size: 1.1rem;
+}
+.profession {
+	color: var(--color-text-button);
+	font-size: 0.9rem;
+	font-weight: 600;
+	margin: 0.2rem 0;
+}
+
+.stars {
+	margin: 0.3rem 0;
+}
+
+.location {
+	display: flex;
+	align-items: center;
+	font-size: 0.9rem;
+}
+
+.description {
+	text-align: left;
+	padding: 1rem 1rem;
+	& > p {
+		margin: 1rem 0;
+	}
+}
+
+footer.card-footer {
+	padding: 1rem 1rem;
+	text-align: left;
+	border-radius: 0 0 0.7rem 0.7rem;
+	background-color: var(--color-primary-shape);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: relative;
+	& > button {
+		font-size: 1.1rem;
+	}
+}
+
+.review {
+	margin: 1rem 0;
+}
+
+button.more-info {
+	padding: 0.7rem;
+	border: none;
+	border-radius: 100%;
+	box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+
+	position: absolute;
+	right: 1.2rem;
+	top: 0;
+	margin-top: -1.4rem; // 0.7 + 0.7
+
+	&:hover {
+		filter: drop-shadow(0 0 0.6rem var(--color-primary));
+	}
+}
