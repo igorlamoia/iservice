@@ -20,7 +20,7 @@ export default function Home() {
       <ServiceCard />
       <div style={{ marginTop: 15 }} />
       {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
-      {/* <LottieAnimacao animationData={iServiceLottie} /> */}
+      <LottieAnimacao animationData={iServiceLottie} className="lottie" />
       <div className="card">
         <p>Todas as categorias de serviços</p>
         <ul className="category-list">
