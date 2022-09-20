@@ -6,21 +6,26 @@ import AssistenciaSVG from "../../assets/assistencia-tecnica.svg";
 import ReparosSVG from "../../assets/reparos.svg";
 import HouseSVG from "../../assets/house.svg";
 import { ServiceCard, WorkerCard, SearchInput, Footer } from "../../components";
+import TopMenu from "../../components/top-menu";
 
 export default function Home() {
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", placeItems: "center" }}
-    >
-      <div style={{ marginTop: 15 }} />
-      <SearchInput />
-      <div style={{ marginTop: 15 }} />
+    <div className="container">
+      <TopMenu />
+      <div className="caixainicial">
+        <div className="textoinicial">
+          <h1>
+            Algum problema doméstico para resolver? <span>i</span>Service vai
+            até você
+          </h1>
+          <p>Conectando quem precisa com quem sabe fazer</p>
+          <SearchInput />
+        </div>
+        <LottieAnimacao animationData={iServiceLottie} className="lottie" />
+      </div>
       <WorkerCard />
-      <div style={{ marginTop: 15 }} />
       <ServiceCard />
-      <div style={{ marginTop: 15 }} />
       {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
-      <LottieAnimacao animationData={iServiceLottie} className="lottie" />
       <div className="card">
         <p>Todas as categorias de serviços</p>
         <ul className="category-list">
@@ -46,7 +51,6 @@ export default function Home() {
           </li>
         </ul>
       </div>
-      <div style={{ marginTop: 15 }} />
 
       <Footer />
     </div>
