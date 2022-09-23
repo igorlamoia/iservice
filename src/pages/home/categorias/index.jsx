@@ -1,7 +1,7 @@
-import AssistenciaSVG from "../../../assets/assistencia-tecnica.svg";
-import ReparosSVG from "../../../assets/reparos.svg";
-import HouseSVG from "../../../assets/house.svg";
-import "./style.scss";
+import AssistenciaSVG from '../../../assets/assistencia-tecnica.svg';
+import ReparosSVG from '../../../assets/reparos.svg';
+import HouseSVG from '../../../assets/house.svg';
+import './style.scss';
 
 export function Categorias() {
   return (

@@ -1,8 +1,8 @@
-import React from "react";
-import "./style.scss";
-import { ReactComponent as StartSVG } from "./../../assets/star.svg";
-import { ReactComponent as LocationSVG } from "./../../assets/location.svg";
-import { ReactComponent as MoreSVG } from "./../../assets/more.svg";
+import React from 'react';
+import './style.scss';
+import { ReactComponent as StartSVG } from './../../assets/star.svg';
+import { ReactComponent as LocationSVG } from './../../assets/location.svg';
+import { ReactComponent as MoreSVG } from './../../assets/more.svg';
 
 export default function WorkerCard() {
   return (

@@ -1,6 +1,6 @@
-import React from "react";
-import "./style.scss";
-import Diarista from "../../assets/images/diarista.png";
+import React from 'react';
+import './style.scss';
+import Diarista from '../../assets/images/diarista.png';
 
 export default function ServiceCard() {
   return (

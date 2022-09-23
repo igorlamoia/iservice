@@ -1,6 +1,6 @@
-import React from "react";
-import "./style.scss";
-import SearchSVG from "../../assets/search-icon.svg";
+import React from 'react';
+import './style.scss';
+import SearchSVG from '../../assets/search-icon.svg';
 export default function SearchInput() {
   return (
     <div className="input-wrapper">
