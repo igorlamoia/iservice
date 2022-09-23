@@ -1,4 +1,3 @@
-import React, { useRef } from "react";
 import { ServiceCard, WorkerCard, SearchInput, Footer } from "./components";
 import iServiceLottie from "./assets/iservice-lottie.json";
 import LottieAnimacao from "lottie-react";
