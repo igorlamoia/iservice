@@ -1,10 +1,10 @@
-import React from "react";
-import "./style.scss";
-import LottieAnimacao from "lottie-react";
-import iServiceLottie from "../../assets/iservice-lottie.json";
-import { ServiceCard, WorkerCard, SearchInput, Footer } from "../../components";
-import TopMenu from "../../components/top-menu";
-import { Categorias } from "./categorias";
+import React from 'react';
+import './style.scss';
+import LottieAnimacao from 'lottie-react';
+import iServiceLottie from '../../assets/iservice-lottie.json';
+import { ServiceCard, WorkerCard, SearchInput, Footer } from '../../components';
+import TopMenu from '../../components/top-menu';
+import { Categorias } from './categorias';
 
 export default function Home() {
   return (
