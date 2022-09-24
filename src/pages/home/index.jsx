@@ -1,54 +1,35 @@
-import React from "react";
-import "./style.scss";
-import LottieAnimacao from "lottie-react";
-import iServiceLottie from "../../assets/iservice-lottie.json";
-import AssistenciaSVG from "../../assets/assistencia-tecnica.svg";
-import ReparosSVG from "../../assets/reparos.svg";
-import HouseSVG from "../../assets/house.svg";
-import { ServiceCard, WorkerCard, SearchInput, Footer } from "../../components";
+import React from 'react';
+import './style.scss';
+import LottieAnimacao from 'lottie-react';
+import iServiceLottie from '../../assets/iservice-lottie.json';
+import { ServiceCard, WorkerCard, SearchInput, Footer } from '../../components';
+import TopMenu from '../../components/top-menu';
+import { Categorias } from './categorias';
 
 export default function Home() {
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", placeItems: "center" }}
-    >
-      <div style={{ marginTop: 15 }} />
-      <SearchInput />
-      <div style={{ marginTop: 15 }} />
-      <WorkerCard />
-      <div style={{ marginTop: 15 }} />
-      <ServiceCard />
-      <div style={{ marginTop: 15 }} />
-      {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
-      <LottieAnimacao animationData={iServiceLottie} className="lottie" />
-      <div className="card">
-        <p>Todas as categorias de serviços</p>
-        <ul className="category-list">
-          <li>
-            <a href="#">
-              <img src={AssistenciaSVG} alt="" />
-              <strong>Assistência Técnica</strong>
-            </a>
-          </li>
-
-          <li>
-            <a href="#">
-              <img src={ReparosSVG} alt="" />
-              <strong>Reformas e reparos</strong>
-            </a>
-          </li>
-
-          <li>
-            <a href="#">
-              <img src={HouseSVG} alt="" />
-              <strong>Serviços domésticos</strong>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div style={{ marginTop: 15 }} />
-
+    <>
+      <TopMenu />
+      <main>
+        <div className="caixainicial">
+          <div className="textoinicial">
+            <h1>
+              Algum problema doméstico para resolver? <span>i</span>Service vai
+              até você
+            </h1>
+            <p>Conectando quem precisa com quem sabe fazer</p>
+            <SearchInput />
+          </div>
+          <LottieAnimacao animationData={iServiceLottie} className="lottie" />
+        </div>
+        <div className="categorias-div">
+          <Categorias />
+        </div>
+        <WorkerCard />
+        <ServiceCard />
+        {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
+      </main>
       <Footer />
-    </div>
+    </>
   );
 }

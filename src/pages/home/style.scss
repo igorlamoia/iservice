@@ -1,60 +1,38 @@
-.card {
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 1rem;
-  text-align: center;
-  width: 100%;
-  padding: 1rem 0;
-  // margin: 0 auto;
-  max-width: 600px;
-
-  p {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-  }
-
-  .category-list {
+main {
+  .caixainicial {
+    margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    place-items: center;
-
-    border-radius: 1rem;
-
-    li {
-      width: 7rem;
-      padding: 0.7rem 0.2rem;
+    align-items: center;
+    padding: 0 10rem;
+    .textoinicial {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0.3rem;
-
-      &:hover {
-        background-color: var(--color-primary-shape);
-        border-radius: 1rem;
+      gap: 20px;
+      font-weight: 600;
+      font-size: 1rem;
+      span {
+        color: var(--color-secondary);
       }
-
-      :nth-child(1) {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        strong {
-          margin-top: 0.8rem;
-          // font-size: 0.8rem;
-          text-align: center;
-        }
-        img {
-          width: 3.7rem;
-          height: 3.7rem;
-        }
-      }
+      color: black;
     }
+  }
+  .categorias-div {
+    background-color: var(--color-bk-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 8rem;
+  }
+
+  .lottie {
+    width: 40%;
+    height: 40%;
   }
 }
 
-.lottie {
-  width: 15rem;
-  height: 15rem;
-}
+// .container {
+//   display: flex;
+//   flex-direction: column;
+//   place-items: center;
+//   gap: 1.5rem;
+// }

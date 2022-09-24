@@ -1,0 +1,50 @@
+nav {
+  ul {
+    font-weight: 500;
+    font-size: 1.2rem;
+    padding: 1.5rem 10rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    button {
+      border-radius: 50px;
+    }
+
+    .primeiro {
+      img {
+        width: 2.2rem;
+        right: 2.2rem;
+      }
+      display: flex;
+      align-items: center;
+      span {
+        color: var(--color-secondary);
+        margin-left: 0.5rem;
+      }
+    }
+
+    .segundo {
+      li + li {
+        margin-left: 1.5rem;
+      }
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .terceiro {
+      display: flex;
+      align-items: center;
+      li + li {
+        margin-left: 1.5rem;
+      }
+    }
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+  }
+}

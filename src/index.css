@@ -22,7 +22,7 @@
 	--color-text-button: #111111;
 	--color-text-comment: #474f60;
 	--color-shape: #ffff;
-	--color-bk-light: #f4f5f6;
+	--color-bk-light: #fafafa;
 	--color-bk-dark: #d9d9d9;
 }
 input {
@@ -73,19 +73,19 @@ button:focus-visible {
 	/* outline: 4px auto -webkit-focus-ring-color; */
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
 	:root {
 		color: #213547;
 		background-color: #ffffff;
-	}
+	} */
 	/* a:hover {
 		color: #747bff;
 	} */
-	button {
+	/* button {
 		background-color: #f9f9f9;
 	}
 }
 
 strong {
 	font-weight: 500;
-}
+} */
