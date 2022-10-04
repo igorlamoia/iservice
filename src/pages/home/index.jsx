@@ -5,11 +5,13 @@ import iServiceLottie from '../../assets/iservice-lottie.json';
 import { ServiceCard, WorkerCard, SearchInput, Footer } from '../../components';
 import TopMenu from '../../components/top-menu';
 import { Categorias } from './categorias';
+import ResponsiveAppBar from '../../components/app-bar';
 
 export default function Home() {
   return (
     <>
-      <TopMenu />
+      {/* <TopMenu /> */}
+      <ResponsiveAppBar />
       <main>
         <div className="caixainicial">
           <div className="textoinicial">

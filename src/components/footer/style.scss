@@ -1,83 +1,81 @@
 footer.footer {
-	display: flex;
-	flex-direction: column;
-	// padding: 3rem;
-	width: 100%;
-	background-color: var(--color-bk-dark);
-	text-align: center;
-	
-	h3 {
-		font-size: 1.4rem;
-		font-weight: 600;
-		margin: 2rem 3rem;
-		margin-bottom: 1.5rem;
-		
-		span {
-			color: var(--color-secondary);
-		}
-	}
+  display: flex;
+  flex-direction: column;
+  // padding: 3rem;
+  width: 100%;
+  background-color: var(--color-bk-dark);
+  text-align: center;
+
+  h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 2rem 3rem;
+    margin-bottom: 1.5rem;
+
+    span {
+      color: var(--color-secondary);
+    }
+  }
 }
 
 .main {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	flex-wrap: wrap;
-	// margin: 3rem;
-	// align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  // margin: 3rem;
+  // align-items: center;
 
-	
-	ul {
-		text-align: left;
-		min-width: 10rem;
-		margin-top: 1rem;
-		
-		li > :nth-child(1):hover {
-			color: var(--color-secondary);
-		}
-	}
-	
-	p {
-		margin: 0 1rem;
-		margin-top: 1rem;
-		max-width: 400px;
-	}
-	@media (max-width: 860px) {
-		
-		ul {
-			justify-content: center;
-			align-items: center;
-			text-align: center;
-		}
-		
-		p {
-			display: none;
-		}
-	}
-	margin: 2rem 3rem;
+  ul {
+    text-align: left;
+    min-width: 10rem;
+    margin-top: 1rem;
+
+    li > :nth-child(1):hover {
+      color: var(--color-secondary);
+    }
+  }
+
+  p {
+    margin: 0 1rem;
+    margin-top: 1rem;
+    max-width: 400px;
+  }
+  @media (max-width: 860px) {
+    ul {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    p {
+      display: none;
+    }
+  }
+  margin: 2rem 3rem;
 }
 
 .bottom {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin: 2rem 3rem;
-	
-	.social {
-		display: flex;
-		justify-content: space-between;
-		
-		li:hover {
-			color: var(--color-secondary);
-			filter: drop-shadow(0 0 0.6rem var(--color-secondary));
-		}
-		
-		li + li {
-			margin-left: 1rem;
-		}
-	}
-	
-	p {
-		font-size: 0.8rem;
-	}
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 3rem;
+
+  .social {
+    display: flex;
+    justify-content: space-between;
+
+    li:hover {
+      color: var(--color-secondary);
+      filter: drop-shadow(0 0 0.6rem var(--color-secondary));
+    }
+
+    li + li {
+      margin-left: 1rem;
+    }
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
 }
