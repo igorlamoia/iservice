@@ -17,6 +17,9 @@
     "prefer-default-export": 0,
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/prefer-default-export": "off",
-    "quotes": [2, "single", { "avoidEscape": true }]
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "eslint-disable react/prop-types": 0,
+    "eslint-disable react/function-component-definition": 0,
+    "react/prop-types": 0
   }
 }

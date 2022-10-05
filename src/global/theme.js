@@ -1,21 +1,17 @@
-import { createTheme } from '@mui/material';
-
-// import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
-
-export const theme = createTheme({
-  status: {
-    danger: '#e53e3e',
-  },
+export const getTheme = (mode) => ({
   palette: {
-    mode: 'light',
-    primary: {
-      main: '#0971f1',
-      darker: '#053e85',
-    },
-    neutral: {
-      main: '#64748B',
-      contrastText: '#fff',
-    },
+    mode,
+    ...(mode === 'light'
+      ? {
+          primary: {
+            main: '#ffff',
+          },
+        }
+      : {
+          primary: {
+            main: '#0000ff',
+          },
+        }),
   },
   typography: {
     fontFamily: '"Quicksand", "Helvetica", "Arial", sans-serif',
