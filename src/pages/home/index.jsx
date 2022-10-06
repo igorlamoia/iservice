@@ -3,14 +3,12 @@ import './style.scss';
 import LottieAnimacao from 'lottie-react';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import { ServiceCard, WorkerCard, SearchInput, Footer } from '../../components';
-import TopMenu from '../../components/top-menu';
 import { Categorias } from './categorias';
 import ResponsiveAppBar from '../../components/app-bar';
 
 export default function Home() {
   return (
     <>
-      {/* <TopMenu /> */}
       <ResponsiveAppBar />
       <main>
         <div className="caixainicial">
@@ -20,7 +18,7 @@ export default function Home() {
               até você
             </h1>
             <p>Conectando quem precisa com quem sabe fazer</p>
-            <SearchInput />
+            {/* <SearchInput /> */}
           </div>
           <LottieAnimacao animationData={iServiceLottie} className="lottie" />
         </div>

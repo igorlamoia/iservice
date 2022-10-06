@@ -30,7 +30,16 @@ function DrawerAppBar(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{
+        // bgcolor: 'primary.light',
+        flex: 1,
+        // backdropFilter: 'blur(20px)',
+        textAlign: 'center',
+      }}
+      // color="transparent"
+    >
       <Typography
         variant="h6"
         component="div"
@@ -55,8 +64,8 @@ function DrawerAppBar(props) {
       <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+            <ListItemButton sx={{ textAlign: 'center', color: 'primary.main' }}>
+              <ListItemText sx={{ color: 'buttonText' }} primary={item} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -118,8 +127,8 @@ function DrawerAppBar(props) {
             </Stack>
             <Box sx={{ display: { xs: 'none', sm: 'flex' }, ml: 'auto' }}>
               {navItems.map((item) => (
-                <Button key={item} sx={{ color: 'buttonText' }}>
-                  {item}
+                <Button key={item}>
+                  <Typography color="buttonText">{item}</Typography>
                 </Button>
               ))}
             </Box>
@@ -137,6 +146,7 @@ function DrawerAppBar(props) {
         <Drawer
           container={container}
           variant="temporary"
+          color="primary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
