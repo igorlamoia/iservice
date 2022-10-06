@@ -51,11 +51,11 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function ToggleTheme() {
-  const contexto = useMyTheme();
+  const { mode, toggleColorMode } = useMyTheme();
   return (
     <MaterialUISwitch
-      defaultChecked={useMediaQuery('(prefers-color-scheme: dark)')}
-      onClick={contexto.toggleColorMode}
+      defaultChecked={!mode}
+      onClick={toggleColorMode}
       sx={{ m: 1 }}
     />
   );

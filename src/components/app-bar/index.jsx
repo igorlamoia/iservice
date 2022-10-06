@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import ToggleTheme from '../toggle-theme';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
@@ -49,9 +50,8 @@ function DrawerAppBar(props) {
     <Box sx={{ display: 'flex', bgColor: '#ffff' }}>
       <AppBar
         component="nav"
-        sx={{ bgColor: '#ffffff', color: '#ffffff' }}
         color="primary"
-        enableColorOnDark
+        // enableColorOnDark
       >
         <Toolbar>
           <IconButton
@@ -68,8 +68,12 @@ function DrawerAppBar(props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            <Typography variant="span" color="secondary">
+              i
+            </Typography>
+            Service
           </Typography>
+          <ToggleTheme />
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>

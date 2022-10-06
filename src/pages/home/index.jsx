@@ -10,8 +10,8 @@ import ResponsiveAppBar from '../../components/app-bar';
 export default function Home() {
   return (
     <>
-      <TopMenu />
-      {/* <ResponsiveAppBar /> */}
+      {/* <TopMenu /> */}
+      <ResponsiveAppBar />
       <main>
         <div className="caixainicial">
           <div className="textoinicial">

@@ -14,6 +14,7 @@ export function ColorModeProvider({ children }) {
       toggleColorMode: () => {
         setMode((prevMode) => !prevMode);
       },
+      mode,
     }),
     []
   );
