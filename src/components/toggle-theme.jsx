@@ -56,7 +56,7 @@ export default function ToggleTheme() {
     <MaterialUISwitch
       defaultChecked={!mode}
       onClick={toggleColorMode}
-      sx={{ m: 1 }}
+      sx={{ mx: 1 }}
     />
   );
 }

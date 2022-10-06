@@ -1,4 +1,4 @@
-import { Box, Fade, Slide, useScrollTrigger } from '@mui/material';
+import { Box, Slide, useScrollTrigger } from '@mui/material';
 
 export function ScrollTop(props) {
   const { children, window } = props;

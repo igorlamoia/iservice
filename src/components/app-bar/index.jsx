@@ -10,15 +10,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Fab, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import ToggleTheme from '../toggle-theme';
 import { HideOnScroll } from './hide-on-scroll';
-import { ScrollTop } from './scroll-to-top';
-import './styles.scss';
+import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
 
 const drawerWidth = 240;
 const navItems = ['Oferecer serviço', 'Quem somos', 'Contato'];
@@ -84,14 +82,7 @@ function DrawerAppBar(props) {
           }}
           // enableColorOnDark
         >
-          <Toolbar
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexGrow: 1,
-              justifyContent: 'space-between',
-            }}
-          >
+          <Toolbar>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -101,41 +92,43 @@ function DrawerAppBar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Stack
-              direction="row"
-              spacing={2}
-              sx={{
-                flexGrow: 1,
-                display: { xs: 'none', sm: 'flex' },
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <img
-                style={{
-                  width: '1.5rem',
-                  height: '1.5rem',
-                  marginRight: '0.5rem',
-                }}
-                src="/LogoiService.svg"
-                alt="Logo iService"
-              />
-              <Typography variant="h6" component="div">
-                <Typography variant="span" color="secondary">
-                  i
+            <Stack direction="row">
+              <Stack
+                direction="row"
+                spacing={2}
+                sx={{ display: { xs: 'none', sm: 'flex' } }}
+              >
+                <img
+                  style={{
+                    width: '1.5rem',
+                    height: '1.5rem',
+                    marginRight: '0.5rem',
+                  }}
+                  src="/LogoiService.svg"
+                  alt="Logo iService"
+                />
+                <Typography variant="h6" component="div">
+                  <Typography variant="span" color="secondary">
+                    i
+                  </Typography>
+                  Service
                 </Typography>
-                Service
-              </Typography>
+              </Stack>
               <ToggleTheme />
             </Stack>
-            <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+            <Box sx={{ display: { xs: 'none', sm: 'flex' }, ml: 'auto' }}>
               {navItems.map((item) => (
                 <Button key={item} sx={{ color: 'buttonText' }}>
                   {item}
                 </Button>
               ))}
             </Box>
-            <Button variant="contained">Entrar</Button>
+            <Button
+              variant="contained"
+              sx={{ borderRadius: '1rem', ml: 'auto' }}
+            >
+              Entrar
+            </Button>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
@@ -160,11 +153,7 @@ function DrawerAppBar(props) {
           {drawer}
         </Drawer>
       </Box>
-      <ScrollTop {...props}>
-        <Fab size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
-        </Fab>
-      </ScrollTop>
+      <ScrolltopIcon />
     </Box>
   );
 }
