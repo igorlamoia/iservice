@@ -1,16 +1,18 @@
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { Box, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { createContext, useMemo, useState, useContext } from 'react';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { getTheme } from '../global/theme';
 
 const ColorModeContext = createContext({});
 
 export function ColorModeProvider({ children }) {
-  const [mode, setMode] = useState('light');
-
+  const [mode, setMode] = useState(
+    useMediaQuery('(prefers-color-scheme: light)')
+  );
   const valuesTheme = useMemo(
     () => ({
       toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        setMode((prevMode) => !prevMode);
       },
     }),
     []
@@ -21,8 +23,16 @@ export function ColorModeProvider({ children }) {
   return (
     <ColorModeContext.Provider value={valuesTheme}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
+        <CssBaseline enableColorScheme />
+        <Box
+          sx={{
+            background: mode
+              ? 'linear-gradient(to right bottom, #f3fcf4, #f3fdf9, #f5fdfd, #f8feff, #fcfeff, #fcfeff, #fcfeff, #fcfeff, #f8feff, #f5fdfd, #f3fdf9, #f3fcf4)'
+              : 'linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840)',
+          }}
+        >
+          {children}
+        </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

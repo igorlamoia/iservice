@@ -1,14 +1,14 @@
 .card-body {
-  background-color: var(--color-shape);
+  // background-color: var(--color-shape);
   // min-width: 200px;
   max-width: 330px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 20px var(--color-shadow);
   border-radius: 0.7rem;
   // font-size: 0.9rem;
   h5 {
-    color: var(--color-text-button);
+    // color: var(--color-text-button);
     font-weight: 500;
     font-size: 1.1rem;
   }
@@ -30,12 +30,12 @@
       margin-left: 0.6rem;
     }
     .profile-name {
-      color: var(--color-text-button);
+      // color: var(--color-text-button);
       font-weight: 600;
       font-size: 1.1rem;
     }
     .profession {
-      color: var(--color-text-button);
+      // color: var(--color-text-button);
       font-size: 0.9rem;
       font-weight: 600;
       margin: 0.4rem 0 0.2rem;
@@ -60,13 +60,13 @@
   .description {
     text-align: left;
     padding: 0 1.5rem 1rem;
-
     p {
       margin: 1rem 0;
     }
   }
 
   footer.card-footer {
+    color: var(--color-text-button);
     padding: 1rem 1.5rem 1.7rem;
     text-align: left;
     border-radius: 0 0 0.7rem 0.7rem;

@@ -1,12 +1,13 @@
 import React from 'react';
+import { Box } from '@mui/material';
 import './style.scss';
-import { ReactComponent as StartSVG } from './../../assets/star.svg';
-import { ReactComponent as LocationSVG } from './../../assets/location.svg';
-import { ReactComponent as MoreSVG } from './../../assets/more.svg';
+import { ReactComponent as StartSVG } from '../../assets/star.svg';
+import { ReactComponent as LocationSVG } from '../../assets/location.svg';
+import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 
 export default function WorkerCard() {
   return (
-    <div className="card-body">
+    <Box sx={{ boxShadow: 12 }} className="card-body">
       <header className="profile">
         <img
           className="profile-img"
@@ -39,7 +40,7 @@ export default function WorkerCard() {
         </p>
       </div>
       <footer className="card-footer">
-        <button className="more-info">
+        <button type="button" className="more-info">
           <MoreSVG />
         </button>
         <h5>Avaliação mais recente</h5>
@@ -49,8 +50,8 @@ export default function WorkerCard() {
             honestos e com bom preços. Recomendo muito
           </p>
         </div>
-        <button>Solicitar Orçamento</button>
+        <button type="button">Solicitar Orçamento</button>
       </footer>
-    </div>
+    </Box>
   );
 }

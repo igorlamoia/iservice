@@ -53,7 +53,7 @@ function DrawerAppBar(props) {
         color="primary"
         enableColorOnDark
       >
-        <Toolbar sx={{ bgColor: '#ffffff' }}>
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
