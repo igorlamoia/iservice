@@ -29,6 +29,7 @@ export const getTheme = (mode) => ({
             disabled: 'rgba(0, 0, 0, 0.38)',
             hint: 'rgba(0, 0, 0, 0.38)',
           },
+          // buttonText: 'rgba(0, 0, 0, 0.87)',
         }
       : {
           // background-image: linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840);

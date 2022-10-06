@@ -1,3 +1,7 @@
+html{
+  scroll-behavior: smooth !important;
+}
+
 :root {
   font-family: 'Quicksand', Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -65,10 +69,9 @@ button {
   color: var(--color-text-button);
   transition: background-color 0.25s;
 }
-button:hover {
-  /* background-color: var(--color-primary-dark); */
+/* button:hover {
   filter: drop-shadow(0 0 0.4em var(--color-primary-medium));
-}
+} */
 button:focus,
 button:focus-visible {
   /* outline: 4px auto -webkit-focus-ring-color; */
