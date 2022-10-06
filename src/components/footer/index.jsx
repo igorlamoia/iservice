@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.scss';
+import { Box } from '@mui/material';
 
 import TwitterSVG from '../../assets/twitter-icon.svg';
 import InstagramSVG from '../../assets/instagram-icon.svg';
@@ -7,7 +8,11 @@ import FacebookSVG from '../../assets/facebook-icon.svg';
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <Box
+      component="footer"
+      sx={{ backgroundColor: 'shape.main' }}
+      className="footer"
+    >
       <h3>
         <span>i</span>Service
       </h3>
@@ -59,6 +64,6 @@ export default function Footer() {
         </ul>
         <p>© iService</p>
       </div>
-    </footer>
+    </Box>
   );
 }

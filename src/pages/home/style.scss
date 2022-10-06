@@ -24,7 +24,9 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8rem 8rem;
+    padding: 2rem 2rem;
+    max-width: 1000px;
+    margin: auto auto;
   }
 
   .lottie {

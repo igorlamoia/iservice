@@ -5,6 +5,9 @@ export const getTheme = (mode) => ({
       ? {
           // common: { black: '#000', white: '#fff' },
           // background: { paper: '#fff', default: '#fafafa' },
+          shape: {
+            main: '#d9d9d9',
+          },
           primary: {
             light: 'rgba(149, 243, 180, 1)',
             main: 'rgba(43, 230, 106, 1)',
@@ -35,6 +38,9 @@ export const getTheme = (mode) => ({
           // background-image: linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840);
           // common: { black: '#000', white: '#fff' },
           background: { paper: 'rgb(0 30 30)', default: 'rgb(20 30 30)' },
+          shape: {
+            main: 'rgb(24 24 27)',
+          },
           primary: {
             light: 'rgba(149, 243, 180, 1)',
             main: 'rgba(43, 230, 106, 1)',
@@ -66,6 +72,8 @@ export const getTheme = (mode) => ({
   },
 });
 
+// rgb(17 24 39)
+// background-color: rgb(24 24 27);
 // --color-primary: #2be66a;
 //   --color-secondary: #fc9700;
 //   --color-primary-medium: #95f3b4;
