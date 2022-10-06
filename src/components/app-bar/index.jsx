@@ -14,10 +14,11 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Fab } from '@mui/material';
+import { Fab, Stack } from '@mui/material';
 import ToggleTheme from '../toggle-theme';
 import { HideOnScroll } from './hide-on-scroll';
 import { ScrollTop } from './scroll-to-top';
+import './styles.scss';
 
 const drawerWidth = 240;
 const navItems = ['Oferecer serviço', 'Quem somos', 'Contato', 'Entrar'];
@@ -71,17 +72,56 @@ function DrawerAppBar(props) {
   // eslint-disable-next-line react/no-unstable-nested-components
 
   return (
-    <Box sx={{ display: 'flex', bgColor: '#ffff' }}>
+    <Box>
       <Toolbar id="back-to-top-anchor" />
       <HideOnScroll {...props}>
         <AppBar
           component="nav"
           // color="primary"
           color="transparent"
-          sx={{ backdropFilter: 'blur(20px)' }}
+          sx={{
+            backdropFilter: 'blur(20px)',
+          }}
           // enableColorOnDark
         >
-          <Toolbar>
+          <Toolbar
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <Stack direction="row" spacing={2} className="desgraca">
+              <img
+                style={{
+                  width: '1.5rem',
+                  height: '1.5rem',
+                  marginRight: '0.5rem',
+                }}
+                src="/LogoiService.svg"
+                alt="Logo iService"
+              />
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+              >
+                <Typography variant="span" color="secondary">
+                  i
+                </Typography>
+                Service
+              </Typography>
+              <ToggleTheme />
+            </Stack>
+            <Box
+              sx={{ display: { xs: 'none', sm: 'flex' }, ml: 'auto' }}
+              className="menuList"
+            >
+              {navItems.map((item) => (
+                <Button key={item} sx={{ color: 'buttonText' }}>
+                  {item}
+                </Button>
+              ))}
+            </Box>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -91,33 +131,6 @@ function DrawerAppBar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <img
-              style={{
-                width: '1.5rem',
-                height: '1.5rem',
-                marginRight: '0.5rem',
-              }}
-              src="/LogoiService.svg"
-              alt="Logo iService"
-            />
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            >
-              <Typography variant="span" color="secondary">
-                i
-              </Typography>
-              Service
-            </Typography>
-            <ToggleTheme />
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              {navItems.map((item) => (
-                <Button key={item} sx={{ color: 'buttonText' }}>
-                  {item}
-                </Button>
-              ))}
-            </Box>
           </Toolbar>
         </AppBar>
       </HideOnScroll>

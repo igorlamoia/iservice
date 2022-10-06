@@ -1,0 +1,10 @@
+.menuList {
+  flex: 1;
+  justify-content: center;
+  :last-child {
+    margin-left: auto;
+  }
+}
+.desgraca {
+  margin-right: auto !important;
+}
