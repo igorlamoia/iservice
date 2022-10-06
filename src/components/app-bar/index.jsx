@@ -21,7 +21,7 @@ import { ScrollTop } from './scroll-to-top';
 import './styles.scss';
 
 const drawerWidth = 240;
-const navItems = ['Oferecer serviço', 'Quem somos', 'Contato', 'Entrar'];
+const navItems = ['Oferecer serviço', 'Quem somos', 'Contato'];
 
 function DrawerAppBar(props) {
   const { window } = props;
@@ -88,40 +88,10 @@ function DrawerAppBar(props) {
             sx={{
               display: 'flex',
               flexDirection: 'row',
+              flexGrow: 1,
+              justifyContent: 'space-between',
             }}
           >
-            <Stack direction="row" spacing={2} className="desgraca">
-              <img
-                style={{
-                  width: '1.5rem',
-                  height: '1.5rem',
-                  marginRight: '0.5rem',
-                }}
-                src="/LogoiService.svg"
-                alt="Logo iService"
-              />
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-              >
-                <Typography variant="span" color="secondary">
-                  i
-                </Typography>
-                Service
-              </Typography>
-              <ToggleTheme />
-            </Stack>
-            <Box
-              sx={{ display: { xs: 'none', sm: 'flex' }, ml: 'auto' }}
-              className="menuList"
-            >
-              {navItems.map((item) => (
-                <Button key={item} sx={{ color: 'buttonText' }}>
-                  {item}
-                </Button>
-              ))}
-            </Box>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -131,6 +101,41 @@ function DrawerAppBar(props) {
             >
               <MenuIcon />
             </IconButton>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', sm: 'flex' },
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <img
+                style={{
+                  width: '1.5rem',
+                  height: '1.5rem',
+                  marginRight: '0.5rem',
+                }}
+                src="/LogoiService.svg"
+                alt="Logo iService"
+              />
+              <Typography variant="h6" component="div">
+                <Typography variant="span" color="secondary">
+                  i
+                </Typography>
+                Service
+              </Typography>
+              <ToggleTheme />
+            </Stack>
+            <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+              {navItems.map((item) => (
+                <Button key={item} sx={{ color: 'buttonText' }}>
+                  {item}
+                </Button>
+              ))}
+            </Box>
+            <Button variant="contained">Entrar</Button>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
