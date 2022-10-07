@@ -84,12 +84,8 @@ function DrawerAppBar(props) {
       <HideOnScroll {...props}>
         <AppBar
           component="nav"
-          // color="primary"
           color="transparent"
-          sx={{
-            backdropFilter: 'blur(20px)',
-          }}
-          // enableColorOnDark
+          sx={{ backdropFilter: 'blur(20px)' }}
         >
           <Toolbar>
             <IconButton
