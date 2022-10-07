@@ -1,8 +1,9 @@
 import React from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
+import { Stack } from '@mui/material';
 import iServiceLottie from '../../assets/iservice-lottie.json';
-import { ServiceCard, WorkerCard, SearchInput, Footer } from '../../components';
+import { ServiceCard, WorkerCard, Footer } from '../../components';
 import { Categorias } from './categorias';
 import ResponsiveAppBar from '../../components/app-bar';
 
@@ -25,8 +26,29 @@ export default function Home() {
         <div className="categorias-div">
           <Categorias />
         </div>
-        <WorkerCard />
-        <ServiceCard />
+        <Stack
+          direction="row"
+          spacing={8}
+          justifyContent="center"
+          sx={{
+            py: 2,
+            overflowX: 'scroll',
+          }}
+        >
+          <WorkerCard />
+          <WorkerCard />
+          <WorkerCard />
+        </Stack>
+        <Stack
+          direction="row"
+          spacing={8}
+          justifyContent="space-around"
+          sx={{ my: 10, overflowX: 'scroll' }}
+        >
+          <ServiceCard />
+          <ServiceCard />
+          <ServiceCard />
+        </Stack>
         {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
       </main>
       <Footer />

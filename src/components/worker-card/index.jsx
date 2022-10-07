@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Rating } from '@mui/material';
 import './style.scss';
-import { ReactComponent as StartSVG } from '../../assets/star.svg';
 import { ReactComponent as LocationSVG } from '../../assets/location.svg';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 
@@ -17,14 +16,13 @@ export default function WorkerCard() {
         <div className="profile-info">
           <h5 className="profile-name">Chaulim</h5>
           <strong className="profession">Açougueiro</strong>
-          <img src="../../assets/star.svg" alt="" />
-          <div className="stars">
-            <StartSVG />
-            <StartSVG />
-            <StartSVG />
-            <StartSVG />
-            <StartSVG />
-          </div>
+          <Rating
+            name="half-rating"
+            defaultValue={4.5}
+            value={4.0}
+            precision={0.5}
+            readOnly
+          />
           <div className="location">
             <LocationSVG />
             <strong>Cataguases-MG</strong>
