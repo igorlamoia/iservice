@@ -6,7 +6,7 @@ import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 
 export default function WorkerCard() {
   return (
-    <Box sx={{ boxShadow: 12 }} className="card-body">
+    <Box sx={{ boxShadow: 6 }} className="card-body">
       <header className="profile">
         <img
           className="profile-img"

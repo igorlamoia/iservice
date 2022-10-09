@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
-import { Stack } from '@mui/material';
+import { Box, Container, Stack } from '@mui/material';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import { ServiceCard, WorkerCard, Footer } from '../../components';
 import { Categorias } from './categorias';
@@ -26,29 +26,59 @@ export default function Home() {
         <div className="categorias-div">
           <Categorias />
         </div>
-        <Stack
-          direction="row"
-          spacing={8}
-          justifyContent="center"
-          sx={{
-            py: 2,
-            overflowX: 'scroll',
-          }}
-        >
-          <WorkerCard />
-          <WorkerCard />
-          <WorkerCard />
-        </Stack>
-        <Stack
-          direction="row"
-          spacing={8}
-          justifyContent="space-around"
-          sx={{ my: 10, overflowX: 'scroll' }}
-        >
-          <ServiceCard />
-          <ServiceCard />
-          <ServiceCard />
-        </Stack>
+        <Container>
+          <Stack
+            direction="row"
+            spacing={{ xs: 2, md: 4 }}
+            // justifyContent="center"
+            sx={{
+              py: 2,
+              overflowX: 'scroll',
+              px: 4,
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+              minWidth: '100%',
+              '& > :first-child': {
+                ml: 'auto',
+              },
+              '& > :last-child': {
+                mr: 'auto',
+              },
+            }}
+          >
+            <WorkerCard />
+            <WorkerCard />
+            <WorkerCard />
+            <WorkerCard />
+          </Stack>
+          <Stack
+            direction="row"
+            spacing={{ xs: 2, md: 4 }}
+            // justifyContent="center"
+            sx={{
+              py: 4,
+              overflowX: 'scroll',
+              px: 4,
+              gap: 4,
+              '&::-webkit-scrollbar': {
+                display: 'none',
+              },
+              minWidth: '100%',
+              '& > :first-child': {
+                ml: 'auto',
+              },
+              '& > :last-child': {
+                mr: 'auto',
+              },
+            }}
+          >
+            <ServiceCard />
+            <ServiceCard />
+            <ServiceCard />
+            <ServiceCard />
+          </Stack>
+        </Container>
         {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
       </main>
       <Footer />

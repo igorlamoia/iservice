@@ -40,6 +40,7 @@ export const getTheme = (mode) => ({
           background: { paper: 'rgb(0 30 30)', default: 'rgb(20 30 30)' },
           shape: {
             main: 'rgb(24 24 27)',
+            light: '#1F2A37',
           },
           primary: {
             light: 'rgba(149, 243, 180, 1)',
@@ -69,6 +70,43 @@ export const getTheme = (mode) => ({
   },
   typography: {
     fontFamily: '"Quicksand", "Helvetica", "Arial", sans-serif',
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: mode
+          ? {
+              scrollbarColor: '#2b2b2b #2b2b2b',
+              '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+                backgroundColor: '#fff',
+              },
+              '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+                // borderRadius: 8,
+                backgroundImage: 'linear-gradient(180deg, #95f3b4, #fafafa)',
+                border: '1px solid #d9d9d9',
+              },
+              '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover':
+                {
+                  backgroundImage: 'linear-gradient(180deg, #2be66a, #fafafa)',
+                },
+            }
+          : {
+              scrollbarColor: '#2b2b2b #2b2b2b',
+              '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+                backgroundColor: '#18181b',
+              },
+              '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+                // borderRadius: 8,
+                backgroundImage: 'linear-gradient(180deg, #00c87e, #18181b)',
+                border: '1px solid #2b2b2b',
+              },
+              '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover':
+                {
+                  backgroundImage: 'linear-gradient(180deg, #2be66a, #18181b)',
+                },
+            },
+      },
+    },
   },
 });
 
