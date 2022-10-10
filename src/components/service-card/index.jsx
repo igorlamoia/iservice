@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { Paper, useTheme } from '@mui/material';
+import { Button, Paper, useTheme } from '@mui/material';
 import Diarista from '../../assets/images/diarista.png';
 
 export default function ServiceCard() {
@@ -8,7 +8,7 @@ export default function ServiceCard() {
   return (
     <Paper
       sx={{
-        borderRadius: 2,
+        borderRadius: 4,
         bgcolor: palette.mode === 'dark' && 'rgba(0,0,0,0.9)',
         minWidth: 170,
       }}
@@ -18,7 +18,17 @@ export default function ServiceCard() {
     >
       <strong>Diarista</strong>
       <img src={Diarista} alt="diarista limpando" />
-      <button>Ver Preços</button>
+      <Button
+        variant="contained"
+        sx={{
+          color: 'black',
+          fontSize: '1rem',
+          fontWeight: 600,
+          borderRadius: 1.7,
+        }}
+      >
+        Ver Preços
+      </Button>
     </Paper>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { Paper, Rating } from '@mui/material';
+import { Button, IconButton, Paper, Rating } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { ReactComponent as LocationSVG } from '../../assets/location.svg';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
@@ -52,9 +52,18 @@ export default function WorkerCard() {
           </p>
         </div>
         <footer className="card-footer" mode={palette.mode}>
-          <button type="button" className="more-info">
+          <IconButton
+            className="more-info"
+            sx={{
+              bgcolor: palette.primary.main,
+              '&:hover': {
+                bgcolor: palette.primary.dark,
+                filter: `drop-shadow(0px 0px 0.6rem ${palette.primary.main})`,
+              },
+            }}
+          >
             <MoreSVG />
-          </button>
+          </IconButton>
           <h5>Avaliação mais recente</h5>
           <div className="review">
             <p>
@@ -62,7 +71,16 @@ export default function WorkerCard() {
               honestos e com bom preços. Recomendo muito
             </p>
           </div>
-          <button type="button">Solicitar Orçamento</button>
+          <Button
+            variant="contained"
+            sx={{
+              color: 'black',
+              fontWeight: 600,
+              borderRadius: 1.7,
+            }}
+          >
+            Solicitar Orçamento
+          </Button>
         </footer>
       </div>
     </Paper>

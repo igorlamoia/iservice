@@ -1,52 +1,45 @@
 import React from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
-import { Container, Stack } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import { ServiceCard, WorkerCard, Footer } from '../../components';
 import { Categorias } from './categorias';
 import ResponsiveAppBar from '../../components/app-bar';
+import { Carousel } from './carousel';
 
 export default function Home() {
   return (
     <>
       <ResponsiveAppBar />
       <main>
-        <div className="caixainicial">
+        <Container className="caixainicial">
           <div className="textoinicial">
-            <h1>
+            <Typography
+              variant="h1"
+              sx={{
+                fontSize: {
+                  lg: '3.5rem',
+                  md: '2.4rem',
+                  sm: '2rem',
+                  xs: '1.5rem',
+                },
+                mt: { xs: '3rem', md: '2rem', lg: 0 },
+                fontWeight: '600',
+              }}
+            >
               Algum problema doméstico para resolver? <span>i</span>Service vai
               até você
-            </h1>
+            </Typography>
             <p>Conectando quem precisa com quem sabe fazer</p>
           </div>
           <LottieAnimacao animationData={iServiceLottie} className="lottie" />
-        </div>
+        </Container>
         <div className="categorias-div">
           <Categorias />
         </div>
         <Container>
-          <Stack
-            direction="row"
-            spacing={{ xs: 2, md: 4 }}
-            // justifyContent="center"
-            sx={{
-              py: 2,
-              overflowX: 'scroll',
-              px: 4,
-              '&::-webkit-scrollbar': {
-                display: 'none',
-              },
-              minWidth: '100%',
-              '& > :first-child': {
-                ml: 'auto',
-              },
-              '& > :last-child': {
-                mr: 'auto',
-              },
-              scrollSnapType: 'x mandatory',
-            }}
-          >
+          <Carousel>
             <WorkerCard />
             <WorkerCard />
             <WorkerCard />
@@ -55,33 +48,17 @@ export default function Home() {
             <WorkerCard />
             <WorkerCard />
             <WorkerCard />
-          </Stack>
-          <Stack
-            direction="row"
-            spacing={{ xs: 2, md: 4 }}
-            // justifyContent="center"
-            sx={{
-              py: 4,
-              overflowX: 'scroll',
-              px: 4,
-              gap: 4,
-              '&::-webkit-scrollbar': {
-                display: 'none',
-              },
-              minWidth: '100%',
-              '& > :first-child': {
-                ml: 'auto',
-              },
-              '& > :last-child': {
-                mr: 'auto',
-              },
-            }}
-          >
+          </Carousel>
+          <Carousel>
             <ServiceCard />
             <ServiceCard />
             <ServiceCard />
             <ServiceCard />
-          </Stack>
+            <ServiceCard />
+            <ServiceCard />
+            <ServiceCard />
+            <ServiceCard />
+          </Carousel>
         </Container>
         {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
       </main>
