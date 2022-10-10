@@ -1,8 +1,8 @@
-export default function assets({ light }) {
+export default function assets({ light, w = '103', h = '99' }) {
   return (
     <svg
-      width="123"
-      height="99"
+      width={w}
+      height={h}
       viewBox="0 0 123 99"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
