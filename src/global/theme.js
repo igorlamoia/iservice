@@ -4,7 +4,7 @@ export const getTheme = (mode) => ({
     ...(mode
       ? {
           // common: { black: '#000', white: '#fff' },
-          // background: { paper: '#fff', default: '#fafafa' },
+          background: { paper: '#fff', default: '#fafafa' },
           shape: {
             main: '#d9d9d9',
           },
@@ -37,7 +37,7 @@ export const getTheme = (mode) => ({
       : {
           // background-image: linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840);
           // common: { black: '#000', white: '#fff' },
-          background: { paper: 'rgb(0 30 30)', default: 'rgb(20 30 30)' },
+          background: { paper: 'rgba(0, 0, 0, 0.5)', default: '#000' },
           shape: {
             main: 'rgb(24 24 27)',
             light: '#1F2A37',
@@ -71,7 +71,21 @@ export const getTheme = (mode) => ({
   typography: {
     fontFamily: '"Quicksand", "Helvetica", "Arial", sans-serif',
   },
+
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          '&.MuiButton-text': {
+            color: mode ? 'black' : 'white',
+          },
+          // '&.MuiButton-contained': {
+          //   color: 'yellow',
+          // },
+        },
+      },
+    },
     MuiCssBaseline: {
       styleOverrides: {
         body: mode

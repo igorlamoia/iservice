@@ -1,16 +1,23 @@
-.card-body {
+div.card-body {
   // background-color: var(--color-shape);
   // min-width: 200px;
-  max-width: 330px;
+  // max-width: 330px;
   display: flex;
+  font-size: 0.9rem;
   flex-direction: column;
-  box-shadow: 0px 4px 20px var(--color-shadow);
-  border-radius: 0.7rem;
+  box-shadow: 1px 2px 7px var(--color-shadow-light);
+  &[mode='dark'] {
+    box-shadow: 1px 2px 7px red !important;
+    // background-color: rgba(0, 0, 0, 0.5);
+    // backdrop-filter: blur(16px);
+    // -webkit-backdrop-filter: blur(16px);
+  }
+  // border-radius: 0.7rem;
   // font-size: 0.9rem;
   h5 {
     // color: var(--color-text-button);
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   header.profile {
     display: flex;
@@ -32,7 +39,7 @@
     .profile-name {
       // color: var(--color-text-button);
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
     .profession {
       // color: var(--color-text-button);
@@ -50,8 +57,8 @@
     .location {
       display: flex;
       align-items: center;
-      font-size: 0.9rem;
-
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
       strong {
         margin-left: 0.3rem;
       }
@@ -69,20 +76,23 @@
     color: var(--color-text-button);
     padding: 1rem 1.5rem 1.7rem;
     text-align: left;
-    border-radius: 0 0 0.7rem 0.7rem;
     background-color: var(--color-primary-shape);
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     position: relative;
+    &[mode='dark'] {
+      background-color: var(--color-bk-dark);
+      color: var(--color-shape);
+    }
 
     button {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
     .review {
       margin: 1rem 0 1.5rem;
     }
-
     button.more-info {
       padding: 0.7rem;
       border: none;

@@ -1,4 +1,4 @@
-html{
+html {
   scroll-behavior: smooth !important;
 }
 
@@ -27,7 +27,7 @@ html{
   --color-text-comment: #474f60;
   --color-shape: #ffff;
   --color-bk-light: #fafafa;
-  --color-bk-dark: #d9d9d9;
+  --color-bk-dark: #111111;
   --color-shadow: #12a833;
 }
 input {
@@ -40,7 +40,7 @@ input {
 }
 a {
   font-weight: 500;
-  color: var(--color-text-button);
+  /* color: var(--color-text-button); */
   text-decoration: inherit;
 }
 /* a:hover {
@@ -76,23 +76,3 @@ button:focus,
 button:focus-visible {
   /* outline: 4px auto -webkit-focus-ring-color; */
 }
-
-@media (prefers-color-scheme: dark) {
-	:root {
-    --color-primary: #2be66a;
-    --color-secondary: #fc9700;
-    --color-primary-medium: #95f3b4;
-    --color-primary-shape: #f3fcf4;
-    --color-primary-dark: #00c87e;
-    --color-text-button: #111111;
-    --color-text-comment: #474f60;
-    --color-shape: #ffff;
-    --color-bk-light: #fafafa;
-    --color-bk-dark: #d9d9d9;
-    --color-shadow: #d80101;
-	}
-}
-
-strong {
-	font-weight: 500;
-} */

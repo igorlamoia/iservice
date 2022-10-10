@@ -6,6 +6,8 @@
   border-radius: 0.7rem;
   width: 220px;
   justify-self: center;
+  &[mode='dark'] {
+  }
 
   button {
     border-radius: 0 0 0.7rem 0.7rem;
