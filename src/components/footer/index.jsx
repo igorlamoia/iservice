@@ -1,26 +1,34 @@
 import React from 'react';
 import './style.scss';
+import { Box, Button, useTheme } from '@mui/material';
 
-import TwitterSVG from '../../assets/twitter-icon.svg';
-import InstagramSVG from '../../assets/instagram-icon.svg';
-import FacebookSVG from '../../assets/facebook-icon.svg';
+import TwitterSVG from '../../assets/twitter-icon';
+import InstagramSVG from '../../assets/instagram-icon';
+import FacebookSVG from '../../assets/facebook-icon';
 
 export default function Footer() {
+  const {
+    palette: { mode },
+  } = useTheme();
   return (
-    <footer className="footer">
+    <Box
+      component="footer"
+      sx={{ backgroundColor: 'shape.main' }}
+      className="footer"
+    >
       <h3>
         <span>i</span>Service
       </h3>
       <div className="main">
         <ul>
           <li>
-            <a href="#">Quem somos</a>
+            <Button type="button">Quem somos</Button>
           </li>
           <li>
-            <a href="#">Trabalhe conosco</a>
+            <Button type="button">Trabalhe conosco</Button>
           </li>
           <li>
-            <a href="#">Assistência</a>
+            <Button type="button">Assistência</Button>
           </li>
         </ul>
         <p className="about">
@@ -29,36 +37,36 @@ export default function Footer() {
         </p>
         <ul>
           <li>
-            <a href="#">Termos de uso</a>
+            <Button type="button">Termos de uso</Button>
           </li>
           <li>
-            <a href="#">Política de privacidade</a>
+            <Button type="button">Política de privacidade</Button>
           </li>
           <li>
-            <a href="#">Enviar feedback</a>
+            <Button type="button">Enviar feedback</Button>
           </li>
         </ul>
       </div>
       <div className="bottom">
         <ul className="social">
           <li>
-            <a href="#">
-              <img src={TwitterSVG} alt="twitter logo" />
-            </a>
+            <Button type="button">
+              <TwitterSVG light={mode === 'light'} />
+            </Button>
           </li>
           <li>
-            <a href="#">
-              <img src={InstagramSVG} alt="Instagram logo" />
-            </a>
+            <Button type="button">
+              <InstagramSVG light={mode === 'light'} />
+            </Button>
           </li>
           <li>
-            <a href="#">
-              <img src={FacebookSVG} alt="Facebook logo" />
-            </a>
+            <Button type="button">
+              <FacebookSVG light={mode === 'light'} />
+            </Button>
           </li>
         </ul>
         <p>© iService</p>
       </div>
-    </footer>
+    </Box>
   );
 }
