@@ -1,4 +1,5 @@
 // import React from "react";
+import ToggleTheme from '../toggle-theme';
 import './style.scss';
 
 // import Diarista from "../../assets/images/diarista.png";
@@ -13,6 +14,7 @@ export default function TopMenu() {
             <span>i</span>
             Service
           </a>
+          <ToggleTheme />
         </li>
         <div className="segundo">
           <li>
@@ -30,7 +32,7 @@ export default function TopMenu() {
             <a href="">Entrar</a>
           </li>
           <li>
-            <button>Cadastrar</button>
+            <button type="button">Cadastrar</button>
           </li>
         </div>
       </ul>

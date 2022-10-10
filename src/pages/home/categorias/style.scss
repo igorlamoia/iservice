@@ -6,10 +6,10 @@
   // flex-direction: column;
   width: 100%;
   padding: 2.5rem 0;
-  // margin: 0 auto;
+  margin: 0 auto;
   p {
     font-size: 1.5rem;
-    color: black;
+    // color: black;
     font-weight: 700;
     margin-bottom: 1.5rem;
   }
@@ -31,7 +31,7 @@
       margin: 0.3rem;
 
       &:hover {
-        background-color: var(--color-primary-shape);
+        // background-color: var(--color-primary-shape);
         border-radius: 1rem;
       }
 

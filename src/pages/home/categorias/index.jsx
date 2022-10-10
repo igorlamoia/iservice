@@ -1,32 +1,36 @@
-import AssistenciaSVG from '../../../assets/assistencia-tecnica.svg';
-import ReparosSVG from '../../../assets/reparos.svg';
-import HouseSVG from '../../../assets/house.svg';
+import { Button, useTheme } from '@mui/material';
 import './style.scss';
+import AssistenciaSVG from '../../../assets/assistencia-tecnica';
+import ReparosSVG from '../../../assets/reparos';
+import HouseSVG from '../../../assets/house';
 
 export function Categorias() {
+  const {
+    palette: { mode },
+  } = useTheme();
   return (
     <div className="card">
       <p>Todas as categorias de serviços</p>
       <ul className="category-list">
         <li>
-          <a href="#">
-            <img src={AssistenciaSVG} alt="" />
+          <Button>
+            <AssistenciaSVG light={mode === 'light'} />
             <strong>Assistência Técnica</strong>
-          </a>
+          </Button>
         </li>
 
         <li>
-          <a href="#">
-            <img src={ReparosSVG} alt="" />
+          <Button>
+            <ReparosSVG light={mode === 'light'} />
             <strong>Reformas e reparos</strong>
-          </a>
+          </Button>
         </li>
 
         <li>
-          <a href="#">
-            <img src={HouseSVG} alt="" />
+          <Button>
+            <HouseSVG light={mode === 'light'} />
             <strong>Serviços domésticos</strong>
-          </a>
+          </Button>
         </li>
       </ul>
     </div>
