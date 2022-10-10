@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
-import { Box, Container, Stack } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import { ServiceCard, WorkerCard, Footer } from '../../components';
 import { Categorias } from './categorias';
@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <ResponsiveAppBar />
       <main>
-        {/* <div className="caixainicial">
+        <div className="caixainicial">
           <div className="textoinicial">
             <h1>
               Algum problema doméstico para resolver? <span>i</span>Service vai
@@ -21,7 +21,7 @@ export default function Home() {
             <p>Conectando quem precisa com quem sabe fazer</p>
           </div>
           <LottieAnimacao animationData={iServiceLottie} className="lottie" />
-        </div> */}
+        </div>
         <div className="categorias-div">
           <Categorias />
         </div>
