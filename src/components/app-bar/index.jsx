@@ -150,6 +150,7 @@ function DrawerAppBar(props) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
+            backdropFilter: 'blur(10px)',
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,

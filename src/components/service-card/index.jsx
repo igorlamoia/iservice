@@ -10,6 +10,7 @@ export default function ServiceCard() {
       sx={{
         borderRadius: 2,
         bgcolor: palette.mode === 'dark' && 'rgba(0,0,0,0.9)',
+        minWidth: 170,
       }}
       elevation={4}
       className="service-card"

@@ -4,7 +4,7 @@ export const getTheme = (mode) => ({
     ...(mode
       ? {
           // common: { black: '#000', white: '#fff' },
-          background: { paper: '#fff', default: '#fafafa' },
+          background: { paper: 'rgba(255,255,255, 0.6)', default: '#fafafa' },
           shape: {
             main: '#d9d9d9',
           },
