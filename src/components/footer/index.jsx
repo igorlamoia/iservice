@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { Box, Button, useTheme } from '@mui/material';
+import { Box, Button, IconButton, useTheme } from '@mui/material';
 
 import TwitterSVG from '../../assets/twitter-icon';
 import InstagramSVG from '../../assets/instagram-icon';
@@ -10,6 +10,9 @@ export default function Footer() {
   const {
     palette: { mode },
   } = useTheme();
+
+  const themeMode = mode === 'light';
+
   return (
     <Box
       component="footer"
@@ -50,19 +53,19 @@ export default function Footer() {
       <div className="bottom">
         <ul className="social">
           <li>
-            <Button type="button">
-              <TwitterSVG light={mode === 'light'} />
-            </Button>
+            <IconButton type="button">
+              <TwitterSVG light={themeMode} />
+            </IconButton>
           </li>
           <li>
-            <Button type="button">
-              <InstagramSVG light={mode === 'light'} />
-            </Button>
+            <IconButton type="button">
+              <InstagramSVG light={themeMode} />
+            </IconButton>
           </li>
           <li>
-            <Button type="button">
-              <FacebookSVG light={mode === 'light'} />
-            </Button>
+            <IconButton type="button">
+              <FacebookSVG light={themeMode} />
+            </IconButton>
           </li>
         </ul>
         <p>© iService</p>

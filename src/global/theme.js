@@ -44,8 +44,8 @@ export const getTheme = (mode) => ({
           },
           primary: {
             light: 'rgba(149, 243, 180, 1)',
-            main: 'rgba(43, 230, 106, 1)',
-            dark: 'rgba(0, 200, 126, 1)',
+            main: 'rgba(0, 200, 126, 1)',
+            dark: 'rgba(43, 230, 106, 1)',
             contrastText: '#fff',
           },
           secondary: {
