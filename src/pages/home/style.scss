@@ -1,20 +1,24 @@
 main {
   .caixainicial {
-    margin: 0 auto;
     display: flex;
-    align-items: center;
-    padding: 0 10rem 3rem;
+    flex-wrap: wrap;
+    // padding: 0 auto;
+    margin: auto;
+    padding: 0 3rem;
     .textoinicial {
       display: flex;
+      margin: auto;
+      // text-align: center;
       flex-direction: column;
       gap: 20px;
       font-weight: 600;
       font-size: 1rem;
+      max-width: 500px;
       span {
         color: var(--color-secondary);
       }
       h1 {
-        font-size: 3rem;
+        // font-size: 3rem;
       }
       // color: black;
     }
@@ -30,8 +34,10 @@ main {
   }
 
   .lottie {
-    // width: 40%;
-    // height: 40%;
+    width: 40%;
+    min-width: 300px;
+    // max-width: 600px;
+    margin: auto;
   }
 }
 
