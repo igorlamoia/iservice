@@ -37,9 +37,9 @@ export const getTheme = (mode) => ({
       : {
           // background-image: linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840);
           // common: { black: '#000', white: '#fff' },
-          background: { paper: 'rgba(0, 0, 0, 0.5)', default: '#000' },
+          background: { paper: 'rgba(0, 0, 0, 0.5)', default: 'rgb(9,9,10)' },
           shape: {
-            main: 'rgb(24 24 27)',
+            main: 'rgb(9,9,10)',
             light: '#1F2A37',
           },
           primary: {
