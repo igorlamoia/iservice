@@ -16,27 +16,73 @@ import { AccountCircle } from '@mui/icons-material';
 export default function SearchInput() {
   const [loading, setLoading] = useState(false);
 
-  const ValidationTextField = styled(TextField)({
-    '& input + fieldset': {
-      borderColor: 'green',
-      borderWidth: 0,
-      // p: 20,
-      boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-      borderRadius: 10,
+  const StyledAutocomplete = styled(Autocomplete)({
+    '& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)': {
+      // Default transform is "translate(14px, 20px) scale(1)""
+      // This lines up the label with the initial cursor position in the input
+      // after changing its padding-left.
+      // transform: 'translate(34px, 20px) scale(1);',
     },
-    'label + &': {
-      marginBot: 3,
+    '& ..MuiAutocomplete-paper': {
+      backgroundColor: 'red',
     },
-    '& input:valid:focus + fieldset': {
-      // borderLeftWidth: 6,
-      // borderColor: 'green',
-      borderWidth: 1,
-      padding: '4px !important', // override inline-style
+    '& .MuiAutocomplete-inputRoot': {
+      // color: 'purple',
+      // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
+      '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
+        // Default left padding is 6px
+        paddingLeft: 90,
+      },
+      '& .MuiOutlinedInput-notchedOutline': {
+        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+        // borderColor: 'yellow',
+        borderWidth: 0,
+        borderRadius: 20,
+      },
+      '&:hover .MuiOutlinedInput-notchedOutline': {},
+      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+        borderWidth: 1,
+      },
+      '.MuiAutocomplete-option': {
+        color: 'white',
+      },
+      '.MuiAutocomplete-inputRoot': {
+        // color: 'white',
+      },
+      '.MuiAutocomplete-clearIndicator': {
+        // color: 'white',
+      },
+      '.MuiAutocomplete-popupIndicator': {
+        // color: 'white',
+      },
+      '.MuiAutocomplete-listbox': {
+        color: 'red',
+      },
     },
   });
 
+  const ValidationTextField = styled(TextField)({
+    // '& input:filed': {
+    //   color: 'red',
+    // },
+    // '& input + fieldset': {
+    //   borderColor: 'green',
+    //   borderWidth: 0,
+    //   // p: 20,
+    //   borderRadius: 10,
+    // },
+    // 'label + &': {
+    //   marginBot: 3,
+    // },
+    // '& input:focus:valid + fieldset': {
+    //   // borderLeftWidth: 6,
+    //   borderWidth: 1,
+    //   padding: '4px !important', // override inline-style
+    // },
+  });
+
   return (
-    <Autocomplete
+    <StyledAutocomplete
       disablePortal
       id="combo-box-demo"
       options={top100Films}
@@ -49,7 +95,7 @@ export default function SearchInput() {
         borderRadius: 10,
         // bgcolor: 'red',
       }}
-      freeSolo
+      // freeSolo
       renderInput={(params) => (
         <ValidationTextField
           {...params}
@@ -65,12 +111,14 @@ export default function SearchInput() {
               </>
             ),
             startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
+              <>
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+                {params.InputProps.startAdornment}
+              </>
             ),
           }}
-          sx={{ border: 0 }}
         />
       )}
     />
