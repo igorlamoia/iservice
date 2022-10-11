@@ -7,6 +7,7 @@ import { ServiceCard, WorkerCard, Footer } from '../../components';
 import { Categorias } from './categorias';
 import ResponsiveAppBar from '../../components/app-bar';
 import { Carousel } from './carousel';
+import AboutUs from '../../components/about-us';
 
 export default function Home() {
   return (
@@ -35,6 +36,7 @@ export default function Home() {
           </div>
           <LottieAnimacao animationData={iServiceLottie} className="lottie" />
         </Container>
+        <AboutUs></AboutUs>
         <div className="categorias-div">
           <Categorias />
         </div>

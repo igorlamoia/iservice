@@ -1,8 +1,8 @@
-export default function house({ light, w = 112, h = 110 }) {
+export default function house({ light, size }) {
   return (
     <svg
-      width={w}
-      height={h}
+      width={size}
+      // height={h}
       viewBox="0 0 112 110"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

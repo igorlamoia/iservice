@@ -13,7 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Stack } from '@mui/material';
+import { Stack, useTheme } from '@mui/material';
 import ToggleTheme from '../toggle-theme';
 import { HideOnScroll } from './hide-on-scroll';
 import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
@@ -22,6 +22,8 @@ const drawerWidth = 240;
 const navItems = ['Oferecer serviço', 'Quem somos', 'Contato'];
 
 function DrawerAppBar(props) {
+  const tema = useTheme();
+  console.log(tema);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -97,16 +99,19 @@ function DrawerAppBar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Stack direction="row">
+            <Stack direction="row" sx={{ width: 202 }}>
               <Stack
                 direction="row"
                 spacing={2}
-                sx={{ display: { xs: 'none', sm: 'flex' } }}
+                sx={{
+                  display: { xs: 'none', sm: 'flex' },
+                  alignItems: 'center',
+                }}
               >
                 <img
                   style={{
-                    width: '1.5rem',
-                    height: '1.5rem',
+                    width: '1.7rem',
+                    height: '1.7rem',
                     marginRight: '0.5rem',
                   }}
                   src="/LogoiService.svg"
@@ -121,19 +126,41 @@ function DrawerAppBar(props) {
               </Stack>
               <ToggleTheme />
             </Stack>
-            <Box sx={{ display: { xs: 'none', sm: 'flex' }, ml: 'auto' }}>
+            <Box
+              sx={{
+                display: { xs: 'none', sm: 'flex' },
+                ml: 'auto',
+                mr: 'auto',
+                gap: { xs: 'none', sm: 1, md: 2 },
+              }}
+            >
               {navItems.map((item) => (
-                <Button key={item}>
+                <Button
+                  sx={{ '&:hover': { bgcolor: 'transparent' } }}
+                  key={item}
+                >
                   <Typography color="buttonText">{item}</Typography>
                 </Button>
               ))}
             </Box>
-            <Button
-              variant="contained"
-              sx={{ borderRadius: '1rem', ml: 'auto' }}
-            >
-              Entrar
-            </Button>
+            <div style={{ width: 202, display: 'flex' }}>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: '1rem',
+                  ml: 'auto',
+                  boxShadow: 2,
+                  '&:hover': {
+                    boxShadow: 2,
+                    filter: `drop-shadow(0 0 0.4rem ${tema.palette.primary.main})`,
+                    transition: 'filter 0.25s',
+                  },
+                }}
+                disableElevation
+              >
+                Entrar
+              </Button>
+            </div>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
@@ -150,7 +177,7 @@ function DrawerAppBar(props) {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            backdropFilter: 'blur(10px)',
+            backdropFilter: 'blur(5px)',
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,

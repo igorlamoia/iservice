@@ -1,5 +1,7 @@
 import {
   Button,
+  Container,
+  Paper,
   Stack,
   Typography,
   useMediaQuery,
@@ -19,22 +21,42 @@ export function Categorias() {
   const celular = useMediaQuery(breakpoints.down('sm'));
 
   return (
-    <div className="card">
-      <p>Todas as categorias de serviços</p>
+    <Paper
+      elevation={3}
+      sx={{
+        py: 2,
+        width: '100%',
+      }}
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{
+          mt: 2,
+          fontSize: {
+            xs: '1.4rem',
+            sm: '2rem',
+          },
+        }}
+      >
+        Todas as categorias de serviços
+      </Typography>
       <Stack
-        className="category-list"
         direction="row"
         padding={3}
-        sx={{ gap: { xs: 2, sm: 5, md: '6rem' } }}
+        sx={{
+          gap: { xs: 2, sm: 5, md: '6rem' },
+          flexWrap: 'wrap',
+        }}
         justifyContent="center"
       >
         <Button>
-          <Stack sx={{ gap: 2 }} alignItems="center">
-            <AssistenciaSVG
-              w={celular && 50}
-              h={celular && 48}
-              light={themeMode}
-            />
+          <Stack
+            sx={{ gap: 2, py: 1 }}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <AssistenciaSVG size={celular ? 50 : 70} light={themeMode} />
             <Typography
               sx={{
                 fontSize: {
@@ -49,8 +71,8 @@ export function Categorias() {
         </Button>
 
         <Button>
-          <Stack sx={{ gap: 2 }} alignItems="center">
-            <ReparosSVG w={celular && 50} h={celular && 48} light={themeMode} />
+          <Stack sx={{ gap: 2 }} alignItems="center" justifyContent="center">
+            <ReparosSVG size={celular ? 50 : 70} light={themeMode} />
             <Typography
               sx={{
                 fontSize: {
@@ -65,8 +87,16 @@ export function Categorias() {
         </Button>
 
         <Button>
-          <Stack sx={{ gap: 2 }} alignItems="center">
-            <HouseSVG w={celular && 50} h={celular && 48} light={themeMode} />
+          <Stack
+            sx={{
+              gap: 2,
+              justifyContent: 'space-around',
+              // alignItems: 'center',
+            }}
+            alignItems="center"
+            // justifyContent="center"
+          >
+            <HouseSVG size={celular ? 50 : 70} light={themeMode} />
             <Typography
               sx={{
                 fontSize: {
@@ -80,6 +110,6 @@ export function Categorias() {
           </Stack>
         </Button>
       </Stack>
-    </div>
+    </Paper>
   );
 }
