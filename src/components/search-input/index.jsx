@@ -7,123 +7,108 @@ import {
   Autocomplete,
   CircularProgress,
   InputAdornment,
+  Paper,
   styled,
   TextField,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { AccountCircle } from '@mui/icons-material';
 
 export default function SearchInput() {
   const [loading, setLoading] = useState(false);
-
-  const StyledAutocomplete = styled(Autocomplete)({
-    '& .MuiInputLabel-outlined:not(.MuiInputLabel-shrink)': {
-      // Default transform is "translate(14px, 20px) scale(1)""
-      // This lines up the label with the initial cursor position in the input
-      // after changing its padding-left.
-      // transform: 'translate(34px, 20px) scale(1);',
-    },
-    '& ..MuiAutocomplete-paper': {
-      backgroundColor: 'red',
-    },
-    '& .MuiAutocomplete-inputRoot': {
-      // color: 'purple',
-      // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
-      '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
-        // Default left padding is 6px
-        paddingLeft: 90,
-      },
-      '& .MuiOutlinedInput-notchedOutline': {
-        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-        // borderColor: 'yellow',
-        borderWidth: 0,
-        borderRadius: 20,
-      },
-      '&:hover .MuiOutlinedInput-notchedOutline': {},
-      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderWidth: 1,
-      },
-      '.MuiAutocomplete-option': {
-        color: 'white',
-      },
-      '.MuiAutocomplete-inputRoot': {
-        // color: 'white',
-      },
-      '.MuiAutocomplete-clearIndicator': {
-        // color: 'white',
-      },
-      '.MuiAutocomplete-popupIndicator': {
-        // color: 'white',
-      },
-      '.MuiAutocomplete-listbox': {
-        color: 'red',
-      },
-    },
-  });
-
-  const ValidationTextField = styled(TextField)({
-    // '& input:filed': {
-    //   color: 'red',
-    // },
-    // '& input + fieldset': {
-    //   borderColor: 'green',
-    //   borderWidth: 0,
-    //   // p: 20,
-    //   borderRadius: 10,
-    // },
-    // 'label + &': {
-    //   marginBot: 3,
-    // },
-    // '& input:focus:valid + fieldset': {
-    //   // borderLeftWidth: 6,
-    //   borderWidth: 1,
-    //   padding: '4px !important', // override inline-style
-    // },
-  });
-
   return (
     <StyledAutocomplete
-      disablePortal
-      id="combo-box-demo"
+      // disablePortal
       options={top100Films}
       sx={{
         width: { xs: '100%', sm: '100%', md: 480 },
         mt: 2,
         py: 3,
-        // boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
         border: 'none',
         borderRadius: 10,
-        // bgcolor: 'red',
       }}
+      PaperComponent={CustomPaper}
       // freeSolo
       renderInput={(params) => (
-        <ValidationTextField
+        <TextField
           {...params}
+          // shrink={true}
           label="Encontrar serviço"
+          InputLabelProps={{
+            ...params.InputLabelProps,
+            sx: {
+              position: 'absolute',
+              left: '40px',
+              backdropFilter: 'blur(20px)',
+            },
+          }}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
               <>
+                <InputAdornment
+                  sx={{ position: 'absolute', ml: 1 }}
+                  position="start"
+                >
+                  <SearchIcon />
+                </InputAdornment>
                 {loading ? (
                   <CircularProgress color="inherit" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
               </>
             ),
-            startAdornment: (
-              <>
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-                {params.InputProps.startAdornment}
-              </>
-            ),
+          }}
+          sx={{
+            '& legend': { m: 5 },
+            '& fieldset': {
+              boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+            },
           }}
         />
       )}
     />
   );
 }
+
+function CustomPaper(props) {
+  return (
+    <Paper
+      elevation={1}
+      sx={{ backdropFilter: 'blur(8px)', my: { xs: 1, sm: 0 } }}
+      {...props}
+    />
+  );
+}
+
+const StyledAutocomplete = styled(Autocomplete)({
+  '& MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined':
+    {
+      backgroundColor: 'secondary.main',
+    },
+
+  '& .MuiAutocomplete-inputRoot': {
+    // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
+    '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-child': {
+      // Default left padding is 6px
+      paddingLeft: '45px',
+    },
+    '& MuiAutocomplete.popper': {
+      backgroundColor: 'red',
+    },
+    '&[class*="MuiOutlinedInput-root"] MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined':
+      {
+        backgroundColor: 'red',
+      },
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderWidth: 0,
+      borderRadius: 20,
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {},
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderWidth: 1,
+    },
+  },
+});
 const top100Films = [
   { label: 'The Shawshank Redemption', year: 1994 },
   { label: 'The Godfather', year: 1972 },

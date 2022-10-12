@@ -56,6 +56,7 @@ export default function WorkerCard() {
             className="more-info"
             sx={{
               bgcolor: palette.primary.main,
+              transition: 'filter .3s ease',
               '&:hover': {
                 bgcolor: palette.primary.dark,
                 filter: `drop-shadow(0px 0px 0.6rem ${palette.primary.main})`,
@@ -76,8 +77,20 @@ export default function WorkerCard() {
             sx={{
               color: 'black',
               fontWeight: 600,
+              boxShadow: 0,
               borderRadius: 1.7,
+              transition: 'transform .2s ease-in-out',
+              // boxShadow: 0,
+              // boxShadow: `1px 1px 5px 2px ${palette.shadow.main}`,
+              '&:hover': {
+                boxShadow: 0,
+                // boxShadow: `1px 1px 5px 2px ${palette.shadow.main}`,
+                bgcolor: palette.primary.dark,
+                transform: 'scale(0.99)',
+                // filter: `drop-shadow(0px 0px 0.6rem ${palette.primary.main})`,
+              },
             }}
+            elevation={0}
           >
             Solicitar Orçamento
           </Button>

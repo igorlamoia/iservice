@@ -33,6 +33,9 @@ export const getTheme = (mode) => ({
             hint: 'rgba(0, 0, 0, 0.38)',
           },
           // buttonText: 'rgba(0, 0, 0, 0.87)',
+          shadow: {
+            main: '#d9d9d9',
+          },
         }
       : {
           // background-image: linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840);
@@ -42,8 +45,11 @@ export const getTheme = (mode) => ({
             main: 'rgb(9,9,10)',
             light: '#1F2A37',
           },
+          shadow: {
+            main: 'rgba(5, 5, 5, 0.9)',
+          },
           primary: {
-            light: 'rgba(149, 243, 180, 1)',
+            light: 'rgba(43, 230, 106, 1)',
             main: 'rgba(0, 200, 126, 1)',
             dark: 'rgba(43, 230, 106, 1)',
             contrastText: '#fff',

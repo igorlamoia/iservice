@@ -36,7 +36,7 @@ export default function Home() {
           </div>
           <LottieAnimacao animationData={iServiceLottie} className="lottie" />
         </Container>
-        <AboutUs></AboutUs>
+        {/* <AboutUs></AboutUs> */}
         <div className="categorias-div">
           <Categorias />
         </div>
