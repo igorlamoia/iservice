@@ -11,7 +11,8 @@ export function Carousel({ children }) {
         overflowX: 'scroll',
         px: 4,
         '&::-webkit-scrollbar': {
-          display: 'none',
+          // display: 'none',
+          height: 5,
         },
         minWidth: '100%',
         '& > :first-child': {

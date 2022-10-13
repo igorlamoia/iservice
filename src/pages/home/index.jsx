@@ -3,10 +3,11 @@ import './style.scss';
 import LottieAnimacao from 'lottie-react';
 import { Container, Typography } from '@mui/material';
 import iServiceLottie from '../../assets/iservice-lottie.json';
-import { ServiceCard, WorkerCard, Footer } from '../../components';
+import { ServiceCard, WorkerCard, Footer, SearchInput } from '../../components';
 import { Categorias } from './categorias';
 import ResponsiveAppBar from '../../components/app-bar';
 import { Carousel } from './carousel';
+import AboutUs from '../../components/about-us';
 
 export default function Home() {
   return (
@@ -19,10 +20,9 @@ export default function Home() {
               variant="h1"
               sx={{
                 fontSize: {
-                  lg: '3.5rem',
-                  md: '2.4rem',
-                  sm: '2rem',
                   xs: '1.5rem',
+                  sm: '1.7rem',
+                  lg: '2.2rem',
                 },
                 mt: { xs: '3rem', md: '2rem', lg: 0 },
                 fontWeight: '600',
@@ -32,9 +32,11 @@ export default function Home() {
               até você
             </Typography>
             <p>Conectando quem precisa com quem sabe fazer</p>
+            <SearchInput />
           </div>
           <LottieAnimacao animationData={iServiceLottie} className="lottie" />
         </Container>
+        {/* <AboutUs></AboutUs> */}
         <div className="categorias-div">
           <Categorias />
         </div>
