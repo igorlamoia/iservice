@@ -22,10 +22,16 @@ export function Categorias() {
 
   return (
     <Paper
-      elevation={3}
+      // elevation={3}
       sx={{
         py: 2,
         width: '100%',
+        boxShadow:
+          '0px 2px 4px -1px rgb(150 150 150 / 20%), 0px 4px 5px 0px rgb(150 150 150 / 14%), 0px 1px 10px 0px rgb(150 150 150 / 12%)',
+        ...(themeMode && {
+          boxShadow:
+            '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+        }),
       }}
     >
       <Typography
@@ -72,6 +78,7 @@ export function Categorias() {
 
         <Button>
           <Stack sx={{ gap: 2 }} alignItems="center" justifyContent="center">
+            {}
             <ReparosSVG size={celular ? 50 : 70} light={themeMode} />
             <Typography
               sx={{

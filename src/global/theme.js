@@ -35,6 +35,7 @@ export const getTheme = (mode) => ({
           // buttonText: 'rgba(0, 0, 0, 0.87)',
           shadow: {
             main: '#d9d9d9',
+            input: 'rgba(0, 0, 0, 0.1)',
           },
         }
       : {
@@ -43,10 +44,11 @@ export const getTheme = (mode) => ({
           background: { paper: 'rgba(0, 0, 0, 0.5)', default: 'rgb(9,9,10)' },
           shape: {
             main: 'rgb(9,9,10)',
-            light: '#1F2A37',
+            light: '#202020',
           },
           shadow: {
             main: 'rgba(5, 5, 5, 0.9)',
+            input: 'rgba(255, 255, 255, 0.1)',
           },
           primary: {
             light: 'rgba(43, 230, 106, 1)',

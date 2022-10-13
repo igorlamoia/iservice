@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { Button, IconButton, Paper, Rating } from '@mui/material';
+import { Box, Button, IconButton, Paper, Rating } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { ReactComponent as LocationSVG } from '../../assets/location.svg';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
@@ -15,12 +15,21 @@ export default function WorkerCard() {
         minWidth: 290,
         borderRadius: 1.5,
         scrollSnapAlign: 'start',
-        boxShadow: 4,
+        boxShadow:
+          '0px 2px 4px -1px rgb(150 150 150 / 20%), 0px 4px 5px 0px rgb(150 150 150 / 14%), 0px 1px 10px 0px rgb(150 150 150 / 12%)',
+        ...(palette.mode === 'light' && {
+          boxShadow:
+            '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+        }),
       }}
+      // elevation={4}
       // boxShadow={4}
-      elevation={0}
     >
-      <div className="card-body" mode={palette.mode}>
+      <Paper
+        // sx={{ bgcolor: palette.background.default }}
+        className="card-body"
+        mode={palette.mode}
+      >
         <header className="profile">
           <img
             className="profile-img"
@@ -51,7 +60,17 @@ export default function WorkerCard() {
             <span>ver mais</span>
           </p>
         </div>
-        <footer className="card-footer" mode={palette.mode}>
+        <Box
+          // sx={{  }}
+          sx={{
+            bgcolor: 'shape.light',
+            ...(palette.mode === 'dark' && {
+              boxShadow: '0px 0px 3px var(--color-primary-dark)',
+            }),
+          }}
+          className="card-footer"
+          mode={palette.mode}
+        >
           <IconButton
             className="more-info"
             sx={{
@@ -80,22 +99,18 @@ export default function WorkerCard() {
               boxShadow: 0,
               borderRadius: 1.7,
               transition: 'transform .2s ease-in-out',
-              // boxShadow: 0,
-              // boxShadow: `1px 1px 5px 2px ${palette.shadow.main}`,
               '&:hover': {
                 boxShadow: 0,
-                // boxShadow: `1px 1px 5px 2px ${palette.shadow.main}`,
                 bgcolor: palette.primary.dark,
                 transform: 'scale(0.99)',
-                // filter: `drop-shadow(0px 0px 0.6rem ${palette.primary.main})`,
               },
             }}
             elevation={0}
           >
             Solicitar Orçamento
           </Button>
-        </footer>
-      </div>
+        </Box>
+      </Paper>
     </Paper>
   );
 }

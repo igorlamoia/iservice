@@ -10,21 +10,25 @@ import {
   Paper,
   styled,
   TextField,
+  useTheme,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function SearchInput() {
   const [loading, setLoading] = useState(false);
+  const { palette } = useTheme();
   return (
     <StyledAutocomplete
       // disablePortal
-      options={top100Films}
+      options={top100Films.map((option) => option.label)}
+      noOptionsText="..."
       sx={{
         width: { xs: '100%', sm: '100%', md: 480 },
         mt: 2,
         py: 3,
         border: 'none',
         borderRadius: 10,
+        transition: 'all 5s ease',
       }}
       PaperComponent={CustomPaper}
       // freeSolo
@@ -35,6 +39,7 @@ export default function SearchInput() {
           label="Encontrar serviço"
           InputLabelProps={{
             ...params.InputLabelProps,
+            type: 'search',
             sx: {
               position: 'absolute',
               left: '40px',
@@ -61,7 +66,7 @@ export default function SearchInput() {
           sx={{
             '& legend': { m: 5 },
             '& fieldset': {
-              boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+              boxShadow: `0px 0px 10px ${palette.shadow.input}`,
             },
           }}
         />
@@ -92,13 +97,6 @@ const StyledAutocomplete = styled(Autocomplete)({
       // Default left padding is 6px
       paddingLeft: '45px',
     },
-    '& MuiAutocomplete.popper': {
-      backgroundColor: 'red',
-    },
-    '&[class*="MuiOutlinedInput-root"] MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined':
-      {
-        backgroundColor: 'red',
-      },
     '& .MuiOutlinedInput-notchedOutline': {
       borderWidth: 0,
       borderRadius: 20,
