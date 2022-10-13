@@ -61,7 +61,7 @@ function DrawerAppBar(props) {
                     height: '1.7rem',
                     marginRight: '0.5rem',
                   }}
-                  src="/LogoiService.svg"
+                  src="LogoiService.svg"
                   alt="Logo iService"
                 />
                 <Typography variant="h6" component="div">
