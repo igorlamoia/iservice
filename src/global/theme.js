@@ -47,7 +47,7 @@ export const getTheme = (mode) => ({
           // common: { black: '#000', white: '#fff' },
           background: { paper: 'rgba(0, 0, 0, 0.5)', default: 'rgb(9,9,10)' },
           shape: {
-            main: 'rgb(9,9,10)',
+            main: 'black',
             light: '#303030',
           },
           shadow: {

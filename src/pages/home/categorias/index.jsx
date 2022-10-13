@@ -35,8 +35,9 @@ export function Categorias() {
         sx={{
           mt: 2,
           fontSize: {
-            xs: '1.4rem',
-            sm: '2rem',
+            xs: '1rem',
+            sm: '1.4rem',
+            md: '1.6rem',
           },
         }}
       >
