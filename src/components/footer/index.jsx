@@ -26,9 +26,9 @@ export default function Footer() {
   return (
     <Paper
       component="footer"
-      // sx={{ backgroundColor: 'shape.main' }}
+      sx={{ bgcolor: 'rgba(0,0,0,0)' }}
       className="footer"
-      elevation={2}
+      elevation={3}
     >
       <Container>
         <h3>
@@ -39,6 +39,7 @@ export default function Footer() {
           direction={{ xs: 'column', sm: 'row' }}
           sx={{
             // px: { xs: 2, sm: 3 },
+
             justifyContent: { xs: 'center', sm: 'space-between' },
             alignItems: { xs: 'center', sm: 'flex-start' },
             textAlign: 'center',
