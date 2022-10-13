@@ -1,6 +1,12 @@
 import React from 'react';
 import './style.scss';
-import { Box, Button, IconButton, useTheme } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  ListItemButton,
+  useTheme,
+} from '@mui/material';
 
 import TwitterSVG from '../../assets/twitter-icon';
 import InstagramSVG from '../../assets/instagram-icon';
@@ -25,13 +31,13 @@ export default function Footer() {
       <div className="main">
         <ul>
           <li>
-            <Button type="button">Quem somos</Button>
+            <ListItemButton type="button">Quem somos</ListItemButton>
           </li>
           <li>
-            <Button type="button">Trabalhe conosco</Button>
+            <ListItemButton type="button">Trabalhe conosco</ListItemButton>
           </li>
           <li>
-            <Button type="button">Assistência</Button>
+            <ListItemButton type="button">Assistência</ListItemButton>
           </li>
         </ul>
         <p className="about">
@@ -40,13 +46,15 @@ export default function Footer() {
         </p>
         <ul>
           <li>
-            <Button type="button">Termos de uso</Button>
+            <ListItemButton type="button">Termos de uso</ListItemButton>
           </li>
           <li>
-            <Button type="button">Política de privacidade</Button>
+            <ListItemButton type="button">
+              Política de privacidade
+            </ListItemButton>
           </li>
           <li>
-            <Button type="button">Enviar feedback</Button>
+            <ListItemButton type="button">Enviar feedback</ListItemButton>
           </li>
         </ul>
       </div>

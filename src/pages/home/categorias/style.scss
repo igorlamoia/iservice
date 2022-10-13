@@ -23,12 +23,12 @@
 
     li {
       width: 7rem;
-      padding: 0.7rem 0.2rem;
+      // padding: 0.7rem 0.2rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      margin: 0.3rem;
+      // margin: 0.3rem;
 
       &:hover {
         // background-color: var(--color-primary-shape);
@@ -42,7 +42,7 @@
         align-items: center;
 
         strong {
-          margin-top: 0.8rem;
+          // margin-top: 0.8rem;
           // font-size: 0.8rem;
           text-align: center;
         }

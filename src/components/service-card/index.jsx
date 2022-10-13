@@ -9,8 +9,9 @@ export default function ServiceCard() {
     <Paper
       sx={{
         borderRadius: 4,
-        bgcolor: palette.mode === 'dark' && 'rgba(0,0,0,0.9)',
         minWidth: 170,
+        boxShadow:
+          '0px 2px 4px -1px rgb(150 150 150 / 20%), 0px 4px 5px 0px rgb(150 150 150 / 14%), 0px 1px 10px 0px rgb(150 150 150 / 12%)',
       }}
       elevation={4}
       className="service-card"

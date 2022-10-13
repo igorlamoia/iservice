@@ -33,17 +33,25 @@ export const getTheme = (mode) => ({
             hint: 'rgba(0, 0, 0, 0.38)',
           },
           // buttonText: 'rgba(0, 0, 0, 0.87)',
+          shadow: {
+            main: '#d9d9d9',
+            input: 'rgba(0, 0, 0, 0.1)',
+          },
         }
       : {
           // background-image: linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840);
           // common: { black: '#000', white: '#fff' },
-          background: { paper: 'rgba(0, 0, 0, 0.5)', default: '#000' },
+          background: { paper: 'rgba(0, 0, 0, 0.5)', default: 'rgb(9,9,10)' },
           shape: {
-            main: 'rgb(24 24 27)',
-            light: '#1F2A37',
+            main: 'rgb(9,9,10)',
+            light: '#202020',
+          },
+          shadow: {
+            main: 'rgba(5, 5, 5, 0.9)',
+            input: 'rgba(255, 255, 255, 0.1)',
           },
           primary: {
-            light: 'rgba(149, 243, 180, 1)',
+            light: 'rgba(43, 230, 106, 1)',
             main: 'rgba(0, 200, 126, 1)',
             dark: 'rgba(43, 230, 106, 1)',
             contrastText: '#fff',

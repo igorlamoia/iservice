@@ -67,7 +67,7 @@ footer.footer {
 
     li:hover {
       color: var(--color-secondary);
-      filter: drop-shadow(0 0 0.6rem var(--color-secondary));
+      filter: drop-shadow(0 0 0.1rem var(--color-secondary));
     }
 
     li + li {
