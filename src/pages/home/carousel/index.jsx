@@ -10,12 +10,13 @@ export function Carousel({ children }) {
         py: 2,
         overflowX: 'scroll',
         px: 4,
+        my: 4,
         '&::-webkit-scrollbar': {
           // display: 'none',
           height: 5,
         },
         minWidth: '100%',
-        '& > :first-child': {
+        '& > :first-of-type': {
           ml: 'auto',
         },
         '& > :last-child': {
