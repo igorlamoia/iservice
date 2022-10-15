@@ -13,6 +13,7 @@ import ToggleTheme from '../toggle-theme';
 import { HideOnScroll } from './hide-on-scroll';
 import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
 import { LeftDrawer } from './drawer';
+import { useNavigate } from 'react-router-dom';
 
 const navItems = ['Oferecer serviço', 'Quem somos', 'Contato'];
 
@@ -26,7 +27,7 @@ function DrawerAppBar(props) {
   };
 
   // eslint-disable-next-line react/no-unstable-nested-components
-
+  const navigate = useNavigate();
   return (
     <Box>
       <Toolbar id="back-to-top-anchor" />
@@ -111,6 +112,11 @@ function DrawerAppBar(props) {
                     }`,
                     transform: 'scale(0.95)',
                   },
+                }}
+                onClick={() => {
+                  navigate('/login', {
+                    state: { name: 'delicia', idade: 23 },
+                  });
                 }}
                 disableElevation
               >
