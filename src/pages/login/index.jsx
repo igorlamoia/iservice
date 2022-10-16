@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase';
+import { Box, Container, Paper, Stack, TextField } from '@mui/material';
+import GoogleSVG from '../../assets/social/social-google.svg';
+import SocialSVG from '../../assets/social/social-facebook.svg';
+import DrawerAppBar from '../../components/app-bar';
 
 export default function Login() {
   const [err, setErr] = useState(false);
@@ -14,26 +18,39 @@ export default function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
+      navigate('/chat');
     } catch (err) {
       setErr(true);
     }
   };
   return (
-    <div className="formContainer">
-      <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
+    <Container
+      sx={{
+        minHeight: '100vh',
+        display: 'grid',
+        placeItems: 'center',
+      }}
+    >
+      <DrawerAppBar />
+      <Paper sx={{ p: 4 }}>
+        <span className="logo">Log-in</span>
         <span className="title">Login</span>
         <form onSubmit={handleSubmit}>
-          <input type="email" placeholder="email" />
-          <input type="password" placeholder="password" />
-          <button>Sign in</button>
-          {err && <span>Something went wrong</span>}
+          <Stack spacing={2}>
+            <TextField type="email" placeholder="email" />
+            <TextField type="password" placeholder="password" />
+            <Stack direction="row" spacing={2}>
+              <img src={GoogleSVG} alt="google" />
+              <img src={SocialSVG} alt="google" />
+            </Stack>
+            <button>Sign in</button>
+            {err && <span>Something went wrong</span>}
+          </Stack>
         </form>
         <p>
-          You don't have an account? <Link to="/register">Register</Link>
+          You don't have an account? <Link to="/login/register">Register</Link>
         </p>
-      </div>
-    </div>
+      </Paper>
+    </Container>
   );
 }
