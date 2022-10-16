@@ -3,10 +3,10 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate, Link } from 'react-router-dom';
-import { auth, db, storage } from '../firebase';
-import Add from '../img/addAvatar.png';
+import { auth, db, storage } from '../../../firebase';
+import Add from '../../../assets/images/addAvatar.png';
 
-export function RegisterChat() {
+export default function Register() {
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

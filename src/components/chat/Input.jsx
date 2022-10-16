@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   arrayUnion,
   doc,
@@ -8,8 +8,8 @@ import {
 } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import Img from '../../img/img.png';
-import Attach from '../../img/attach.png';
+import Img from '../../assets/images/img.png';
+import Attach from '../../assets/images/attach.png';
 import { db, storage } from '../../firebase';
 import { useAuthContext } from '../../hooks/context/AuthContext';
 import { useChatContext } from '../../hooks/context/ChatContext';

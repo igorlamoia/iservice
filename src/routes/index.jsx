@@ -1,29 +1,26 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, Login, Registration } from '../pages';
-import { HomeChat } from '../screens/Home';
-import { LoginChat } from '../screens/Login';
-import { RegisterChat } from '../screens/Register';
+import { Home, Login, Register, ChatPage } from '../pages';
 import { ErrorBoundary } from './error-boundary';
 import { NotFoundPage } from './not-found';
-import { ProtectedRouteLayout } from './protected-route-layout';
+import { ProtectedRoute } from './protected-route-layout';
 
 export function MyRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
+        <Route path="/" errorElement={<ErrorBoundary />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="login/register" element={<Register />} />
           <Route
-            index
-            errorElement={<ErrorBoundary />}
+            path="chat"
             element={
-              <ProtectedRouteLayout>
-                <HomeChat />
-              </ProtectedRouteLayout>
+              <ProtectedRoute>
+                <ChatPage />
+              </ProtectedRoute>
             }
           />
-          <Route path="login" element={<LoginChat />} />
-          <Route path="register" element={<RegisterChat />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

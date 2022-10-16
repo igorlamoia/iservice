@@ -1,5 +1,6 @@
 import Home from './home';
-import Registration from './login/registration';
+import Register from './login/register';
 import Login from './login';
+import ChatPage from './chat';
 
-export { Home, Registration, Login };
+export { Home, Register, Login, ChatPage };

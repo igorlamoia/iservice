@@ -1,7 +1,6 @@
 import React from 'react';
 import './style.scss';
 import {
-  Box,
   Container,
   IconButton,
   List,
@@ -12,9 +11,9 @@ import {
   useTheme,
 } from '@mui/material';
 
-import TwitterSVG from '../../assets/twitter-icon';
-import InstagramSVG from '../../assets/instagram-icon';
-import FacebookSVG from '../../assets/facebook-icon';
+import TwitterSVG from '../../assets/social/twitter-icon';
+import InstagramSVG from '../../assets/social/instagram-icon';
+import FacebookSVG from '../../assets/social/facebook-icon';
 
 export default function Footer() {
   const {

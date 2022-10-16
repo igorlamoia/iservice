@@ -1,8 +1,8 @@
 import React from 'react';
-import Sidebar from '../components/chat/Sidebar';
-import Chat from '../components/chat/Chat';
+import Sidebar from '../../components/chat/Sidebar';
+import Chat from '../../components/chat/Chat';
 
-export function HomeChat() {
+export default function ChatPage() {
   return (
     <div className="home">
       <div className="container">
