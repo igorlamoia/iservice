@@ -16,6 +16,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 export default function SearchInput() {
   const [loading, setLoading] = useState(false);
+
   const { palette } = useTheme();
   return (
     <StyledAutocomplete
