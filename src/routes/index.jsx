@@ -1,35 +1,29 @@
 import React from 'react';
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-} from 'react-router-dom';
-import { Home, Login, Registration } from '../pages';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Home, Login, Register, ChatPage } from '../pages';
 import { ErrorBoundary } from './error-boundary';
 import { NotFoundPage } from './not-found';
+import { ProtectedRoute } from './protected-route-layout';
 
-export const routes = createBrowserRouter(
-  createRoutesFromElements(
-    <>
-      <Route path="/" errorElement={<ErrorBoundary />}>
-        <Route index element={<Home />} />
-        <Route path="/login">
-          <Route index element={<Login />} />
-          <Route path="registration" element={<Registration />} />
+export function MyRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" errorElement={<ErrorBoundary />}>
+          <Route index element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="login/register" element={<Register />} />
+          <Route
+            path="chat"
+            element={
+              <ProtectedRoute>
+                <ChatPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-      {/* <Route element={<AuthLayout />}>
-          <Route path="login" element={<Login />} loader={redirectIfUser} />
-          <Route path="logout" />
-        </Route> */}
-      {/* </Route> */}
-    </>
-  )
-);
-export default routes;
-// loader={({ request }) =>
-//   fetch('https://igor-sds2-dsdeliver.herokuapp.com/orders', {
-//     data: request,
-//   })
-// }
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
