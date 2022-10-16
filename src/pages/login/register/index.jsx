@@ -5,6 +5,8 @@ import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate, Link } from 'react-router-dom';
 import { auth, db, storage } from '../../../firebase';
 import Add from '../../../assets/images/addAvatar.png';
+import DrawerAppBar from '../../../components/app-bar';
+import { Container } from '@mui/material';
 
 export default function Register() {
   const [err, setErr] = useState(false);
@@ -60,27 +62,30 @@ export default function Register() {
   };
 
   return (
-    <div className="formContainer">
-      <div className="formWrapper">
-        <span className="logo">Lama Chat</span>
-        <span className="title">Register</span>
-        <form onSubmit={handleSubmit}>
-          <input required type="text" placeholder="display name" />
-          <input required type="email" placeholder="email" />
-          <input required type="password" placeholder="password" />
-          <input required style={{ display: 'none' }} type="file" id="file" />
-          <label htmlFor="file">
-            <img src={Add} alt="" />
-            <span>Add an avatar</span>
-          </label>
-          <button disabled={loading}>Sign up</button>
-          {loading && 'Uploading and compressing the image please wait...'}
-          {err && <span>Something went wrong</span>}
-        </form>
-        <p>
-          You do have an account? <Link to="/login">Login</Link>
-        </p>
+    <>
+      <DrawerAppBar />
+      <div className="formContainer">
+        <div className="formWrapper">
+          <span className="logo">Iservice</span>
+          <span className="title">Cadastre-se</span>
+          <form onSubmit={handleSubmit}>
+            <input required type="text" placeholder="display name" />
+            <input required type="email" placeholder="email" />
+            <input required type="password" placeholder="password" />
+            <input required style={{ display: 'none' }} type="file" id="file" />
+            <label htmlFor="file">
+              <img src={Add} alt="" />
+              <span>Add an avatar</span>
+            </label>
+            <button disabled={loading}>Sign up</button>
+            {loading && 'Uploading and compressing the image please wait...'}
+            {err && <span>Something went wrong</span>}
+          </form>
+          <p>
+            You do have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
