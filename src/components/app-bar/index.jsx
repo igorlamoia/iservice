@@ -1,14 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom';
 
 import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { Stack, useTheme } from '@mui/material';
+
+import {
+  Stack,
+  useTheme,
+  AppBar,
+  Box,
+  IconButton,
+  Toolbar,
+  Typography,
+  Button,
+} from '@mui/material';
+
 import ToggleTheme from '../toggle-theme';
 import { HideOnScroll } from './hide-on-scroll';
 import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
@@ -26,7 +32,7 @@ function DrawerAppBar(props) {
   };
 
   // eslint-disable-next-line react/no-unstable-nested-components
-
+  const navigate = useNavigate();
   return (
     <Box>
       <Toolbar id="back-to-top-anchor" />
@@ -111,6 +117,11 @@ function DrawerAppBar(props) {
                     }`,
                     transform: 'scale(0.95)',
                   },
+                }}
+                onClick={() => {
+                  navigate('/login', {
+                    state: { name: 'delicia', idade: 23 },
+                  });
                 }}
                 disableElevation
               >

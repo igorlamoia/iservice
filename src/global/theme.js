@@ -85,6 +85,16 @@ export const getTheme = (mode) => ({
   },
 
   components: {
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          '&.MuiListItemButton-gutters': {
+            // backgroundColor: 'blue',
+            borderRadius: '0.5rem',
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -92,6 +102,14 @@ export const getTheme = (mode) => ({
           '&.MuiButton-text': {
             color: mode ? 'black' : 'white',
           },
+          borderRadius: '0.5rem',
+          '&.MuiButton-textPrimary': {
+            transition: 'background-color .3s ease',
+            ':hover': {
+              // backgroundColor: '#b9f6ca',
+            },
+          },
+
           // '&.MuiButton-contained': {
           //   color: 'yellow',
           // },
