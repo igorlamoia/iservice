@@ -47,11 +47,26 @@ export default function AboutUs() {
           mais facilidade, simplicidade e rapidez para seu dia a dia.
         </Typography>
         <Stack direction={'row'}></Stack>
+
         <lottie-interactive
           path="Escolha.json"
           interaction="hover"
-          style={{ height: 300, width: 300 }}
+          style={{ height: 250, width: 250 }}
         ></lottie-interactive>
+        <Typography
+          style={{ marginLeft: '1.8rem', marginBottom: '1.5rem' }}
+          sx={{
+            fontSize: {
+              xs: '1rem',
+              sm: '1.3rem',
+              lg: '1.5rem',
+            },
+            mt: { xs: '3rem', md: '2rem', lg: 0 },
+            fontWeight: '600',
+          }}
+        >
+          Escolha o melhor
+        </Typography>
       </Paper>
     </Container>
   );
