@@ -1,19 +1,8 @@
 div.card-body {
-  // background-color: var(--color-shape);
-  // min-width: 200px;
-  // max-width: 330px;
   display: flex;
   font-size: 0.9rem;
   flex-direction: column;
-  box-shadow: 1px 2px 7px var(--color-shadow-light);
-  &[mode='dark'] {
-    box-shadow: 1px 2px 7px red !important;
-    // background-color: rgba(0, 0, 0, 0.5);
-    // backdrop-filter: blur(16px);
-    // -webkit-backdrop-filter: blur(16px);
-  }
-  // border-radius: 0.7rem;
-  // font-size: 0.9rem;
+
   h5 {
     // color: var(--color-text-button);
     font-weight: 500;
@@ -50,7 +39,7 @@ div.card-body {
 
     .stars {
       margin: 0.3rem 0;
-      :not(:first-child) {
+      :not(:first-of-type) {
         margin-left: 0.3rem;
       }
     }
@@ -72,18 +61,20 @@ div.card-body {
     }
   }
 
-  footer.card-footer {
-    color: var(--color-text-button);
+  .card-footer {
+    // color: var(--color-text-button);
     padding: 1rem 1.5rem 1.7rem;
     text-align: left;
-    background-color: var(--color-primary-shape);
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     position: relative;
+    &[mode='light'] {
+      background-color: var(--color-primary-shape);
+    }
     &[mode='dark'] {
-      background-color: var(--color-bk-dark);
+      // background-color: var(--color-bk-dark);
       color: var(--color-shape);
     }
 

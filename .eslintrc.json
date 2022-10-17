@@ -21,6 +21,7 @@
     "eslint-disable react/prop-types": 0,
     "eslint-disable react/function-component-definition": 0,
     "react/prop-types": 0,
-    "eslint-disable react/jsx-props-no-spreading": 0
+    "eslint-disable react/jsx-props-no-spreading": 0,
+    "eslint-disable import/no-named-as-default": 0
   }
 }

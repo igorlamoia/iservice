@@ -25,15 +25,18 @@ export function ColorModeProvider({ children }) {
     <ColorModeContext.Provider value={valuesTheme}>
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
-        {/* <Box
-          sx={{
-            background: mode
-              ? 'linear-gradient(to right bottom, #f3fcf4, #f3fdf9, #f5fdfd, #f8feff, #fcfeff, #fcfeff, #fcfeff, #fcfeff, #f8feff, #f5fdfd, #f3fdf9, #f3fcf4)'
-              : 'linear-gradient(to right bottom, #141e1e, #111e20, #0e1d22, #0c1c24, #0d1b26, #0d1b26, #0d1b26, #0d1b26, #0c1c24, #0e1d22, #111e20, #141e1e)',
-          }}
-        > */}
-        {children}
-        {/* </Box> */}
+        {mode ? (
+          <Box
+            sx={{
+              background:
+                'linear-gradient(to right bottom, #f3fcf4, #f3fdf9, #f5fdfd, #f8feff, #fcfeff, #fcfeff, #fcfeff, #fcfeff, #f8feff, #f5fdfd, #f3fdf9, #f3fcf4)',
+            }}
+          >
+            {children}
+          </Box>
+        ) : (
+          children
+        )}
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

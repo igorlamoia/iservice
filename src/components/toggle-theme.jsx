@@ -1,7 +1,24 @@
 import Switch from '@mui/material/Switch';
 import styled from '@emotion/styled';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material';
 import { useMyTheme } from '../hooks/useTheme';
+
+export default function ToggleTheme() {
+  const { toggleColorMode } = useMyTheme();
+  const {
+    palette: { mode },
+  } = useTheme();
+
+  return (
+    <>
+      <MaterialUISwitch
+        onChange={toggleColorMode}
+        checked={mode === 'dark'}
+        sx={{ mx: 1 }}
+      />
+    </>
+  );
+}
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -13,7 +30,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     transform: 'translateX(6px)',
     '&.Mui-checked': {
       color: '#fff',
-      transform: 'translateX(22px)',
+      transform: 'translateX(22px) rotate(360deg)',
       '& .MuiSwitch-thumb:before': {
         backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
           '#fff'
@@ -49,14 +66,3 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     borderRadius: 20 / 2,
   },
 }));
-
-export default function ToggleTheme() {
-  const { mode, toggleColorMode } = useMyTheme();
-  return (
-    <MaterialUISwitch
-      defaultChecked={!mode}
-      onClick={toggleColorMode}
-      sx={{ mx: 1 }}
-    />
-  );
-}

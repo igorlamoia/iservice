@@ -11,6 +11,7 @@ import './style.scss';
 import AssistenciaSVG from '../../../assets/assistencia-tecnica';
 import ReparosSVG from '../../../assets/reparos';
 import HouseSVG from '../../../assets/house';
+import { MyPaper } from '../../../components';
 
 export function Categorias() {
   const {
@@ -21,8 +22,8 @@ export function Categorias() {
   const celular = useMediaQuery(breakpoints.down('sm'));
 
   return (
-    <Paper
-      elevation={3}
+    <MyPaper
+      elevation={4}
       sx={{
         py: 2,
         width: '100%',
@@ -34,8 +35,9 @@ export function Categorias() {
         sx={{
           mt: 2,
           fontSize: {
-            xs: '1.4rem',
-            sm: '2rem',
+            xs: '1rem',
+            sm: '1.4rem',
+            md: '1.6rem',
           },
         }}
       >
@@ -110,6 +112,6 @@ export function Categorias() {
           </Stack>
         </Button>
       </Stack>
-    </Paper>
+    </MyPaper>
   );
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, useTheme } from '@mui/material';
 import iServiceLottie from '../../assets/iservice-lottie.json';
+import darkIServiceLottie from '../../assets/dark-iservice-lottie.json';
 import { ServiceCard, WorkerCard, Footer, SearchInput } from '../../components';
 import { Categorias } from './categorias';
 import ResponsiveAppBar from '../../components/app-bar';
@@ -10,6 +11,10 @@ import { Carousel } from './carousel';
 import AboutUs from '../../components/about-us';
 
 export default function Home() {
+  const {
+    palette: { mode },
+  } = useTheme();
+  const darkmode = mode === 'dark';
   return (
     <>
       <ResponsiveAppBar />
@@ -34,9 +39,12 @@ export default function Home() {
             <p>Conectando quem precisa com quem sabe fazer</p>
             <SearchInput />
           </div>
-          <LottieAnimacao animationData={iServiceLottie} className="lottie" />
+          <LottieAnimacao
+            animationData={darkmode ? darkIServiceLottie : iServiceLottie}
+            className="lottie"
+          />
         </Container>
-        <AboutUs></AboutUs>
+        {/* <AboutUs></AboutUs> */}
         <div className="categorias-div">
           <Categorias />
         </div>
