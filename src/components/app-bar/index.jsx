@@ -53,30 +53,7 @@ function DrawerAppBar(props) {
               <MenuIcon />
             </IconButton>
             <Stack direction="row" sx={{ width: 202 }}>
-              <Stack
-                direction="row"
-                spacing={2}
-                sx={{
-                  display: { xs: 'none', sm: 'flex' },
-                  alignItems: 'center',
-                }}
-              >
-                <img
-                  style={{
-                    width: '1.7rem',
-                    height: '1.7rem',
-                    marginRight: '0.5rem',
-                  }}
-                  src="LogoiService.svg"
-                  alt="Logo iService"
-                />
-                <Typography variant="h6" component="div">
-                  <Typography variant="span" color="secondary">
-                    i
-                  </Typography>
-                  Service
-                </Typography>
-              </Stack>
+              <LogoTipo />
               <ToggleTheme />
             </Stack>
             <Box
@@ -143,3 +120,32 @@ function DrawerAppBar(props) {
 }
 
 export default DrawerAppBar;
+
+function LogoTipo() {
+  return (
+    <Stack
+      direction="row"
+      spacing={2}
+      sx={{
+        display: { xs: 'none', sm: 'flex' },
+        alignItems: 'center',
+      }}
+    >
+      <img
+        style={{
+          width: '1.7rem',
+          height: '1.7rem',
+          marginRight: '0.5rem',
+        }}
+        src="LogoiService.svg"
+        alt="Logo iService"
+      />
+      <Typography variant="h6" component="div">
+        <Typography variant="span" color="secondary">
+          i
+        </Typography>
+        Service
+      </Typography>
+    </Stack>
+  );
+}

@@ -85,6 +85,35 @@ export const getTheme = (mode) => ({
   },
 
   components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          // background: bgColor,
+          borderRadius: '0.5rem',
+          '&.MuiInputBase-multiline': {
+            padding: 1,
+          },
+        },
+        input: {
+          fontWeight: 500,
+          // background: bgColor,
+          padding: '15.5px 14px',
+          borderRadius: '0.5rem',
+          '&.MuiInputBase-inputSizeSmall': {
+            padding: '10px 14px',
+            '&.MuiInputBase-inputAdornedStart': {
+              paddingLeft: 0,
+            },
+          },
+        },
+        inputAdornedStart: {
+          paddingLeft: 4,
+        },
+        notchedOutline: {
+          borderRadius: '0.5rem',
+        },
+      },
+    },
     MuiListItemButton: {
       styleOverrides: {
         root: {

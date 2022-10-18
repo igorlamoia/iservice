@@ -4,5 +4,16 @@ import SearchInput from './search-input';
 import Footer from './footer';
 import ToggleTheme from './toggle-theme';
 import MyPaper from './my-paper';
+import MyInput from './input';
+import MyButton from './my-button';
 
-export { WorkerCard, ServiceCard, SearchInput, Footer, ToggleTheme, MyPaper };
+export {
+  WorkerCard,
+  ServiceCard,
+  SearchInput,
+  Footer,
+  ToggleTheme,
+  MyPaper,
+  MyInput,
+  MyButton,
+};
