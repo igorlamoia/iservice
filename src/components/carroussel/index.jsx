@@ -55,11 +55,7 @@ export default function Carroussel() {
         <SwiperSlide>
           <WorkerCard></WorkerCard>
         </SwiperSlide>
-        <SwiperSlide>
-          {({ isActive }) => (
-            <div>Current slide is {isActive ? 'active' : 'not active'}</div>
-          )}
-        </SwiperSlide>
+        <SwiperSlide></SwiperSlide>
         <SwiperSlide>
           <WorkerCard></WorkerCard>
         </SwiperSlide>
