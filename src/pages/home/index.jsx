@@ -9,6 +9,7 @@ import { Categorias } from './categorias';
 import ResponsiveAppBar from '../../components/app-bar';
 import { Carousel } from './carousel';
 import AboutUs from '../../components/about-us';
+import Carroussel from '../../components/carroussel';
 
 export default function Home() {
   const {
@@ -44,12 +45,13 @@ export default function Home() {
             className="lottie"
           />
         </Container>
-        {/* <AboutUs></AboutUs> */}
+        <AboutUs></AboutUs>
         <div className="categorias-div">
           <Categorias />
         </div>
         <Container>
-          <Carousel>
+          <Carroussel></Carroussel>
+          {/* <Carousel>
             <WorkerCard />
             <WorkerCard />
             <WorkerCard />
@@ -58,7 +60,7 @@ export default function Home() {
             <WorkerCard />
             <WorkerCard />
             <WorkerCard />
-          </Carousel>
+          </Carousel> */}
           <Carousel>
             <ServiceCard />
             <ServiceCard />

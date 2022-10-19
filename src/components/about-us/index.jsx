@@ -15,7 +15,10 @@ export default function AboutUs() {
     palette: { mode },
   } = useTheme();
   const themeMode = mode === 'light';
-  const celular = useMediaQuery(breakpoints.down('sm'));
+  const celular = useMediaQuery(breakpoints.down('md'));
+
+  const tamanho = celular ? 100 : 200;
+
   return (
     <Container>
       <Paper
@@ -46,27 +49,78 @@ export default function AboutUs() {
           profissionais da sua região com pessoas solicitando serviço, trazendo
           mais facilidade, simplicidade e rapidez para seu dia a dia.
         </Typography>
-        <Stack direction={'row'}></Stack>
-
-        <lottie-interactive
-          path="Escolha.json"
-          interaction="hover"
-          style={{ height: 250, width: 250 }}
-        ></lottie-interactive>
-        <Typography
-          style={{ marginLeft: '1.8rem', marginBottom: '1.5rem' }}
-          sx={{
-            fontSize: {
-              xs: '1rem',
-              sm: '1.3rem',
-              lg: '1.5rem',
-            },
-            mt: { xs: '3rem', md: '2rem', lg: 0 },
-            fontWeight: '600',
-          }}
+        <Stack
+          direction={{ md: 'row', xs: 'column' }}
+          spacing={10}
+          justifyContent="center"
+          alignItems="flex-end"
         >
-          Escolha o melhor
-        </Typography>
+          <Stack>
+            <lottie-interactive
+              path="Escolha.json"
+              interaction="hover"
+              style={{ height: tamanho, width: tamanho }}
+            ></lottie-interactive>
+            <Typography
+              sx={{
+                textAlign: 'center',
+                fontSize: {
+                  xs: '1rem',
+                  sm: '1.3rem',
+                  lg: '1.5rem',
+                },
+                mt: { xs: '3rem', md: '2rem', lg: 0 },
+                fontWeight: '600',
+              }}
+            >
+              Escolha o melhor
+            </Typography>
+          </Stack>
+
+          <Stack>
+            <lottie-interactive
+              path="chat.json"
+              interaction="hover"
+              style={{ height: celular ? 80 : 160 }}
+            ></lottie-interactive>
+            <Typography
+              sx={{
+                textAlign: 'center',
+                fontSize: {
+                  xs: '1rem',
+                  sm: '1.3rem',
+                  lg: '1.5rem',
+                },
+                mt: { xs: '3rem', md: '2rem', lg: 0 },
+                fontWeight: '600',
+              }}
+            >
+              Entre em contato
+            </Typography>
+          </Stack>
+
+          <Stack>
+            <lottie-interactive
+              path="check.json"
+              interaction="hover"
+              style={{ height: celular ? 80 : 160 }}
+            ></lottie-interactive>
+            <Typography
+              sx={{
+                textAlign: 'center',
+                fontSize: {
+                  xs: '1rem',
+                  sm: '1.3rem',
+                  lg: '1.5rem',
+                },
+                mt: { xs: '3rem', md: '2rem', lg: 0 },
+                fontWeight: '600',
+              }}
+            >
+              Conclua o Serviço
+            </Typography>
+          </Stack>
+        </Stack>
       </Paper>
     </Container>
   );
