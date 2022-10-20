@@ -17,18 +17,21 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Formik } from 'formik';
 import { auth } from '../../firebase';
 import GoogleSVG from '../../assets/social/social-google.svg';
 import SocialSVG from '../../assets/social/social-facebook.svg';
 import DrawerAppBar from '../../components/app-bar';
 import { MyButton, MyInput } from '../../components';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 export default function Login() {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (values) => {
+    console.log(values);
+    return;
     e.preventDefault();
     // console.log(e.target[0].value);
     // console.log(e.target);
@@ -41,6 +44,9 @@ export default function Login() {
       setErr(true);
     }
   };
+
+  console.log('rodando');
+
   return (
     <>
       <DrawerAppBar />
@@ -51,7 +57,7 @@ export default function Login() {
           placeItems: 'center',
         }}
       >
-        <Paper sx={{ p: 4 }}>
+        <Paper sx={{ p: 4 }} elevation={4}>
           <Stack spacing={1} sx={{ alignItems: 'center', textAlign: 'center' }}>
             <LogoTipo />
             <Typography>Olá, bem vindo de volta</Typography>
@@ -70,29 +76,70 @@ export default function Login() {
             </Stack>
           </Stack>
           <OrTag />
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={2}>
-              <MyInput label="E-mail" id="email" type="email" />
-              <MyInput
-                label="Senha"
-                id="senha"
-                type={false ? 'text' : 'password'}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      //  onClick={handleClickShowPassword}
-                      //  onMouseDown={handleMouseDownPassword}
-                    >
-                      {true ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-              <MyButton>Entrar</MyButton>
-              {err && <span>Something went wrong</span>}
-            </Stack>
-          </form>
+          <Formik
+            initialValues={{
+              email: '',
+              email2: '',
+              senha: '',
+              submit: null,
+            }}
+            // validationSchema={Yup.object().shape({
+            //   email: Yup.string()
+            //     .email('Must be a valid email')
+            //     .max(255)
+            //     .required('Email is required'),
+            //   password: Yup.string().max(255).required('Password is required'),
+            // })}
+            onSubmit={async (
+              values,
+              { setErrors, setStatus, setSubmitting }
+            ) => {
+              console.log('Submitou');
+              console.log(values);
+            }}
+          >
+            {({
+              errors,
+              handleBlur,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+              touched,
+              values,
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <Stack spacing={2}>
+                  <MyInput
+                    label="E-mail"
+                    id="email"
+                    type="email"
+                    value={values.email}
+                    onChange={handleChange}
+                  />
+                  <MyInput
+                    label="Senha"
+                    id="senha"
+                    type={false ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          //  onClick={handleClickShowPassword}
+                          //  onMouseDown={handleMouseDownPassword}
+                        >
+                          {true ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    value={values.senha}
+                    onChange={handleChange}
+                  />
+                  <MyButton type="submit">Entrar</MyButton>
+                  {err && <span>Something went wrong</span>}
+                </Stack>
+              </form>
+            )}
+          </Formik>
           <Typography sx={{ mt: 2 }}>
             Ainda não tem sua conta? <Link to="/login/register">Register</Link>
           </Typography>
