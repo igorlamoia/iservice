@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {
+  Alert,
   Box,
   Button,
   Container,
@@ -13,12 +14,14 @@ import {
   InputLabel,
   OutlinedInput,
   Paper,
+  Snackbar,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Formik } from 'formik';
+import Slide from '@mui/material/Slide';
 import { auth } from '../../firebase';
 import GoogleSVG from '../../assets/social/social-google.svg';
 import SocialSVG from '../../assets/social/social-facebook.svg';
@@ -28,27 +31,26 @@ import { loginSchema } from '../../utils/validation/login.schema';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [err, setErr] = useState(false);
   const navigate = useNavigate();
-
+  const [errorForm, seterrorForm] = useState({ error: false });
   const handleLoginForm = async (values) => {
-    console.log('Chegada do formulário');
-    console.log(values);
-    return;
-    e.preventDefault();
-    // console.log(e.target[0].value);
-    // console.log(e.target);
-    const email = 'iguim@a.com';
-    const password = '123456';
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, values.email, values.senha);
       navigate('/chat');
     } catch (err) {
-      setErr(true);
+      if (err.code === 'auth/wrong-password') {
+        return seterrorForm({
+          error: true,
+          message: 'Senha incorreta',
+        });
+      }
+      if (err.code === 'auth/user-not-found') {
+        return seterrorForm({ error: true, message: 'Usuário não encontrado' });
+      }
+      seterrorForm({ error: true, message: err.message });
+      // setErr(true);
     }
   };
-
-  console.log('rodando');
 
   const initialStateForm = {
     email: '',
@@ -136,7 +138,6 @@ export default function Login() {
                     errorMessage={errors.senha}
                   />
                   <MyButton type="submit">Entrar</MyButton>
-                  {err && <span>Something went wrong</span>}
                 </Stack>
               </form>
             )}
@@ -145,6 +146,19 @@ export default function Login() {
             Ainda não tem sua conta? <Link to="/login/register">Register</Link>
           </Typography>
         </Paper>
+        <Snackbar
+          open={errorForm.error}
+          autoHideDuration={6000}
+          onClose={() => seterrorForm(false)}
+        >
+          <Alert
+            onClose={() => seterrorForm(false)}
+            severity="error"
+            sx={{ width: '100%' }}
+          >
+            {errorForm.message}
+          </Alert>
+        </Snackbar>
       </Container>
     </>
   );
