@@ -15,6 +15,7 @@ export default function MyBytton({
       sx={({ palette }) => ({
         color: 'black',
         boxShadow: 0,
+        width: '100%',
         borderRadius: 1.7,
         minHeight: 45,
         justifyContent: 'center',

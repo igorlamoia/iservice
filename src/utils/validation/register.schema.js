@@ -1,6 +1,10 @@
 import * as yup from 'yup';
 
-export const loginSchema = yup.object({
+export const registerSchema = yup.object({
+  nickname: yup
+    .string('Apelido deve ser uma palavra')
+    .min(3, 'Apelido curto demais')
+    .required('Apelido é obrigatório'),
   email: yup
     .string('E-mail inválido')
     .email('E-mail inválido')

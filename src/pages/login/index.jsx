@@ -23,6 +23,7 @@ import SocialSVG from '../../assets/social/social-facebook.svg';
 import DrawerAppBar from '../../components/app-bar';
 import { MyButton, MyInput } from '../../components';
 import { loginSchema } from '../../utils/validation/login.schema';
+import iServiceLogo from '../../assets/LogoiService.svg';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,7 +35,7 @@ export default function Login() {
     try {
       setIsLoading(true);
 
-      await signInWithEmailAndPassword(auth, values.email, values.senha);
+      await signInWithEmailAndPassword(auth, values.email, values.password);
       navigate('/chat');
     } catch (err) {
       if (err.code === 'auth/wrong-password') {
@@ -55,7 +56,7 @@ export default function Login() {
 
   const initialStateForm = {
     email: '',
-    senha: '',
+    password: '',
   };
 
   const handleClickShowPassword = () => {
@@ -72,7 +73,7 @@ export default function Login() {
           placeItems: 'center',
         }}
       >
-        <Paper sx={{ p: 4 }} elevation={4}>
+        <Paper sx={{ p: 4, minWidth: { sm: 375 } }} elevation={4}>
           <Stack spacing={1} sx={{ alignItems: 'center', textAlign: 'center' }}>
             <LogoTipo />
             <Typography>Olá, bem vindo de volta</Typography>
@@ -121,7 +122,7 @@ export default function Login() {
                   <MyInput
                     label="Senha"
                     onBlur={handleBlur}
-                    id="senha"
+                    id="password"
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={
                       <InputAdornment position="end">
@@ -133,10 +134,10 @@ export default function Login() {
                         </IconButton>
                       </InputAdornment>
                     }
-                    value={values.senha}
+                    value={values.password}
                     onChange={handleChange}
-                    error={Boolean(errors.senha && touched.senha)}
-                    errorMessage={errors.senha}
+                    error={Boolean(errors.password && touched.password)}
+                    errorMessage={errors.password}
                   />
                   <MyButton
                     isLoading={isLoading}
@@ -171,7 +172,7 @@ export default function Login() {
   );
 }
 
-function OrTag() {
+export function OrTag() {
   return (
     <Grid item xs={12}>
       <Box
@@ -206,7 +207,7 @@ function OrTag() {
   );
 }
 
-function LogoTipo() {
+export function LogoTipo() {
   return (
     <Stack
       direction="row"
@@ -222,7 +223,7 @@ function LogoTipo() {
           height: '1.7rem',
           marginRight: '0.5rem',
         }}
-        src="LogoiService.svg"
+        src={iServiceLogo}
         alt="Logo iService"
       />
       <Typography variant="h6" component="div">

@@ -40,6 +40,20 @@ export default function MyInput({
         '& fieldset': {
           top: 0,
         },
+        '.Mui-error input': {
+          animation: 'shake .3s',
+        },
+        '@keyframes shake': {
+          '25%': {
+            transform: 'translateX(-4px)',
+          },
+          '50%': {
+            transform: 'translateX(4px)',
+          },
+          '75%': {
+            transform: 'translateX(-4px)',
+          },
+        },
         ...sx,
       }}
       error={Boolean(error)}
