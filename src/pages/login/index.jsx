@@ -32,12 +32,8 @@ export default function Login() {
 
   const handleLoginForm = async (values) => {
     try {
-      console.log('enviando form');
       setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-      return;
+
       await signInWithEmailAndPassword(auth, values.email, values.senha);
       navigate('/chat');
     } catch (err) {
@@ -52,6 +48,8 @@ export default function Login() {
       }
       seterrorForm({ error: true, message: err.message });
       // setErr(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
