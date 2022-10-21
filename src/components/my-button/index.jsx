@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, CircularProgress } from '@mui/material';
 import React from 'react';
 
 export default function MyBytton({
   sx,
   variant = 'contained',
   children,
+  isLoading,
   ...rest
 }) {
   return (
@@ -16,6 +17,8 @@ export default function MyBytton({
         boxShadow: 0,
         borderRadius: 1.7,
         minHeight: 45,
+        justifyContent: 'center',
+        alignItems: 'center',
         transition: 'transform .2s ease',
         '&:hover': {
           boxShadow: 0,
@@ -26,7 +29,9 @@ export default function MyBytton({
       })}
       {...rest}
     >
-      <Typography sx={{ fontWeight: 600 }}>{children}</Typography>
+      <Typography sx={{ fontWeight: 600 }}>
+        {isLoading ? <CircularProgress size={20} /> : children}
+      </Typography>
     </Button>
   );
 }

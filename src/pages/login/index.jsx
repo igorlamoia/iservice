@@ -7,21 +7,16 @@ import {
   Button,
   Container,
   Divider,
-  FormControl,
   Grid,
   IconButton,
   InputAdornment,
-  InputLabel,
-  OutlinedInput,
   Paper,
   Snackbar,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Formik } from 'formik';
-import Slide from '@mui/material/Slide';
 import { auth } from '../../firebase';
 import GoogleSVG from '../../assets/social/social-google.svg';
 import SocialSVG from '../../assets/social/social-facebook.svg';
@@ -33,8 +28,16 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [errorForm, seterrorForm] = useState({ error: false });
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleLoginForm = async (values) => {
     try {
+      console.log('enviando form');
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+      return;
       await signInWithEmailAndPassword(auth, values.email, values.senha);
       navigate('/chat');
     } catch (err) {
@@ -137,7 +140,13 @@ export default function Login() {
                     error={Boolean(errors.senha && touched.senha)}
                     errorMessage={errors.senha}
                   />
-                  <MyButton type="submit">Entrar</MyButton>
+                  <MyButton
+                    isLoading={isLoading}
+                    disabled={isLoading}
+                    type="submit"
+                  >
+                    Entrar
+                  </MyButton>
                 </Stack>
               </form>
             )}
