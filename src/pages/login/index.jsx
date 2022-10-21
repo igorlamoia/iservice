@@ -24,12 +24,15 @@ import GoogleSVG from '../../assets/social/social-google.svg';
 import SocialSVG from '../../assets/social/social-facebook.svg';
 import DrawerAppBar from '../../components/app-bar';
 import { MyButton, MyInput } from '../../components';
+import { loginSchema } from '../../utils/validation/login.schema';
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (values) => {
+  const handleLoginForm = async (values) => {
+    console.log('Chegada do formulário');
     console.log(values);
     return;
     e.preventDefault();
@@ -46,6 +49,15 @@ export default function Login() {
   };
 
   console.log('rodando');
+
+  const initialStateForm = {
+    email: '',
+    senha: '',
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword((old) => !old);
+  };
 
   return (
     <>
@@ -77,35 +89,19 @@ export default function Login() {
           </Stack>
           <OrTag />
           <Formik
-            initialValues={{
-              email: '',
-              email2: '',
-              senha: '',
-              submit: null,
-            }}
-            // validationSchema={Yup.object().shape({
-            //   email: Yup.string()
-            //     .email('Must be a valid email')
-            //     .max(255)
-            //     .required('Email is required'),
-            //   password: Yup.string().max(255).required('Password is required'),
-            // })}
-            onSubmit={async (
-              values,
-              { setErrors, setStatus, setSubmitting }
-            ) => {
-              console.log('Submitou');
-              console.log(values);
+            initialValues={initialStateForm}
+            validationSchema={loginSchema}
+            onSubmit={async (values) => {
+              handleLoginForm(values);
             }}
           >
             {({
               errors,
-              handleBlur,
               handleChange,
+              handleBlur,
               handleSubmit,
-              isSubmitting,
-              touched,
               values,
+              touched,
             }) => (
               <form onSubmit={handleSubmit}>
                 <Stack spacing={2}>
@@ -114,25 +110,30 @@ export default function Login() {
                     id="email"
                     type="email"
                     value={values.email}
+                    onBlur={handleBlur}
                     onChange={handleChange}
+                    error={Boolean(errors.email && touched.email)}
+                    errorMessage={errors.email}
                   />
                   <MyInput
                     label="Senha"
+                    onBlur={handleBlur}
                     id="senha"
-                    type={false ? 'text' : 'password'}
+                    type={showPassword ? 'text' : 'password'}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
-                          //  onClick={handleClickShowPassword}
-                          //  onMouseDown={handleMouseDownPassword}
+                          onClick={handleClickShowPassword}
                         >
-                          {true ? <VisibilityOff /> : <Visibility />}
+                          {!showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     }
                     value={values.senha}
                     onChange={handleChange}
+                    error={Boolean(errors.senha && touched.senha)}
+                    errorMessage={errors.senha}
                   />
                   <MyButton type="submit">Entrar</MyButton>
                   {err && <span>Something went wrong</span>}

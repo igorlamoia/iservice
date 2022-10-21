@@ -13,7 +13,7 @@ export default function MyInput({
   endAdornment,
   sx,
   error,
-  errors,
+  errorMessage,
   ...rest
 }) {
   return (
@@ -42,7 +42,7 @@ export default function MyInput({
         },
         ...sx,
       }}
-      error={error}
+      error={Boolean(error)}
     >
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <OutlinedInput
@@ -57,9 +57,7 @@ export default function MyInput({
         {...rest}
         endAdornment={endAdornment}
       />
-      {errors?.id && (
-        <FormHelperText error>{error?.id?.message}</FormHelperText>
-      )}
+      {error && <FormHelperText error>{errorMessage}</FormHelperText>}
     </FormControl>
   );
 }

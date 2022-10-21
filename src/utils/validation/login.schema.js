@@ -2,11 +2,11 @@ import * as yup from 'yup';
 
 export const loginSchema = yup.object({
   email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
+    .string('E-mail inválido')
+    .email('E-mail inválido')
+    .required('E-mail é obrigatório'),
+  senha: yup
+    .string('Senha inválida')
+    .min(8, 'Senha deve ter no mínimo 8 caracteres')
+    .required('Senha é obrigatória'),
 });
