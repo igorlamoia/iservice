@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import {
@@ -18,13 +18,18 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Formik } from 'formik';
 import { auth } from '../../firebase';
-import GoogleSVG from '../../assets/social/social-google.svg';
-import SocialSVG from '../../assets/social/social-facebook.svg';
-import DrawerAppBar from '../../components/app-bar';
 import { MyButton, MyInput } from '../../components';
 import { loginSchema } from '../../utils/validation/login.schema';
 import iServiceLogo from '../../assets/LogoiService.svg';
 import { LoginRegisterNavbar } from './navbar';
+import { useAuthContext } from '../../hooks/context/AuthContext';
+import SocialLogin from '../../components/social-login';
+
+// const firebaseData = {
+//   displayName: 'John Doe',
+//   email: '',
+//   photoURL: '',
+// };
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -32,10 +37,11 @@ export default function Login() {
   const [errorForm, seterrorForm] = useState({ error: false });
   const [isLoading, setIsLoading] = useState(false);
 
+  const { currentUser, logOut } = useAuthContext();
+
   const handleLoginForm = async (values) => {
     try {
       setIsLoading(true);
-
       await signInWithEmailAndPassword(auth, values.email, values.password);
       navigate('/chat');
     } catch (err) {
@@ -64,6 +70,10 @@ export default function Login() {
     setShowPassword((old) => !old);
   };
 
+  useEffect(() => {
+    console.log('user mudou');
+    console.log(currentUser);
+  }, [currentUser]);
   return (
     <>
       {/* <DrawerAppBar /> */}
@@ -88,10 +98,8 @@ export default function Login() {
             >
               Acesse sua conta para continuar
             </Typography>
-            <Stack direction="row" spacing={2}>
-              <img src={GoogleSVG} alt="google" />
-              <img src={SocialSVG} alt="google" />
-            </Stack>
+            {/* sssss */}
+            <SocialLogin />
           </Stack>
           <OrTag />
           <Typography

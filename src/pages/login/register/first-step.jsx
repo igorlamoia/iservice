@@ -32,6 +32,8 @@ import {
   strengthColor,
   strengthIndicator,
 } from '../../../utils/password-strength';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
+import SocialLogin from '../../../components/social-login';
 
 // Login with google, facebook or create from zero
 export function FirstStep({ handleNextStep }) {
@@ -60,64 +62,54 @@ export function FirstStep({ handleNextStep }) {
     setShowPassword2((old) => !old);
   };
 
-  const handleSubmitAntigo = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    const displayName = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
-    const file = e.target[3].files[0];
+  const { currentUser, logOut } = useAuthContext();
 
-    try {
-      // Create user
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-
-      // Create a unique image name
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${displayName + date}`);
-
-      await uploadBytesResumable(storageRef, file).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            // Update profile
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
+  const handleRegisterForm = (values) => {
+    console.log('enviou');
+    return;
+    // TODO - Upload image to firebase storage
+    if (selectedFile) {
+      const uploadTask = uploadBytesResumable(
+        ref(storage, `users/${currentUser.uid}/avatar`),
+        selectedFile
+      );
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log('File available at', downloadURL);
+            setDoc(doc(db, 'users', currentUser.uid), {
+              email: currentUser.email,
+              nickname: values.nickname,
+              avatar: downloadURL,
             });
-            // create user on firestore
-            await setDoc(doc(db, 'users', res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
-
-            // create empty user chats on firestore
-            await setDoc(doc(db, 'userChats', res.user.uid), {});
-            navigate('/');
-          } catch (err) {
-            console.log(err.message);
-            setErr(true);
-            setLoading(false);
-          }
-        });
-      });
-    } catch (err) {
-      setErr(true);
-      setLoading(false);
+          });
+        }
+      );
     }
   };
 
-  const handleRegisterForm = {};
-
   const initialStateForm = {
-    nickname: '',
-    email: '',
+    nickname: currentUser ? currentUser.displayName : '',
+    email: currentUser ? currentUser.email : '',
     password: '',
     passwordConfirmation: '',
-    file: '',
-    birthDate: '',
+    file: currentUser ? currentUser.photoURL : '',
   };
+
+  console.log('Usuário ai:', currentUser);
+
+  useEffect(() => {
+    setSelectedFile(undefined); // Limpa file escolhido caso usuário troque de conta
+  }, [currentUser]);
 
   // UseEffect para foto preview
   useEffect(() => {
@@ -143,6 +135,7 @@ export function FirstStep({ handleNextStep }) {
     // I've kept this example simple by using the first image instead of multiple
     setSelectedFile(e.target.files[0]);
   };
+
   return (
     <>
       <Typography
@@ -155,33 +148,9 @@ export function FirstStep({ handleNextStep }) {
       >
         Reaproveite seus dados Google ou Facebook
       </Typography>
-      <Stack direction="row" spacing={2} justifyContent="center">
-        <img src={GoogleSVG} alt="google" />
-        <img src={SocialSVG} alt="google" />
-      </Stack>
-      <OrTag />
-      <Stack alignItems="center">
-        <Typography
-          sx={{
-            fontSize: '0.7rem',
-            display: 'flex',
-            gap: 1,
-          }}
-        >
-          <Typography
-            sx={({ palette }) => ({
-              color: palette.primary.main,
-              fontSize: '0.7rem',
-            })}
-          >
-            Inscreva-se
-          </Typography>
-          com novos dados
-        </Typography>
-      </Stack>
       <Formik
         initialValues={initialStateForm}
-        validationSchema={registerSchema}
+        validationSchema={() => registerSchema(Boolean(currentUser))}
         onSubmit={async (values) => {
           handleRegisterForm(values);
         }}
@@ -193,8 +162,32 @@ export function FirstStep({ handleNextStep }) {
           handleSubmit,
           values,
           touched,
+          setFieldValue,
         }) => (
           <form onSubmit={handleSubmit}>
+            <Stack sx={{ my: 1 }} justifyContent="center" alignItems="center">
+              <SocialLogin setFieldValue={setFieldValue} />
+            </Stack>
+            <OrTag />
+            <Stack alignItems="center">
+              <Typography
+                sx={{
+                  fontSize: '0.7rem',
+                  display: 'flex',
+                  gap: 1,
+                }}
+              >
+                <Typography
+                  sx={({ palette }) => ({
+                    color: palette.primary.main,
+                    fontSize: '0.7rem',
+                  })}
+                >
+                  Inscreva-se
+                </Typography>
+                com novos dados
+              </Typography>
+            </Stack>
             <Stack spacing={2}>
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
@@ -205,85 +198,79 @@ export function FirstStep({ handleNextStep }) {
                 <MyInput
                   label="Nome/Apelido"
                   id="nickname"
+                  {...(currentUser && { shrink: true })}
                   value={values.nickname}
                   onBlur={handleBlur}
                   onChange={handleChange}
                   error={Boolean(errors.nickname && touched.nickname)}
                   errorMessage={errors.nickname}
                 />
-                <MyInput
-                  label="Data de nascimento"
-                  type="date"
-                  shrink
-                  id="birthDate"
-                  value={values.birthDate}
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  error={Boolean(errors.birthDate && touched.birthDate)}
-                  errorMessage={errors.birthDate}
-                />
               </Stack>
               <MyInput
                 label="E-mail"
                 id="email"
+                {...(currentUser && { disabled: true, shrink: true })}
                 value={values.email}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 error={Boolean(errors.email && touched.email)}
                 errorMessage={errors.email}
               />
-              <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                sx={{ gap: 2 }}
-                justifyContent="flex-start"
-                alignItems="flex-start"
-              >
-                <MyInput
-                  label="Senha"
-                  onBlur={handleBlur}
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                      >
-                        {!showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  value={values.password}
-                  onChange={(e) => {
-                    handleChange(e);
-                    changePassword(e.target.value);
-                  }}
-                  error={Boolean(errors.password && touched.password)}
-                  errorMessage={errors.password}
-                />
-                <MyInput
-                  label="Confirmar Senha"
-                  onBlur={handleBlur}
-                  id="passwordConfirmation"
-                  type={showPassword2 ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword2}
-                      >
-                        {!showPassword2 ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  value={values.passwordConfirmation}
-                  onChange={handleChange}
-                  error={Boolean(
-                    errors.passwordConfirmation && touched.passwordConfirmation
-                  )}
-                  errorMessage={errors.password}
-                />
-              </Stack>
+              {!currentUser && (
+                <Stack
+                  direction={{ xs: 'column', sm: 'row' }}
+                  sx={{ gap: 2 }}
+                  justifyContent="flex-start"
+                  alignItems="flex-start"
+                >
+                  <MyInput
+                    label="Senha"
+                    onBlur={handleBlur}
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                        >
+                          {!showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    value={values.password}
+                    onChange={(e) => {
+                      handleChange(e);
+                      changePassword(e.target.value);
+                    }}
+                    error={Boolean(errors.password && touched.password)}
+                    errorMessage={errors.password}
+                  />
+                  <MyInput
+                    label="Confirmar Senha"
+                    onBlur={handleBlur}
+                    id="passwordConfirmation"
+                    type={showPassword2 ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword2}
+                        >
+                          {!showPassword2 ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    value={values.passwordConfirmation}
+                    onChange={handleChange}
+                    error={Boolean(
+                      errors.passwordConfirmation &&
+                        touched.passwordConfirmation
+                    )}
+                    errorMessage={errors.password}
+                  />
+                </Stack>
+              )}
               {strength !== 0 && (
                 <FormControl fullWidth>
                   <Box sx={{ mb: 2 }}>
@@ -304,8 +291,8 @@ export function FirstStep({ handleNextStep }) {
                 </FormControl>
               )}
               <input
-                required
                 style={{ display: 'none' }}
+                name="file"
                 type="file"
                 id="file"
                 onChange={onSelectFile}
@@ -336,6 +323,17 @@ export function FirstStep({ handleNextStep }) {
                     }}
                     alt="profile"
                   />
+                ) : !!currentUser?.photoURL ? (
+                  <img
+                    src={currentUser?.photoURL}
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                    }}
+                    alt="profile"
+                  />
                 ) : (
                   <LottieAnimacao animationData={AvatarImage} />
                 )}
@@ -354,7 +352,7 @@ export function FirstStep({ handleNextStep }) {
                     Zindex: 100000,
                   })}
                 >
-                  {imagePreview ? (
+                  {imagePreview || Boolean(currentUser) ? (
                     <ModeEdit fontSize="12px" />
                   ) : (
                     <Camera fontSize="12px" />
@@ -363,7 +361,8 @@ export function FirstStep({ handleNextStep }) {
               </InputLabel>
             </Stack>
             <MyButton
-              onClick={handleNextStep}
+              // onClick={handleNextStep}
+              type="submit"
               isLoading={isLoading}
               disabled={isLoading}
             >

@@ -9,11 +9,16 @@ import {
   Stepper,
   Typography,
 } from '@mui/material';
-import DrawerAppBar from '../../../components/app-bar';
 import { LogoTipo } from '..';
 import { FirstStep } from './first-step';
 import { SecondStep } from './second-step';
 import { LoginRegisterNavbar } from '../navbar';
+
+// const firebaseData = {
+//   displayName: 'John Doe',
+//   email: '',
+//   photoURL: '',
+// };
 
 export default function Register() {
   const [actualStep, setActualStep] = useState(0);
@@ -51,7 +56,7 @@ export default function Register() {
               <Typography>Olá, seja bem vindo!</Typography>
               <Typography>Cadastre-se por 2 etapas</Typography>
             </Stack>
-            <Stepper sx={{ mt: 2 }} activeStep={0} alternativeLabel>
+            <Stepper sx={{ mt: 2 }} activeStep={actualStep} alternativeLabel>
               {steps.map((label) => (
                 <Step key={label}>
                   <StepLabel>{label}</StepLabel>

@@ -15,6 +15,7 @@ export function SecondStep() {
     city: '',
     state: '',
     neighborhood: '',
+    birthDate: '',
   };
 
   const handleRegisterForm = (values) => {
@@ -39,6 +40,17 @@ export function SecondStep() {
           touched,
         }) => (
           <form onSubmit={handleSubmit}>
+            <MyInput
+              label="Data de nascimento"
+              type="date"
+              shrink
+              id="birthDate"
+              value={values.birthDate}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              error={Boolean(errors.birthDate && touched.birthDate)}
+              errorMessage={errors.birthDate}
+            />
             <Stack sx={{ mt: 3 }} spacing={2}>
               <MyInput
                 label="CPF"
