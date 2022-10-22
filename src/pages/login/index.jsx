@@ -89,26 +89,36 @@ export default function Login() {
           <Stack spacing={1} sx={{ alignItems: 'center', textAlign: 'center' }}>
             <LogoTipo />
             <Typography>Olá, bem vindo de volta</Typography>
-            <Typography
-              sx={({ palette }) => ({
-                fontSize: '0.7rem',
-                color: palette.primary.main,
-                // textAlign: 'center',
-              })}
-            >
-              Acesse sua conta para continuar
+            <Typography sx={{ fontSize: '0.7rem' }}>
+              Fazer
+              <Typography
+                variant="span"
+                sx={({ palette }) => ({
+                  fontSize: '0.7rem',
+                  color: palette.primary.main,
+                  // textAlign: 'center',
+                })}
+              >
+                {' '}
+                Login{' '}
+              </Typography>
+              Com:
             </Typography>
-            {/* sssss */}
             <SocialLogin />
           </Stack>
           <OrTag />
-          <Typography
-            sx={({ palette }) => ({
-              fontSize: '0.7rem',
-              textAlign: 'center',
-            })}
-          >
-            Insira seus dados para entrar
+
+          <Typography sx={{ fontSize: '0.7rem', textAlign: 'center' }}>
+            <Typography
+              variant="span"
+              sx={({ palette }) => ({
+                fontSize: '0.7rem',
+                color: palette.primary.main,
+              })}
+            >
+              Entrar{' '}
+            </Typography>
+            com endereço de e-mail
           </Typography>
           <Formik
             initialValues={initialStateForm}

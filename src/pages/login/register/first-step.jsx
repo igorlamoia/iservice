@@ -66,6 +66,7 @@ export function FirstStep({ handleNextStep }) {
 
   const handleRegisterForm = (values) => {
     console.log('enviou');
+    // handleNextStep();
     return;
     // TODO - Upload image to firebase storage
     if (selectedFile) {
@@ -138,15 +139,19 @@ export function FirstStep({ handleNextStep }) {
 
   return (
     <>
-      <Typography
-        sx={({ palette }) => ({
-          fontSize: '0.7rem',
-          color: palette.primary.main,
-          textAlign: 'center',
-          mt: 2,
-        })}
-      >
-        Reaproveite seus dados Google ou Facebook
+      <Typography sx={{ fontSize: '0.7rem', mt: 2, textAlign: 'center' }}>
+        Reaproveite seus dados, fazendo{' '}
+        <Typography
+          variant="span"
+          sx={({ palette }) => ({
+            fontSize: '0.7rem',
+            color: palette.primary.main,
+            // m: 1,
+          })}
+        >
+          Login
+        </Typography>{' '}
+        com:
       </Typography>
       <Formik
         initialValues={initialStateForm}
@@ -173,17 +178,16 @@ export function FirstStep({ handleNextStep }) {
               <Typography
                 sx={{
                   fontSize: '0.7rem',
-                  display: 'flex',
-                  gap: 1,
                 }}
               >
                 <Typography
+                  variant="span"
                   sx={({ palette }) => ({
                     color: palette.primary.main,
                     fontSize: '0.7rem',
                   })}
                 >
-                  Inscreva-se
+                  Inscreva-se{' '}
                 </Typography>
                 com novos dados
               </Typography>
