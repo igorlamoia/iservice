@@ -13,6 +13,7 @@ import { LogoTipo } from '..';
 import { FirstStep } from './first-step';
 import { SecondStep } from './second-step';
 import { LoginRegisterNavbar } from '../navbar';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
 
 // const firebaseData = {
 //   displayName: 'John Doe',
@@ -22,6 +23,7 @@ import { LoginRegisterNavbar } from '../navbar';
 
 export default function Register() {
   const [actualStep, setActualStep] = useState(0);
+  const { currentUser } = useAuthContext();
   const steps = ['Dados básicos', 'Dados de uso'];
 
   const handleNextStep = useCallback(
@@ -54,7 +56,11 @@ export default function Register() {
             >
               <LogoTipo />
               <Typography>Olá, seja bem vindo!</Typography>
-              <Typography>Cadastre-se por 2 etapas</Typography>
+              <Typography>
+                {currentUser
+                  ? 'Finalize seu cadastro'
+                  : 'Cadastre-se por 2 etapas'}
+              </Typography>
             </Stack>
             <Stepper sx={{ mt: 2 }} activeStep={actualStep} alternativeLabel>
               {steps.map((label) => (

@@ -42,56 +42,37 @@ export function LoginRegisterNavbar() {
         elevation={0}
       >
         <Toolbar>
-          <Stack direction="row" sx={{ width: 202 }}>
-            <LogoTipo />
-            <ToggleTheme />
-          </Stack>
-          <Box
+          <ToggleTheme />
+          <Button
+            variant="contained"
             sx={{
-              display: { xs: 'none', sm: 'flex' },
+              borderRadius: '1rem',
               ml: 'auto',
-              mr: 'auto',
-              gap: { xs: 'none', sm: 1, md: 2 },
-            }}
-          >
-            {navItems.map((item) => (
-              <Button sx={{ '&:hover': { bgcolor: 'transparent' } }} key={item}>
-                <Typography color="buttonText">{item}</Typography>
-              </Button>
-            ))}
-          </Box>
-          <div style={{ width: 202, display: 'flex' }}>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: '1rem',
-                ml: 'auto',
+              boxShadow: `1px 2px 10px 2px ${
+                palette.mode === 'light'
+                  ? palette.primary.light
+                  : palette.primary.main
+              }`,
+              transition: 'transform .2s ease-in-out',
+              '&:hover': {
+                backgroundColor: palette.primary.main,
                 boxShadow: `1px 2px 10px 2px ${
                   palette.mode === 'light'
                     ? palette.primary.light
                     : palette.primary.main
                 }`,
-                transition: 'transform .2s ease-in-out',
-                '&:hover': {
-                  backgroundColor: palette.primary.main,
-                  boxShadow: `1px 2px 10px 2px ${
-                    palette.mode === 'light'
-                      ? palette.primary.light
-                      : palette.primary.main
-                  }`,
-                  transform: 'scale(0.95)',
-                },
-              }}
-              onClick={() => {
-                navigate('/', {
-                  state: { name: 'delicia', idade: 23 },
-                });
-              }}
-              disableElevation
-            >
-              Página Inicial
-            </Button>
-          </div>
+                transform: 'scale(0.95)',
+              },
+            }}
+            onClick={() => {
+              navigate('/', {
+                state: { name: 'delicia', idade: 23 },
+              });
+            }}
+            disableElevation
+          >
+            Página Inicial
+          </Button>
         </Toolbar>
       </AppBar>
       <ScrolltopIcon />
