@@ -84,7 +84,7 @@ export default function Login() {
                 // textAlign: 'center',
               })}
             >
-              Insira seus dados para entrar
+              Acesse sua conta para continuar
             </Typography>
             <Stack direction="row" spacing={2}>
               <img src={GoogleSVG} alt="google" />
@@ -92,6 +92,14 @@ export default function Login() {
             </Stack>
           </Stack>
           <OrTag />
+          <Typography
+            sx={({ palette }) => ({
+              fontSize: '0.7rem',
+              textAlign: 'center',
+            })}
+          >
+            Insira seus dados para entrar
+          </Typography>
           <Formik
             initialValues={initialStateForm}
             validationSchema={loginSchema}

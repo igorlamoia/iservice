@@ -3,8 +3,26 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate, Link } from 'react-router-dom';
-import { Container, Paper, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Paper,
+  Stack,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+} from '@mui/material';
 import { Formik } from 'formik';
+import {
+  Visibility,
+  VisibilityOff,
+  ModeEdit,
+  Camera,
+} from '@mui/icons-material';
 import { auth, db, storage } from '../../../firebase';
 import DrawerAppBar from '../../../components/app-bar';
 import { LogoTipo, OrTag } from '..';
@@ -13,12 +31,23 @@ import GoogleSVG from '../../../assets/social/social-google.svg';
 import SocialSVG from '../../../assets/social/social-facebook.svg';
 import Add from '../../../assets/add-image.svg';
 import { MyButton, MyInput } from '../../../components';
+import LottieAnimacao from 'lottie-react';
+import AvatarImage from '../../../assets/avatar-image.json';
 
 export default function Register() {
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword((old) => !old);
+  };
+  const handleClickShowPassword2 = () => {
+    setShowPassword2((old) => !old);
+  };
 
   const handleSubmitAntigo = async (e) => {
     setLoading(true);
@@ -124,18 +153,27 @@ export default function Register() {
               }}
             >
               <LogoTipo />
-              <Typography>Cadastre-se</Typography>
               <Typography>Olá, seja bem vindo!</Typography>
-              <Typography
-                sx={({ palette }) => ({
-                  fontSize: '0.7rem',
-                  color: palette.primary.main,
-                  // textAlign: 'center',
-                })}
-              >
-                Reaproveite seus dados Google ou Facebook
-              </Typography>
+              <Typography>Cadastre-se por 2 etapas</Typography>
             </Stack>
+            <Stepper sx={{ mt: 2 }} activeStep={0} alternativeLabel>
+              {['Dados básicos', 'Dados de uso'].map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+
+            <Typography
+              sx={({ palette }) => ({
+                fontSize: '0.7rem',
+                color: palette.primary.main,
+                textAlign: 'center',
+                mt: 2,
+              })}
+            >
+              Reaproveite seus dados Google ou Facebook
+            </Typography>
             <Stack direction="row" spacing={2} justifyContent="center">
               <img src={GoogleSVG} alt="google" />
               <img src={SocialSVG} alt="google" />
@@ -195,15 +233,64 @@ export default function Register() {
                       error={Boolean(errors.email && touched.email)}
                       errorMessage={errors.email}
                     />
-                    <MyInput
-                      label="Senha"
-                      id="password"
-                      value={values.password}
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      error={Boolean(errors.password && touched.password)}
-                      errorMessage={errors.password}
-                    />
+                    <Stack
+                      direction={{ xs: 'column', sm: 'row' }}
+                      spacing={2}
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <MyInput
+                        label="Senha"
+                        onBlur={handleBlur}
+                        id="password"
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                            >
+                              {!showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        value={values.password}
+                        onChange={handleChange}
+                        error={Boolean(errors.password && touched.password)}
+                        errorMessage={errors.password}
+                      />
+                      <MyInput
+                        label="Confirmar Senha"
+                        onBlur={handleBlur}
+                        id="passwordConfirmation"
+                        type={showPassword2 ? 'text' : 'password'}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword2}
+                            >
+                              {!showPassword2 ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        value={values.passwordConfirmation}
+                        onChange={handleChange}
+                        error={Boolean(
+                          errors.passwordConfirmation &&
+                            touched.passwordConfirmation
+                        )}
+                        errorMessage={errors.password}
+                      />
+                    </Stack>
                     <input
                       required
                       style={{ display: 'none' }}
@@ -211,30 +298,57 @@ export default function Register() {
                       id="file"
                       onChange={onSelectFile}
                     />
-                    <label
+                    <Typography sx={{ textAlign: 'center' }}>
+                      Foto de perfil:
+                    </Typography>
+                    <InputLabel
                       htmlFor="file"
-                      style={{
+                      sx={({ palette }) => ({
                         cursor: 'pointer',
-                        display: 'flex',
-                        justifyItems: 'center',
-                        margin: '10px auto',
-                        alignItems: 'center',
-                      }}
+                        borderRadius: '50%',
+                        border: `2px solid ${palette.border.main}`,
+                        height: '100px',
+                        width: '100px',
+                        overflow: 'unset',
+                      })}
+                      style={{ margin: '10px auto' }}
                     >
-                      <img
-                        src={imagePreview || Add}
-                        style={{
-                          height: 50,
-                          width: 50,
-                          borderRadius: 10,
-                          objectFit: 'cover',
-                        }}
-                        alt="profile"
-                      />
-                      <Typography sx={{ ml: 1 }}>
-                        {imagePreview ? 'Trocar foto' : 'Adicionar foto'}
-                      </Typography>
-                    </label>
+                      {imagePreview ? (
+                        <img
+                          src={imagePreview}
+                          style={{
+                            height: '100%',
+                            width: '100%',
+                            borderRadius: '50%',
+                            objectFit: 'cover',
+                          }}
+                          alt="profile"
+                        />
+                      ) : (
+                        <LottieAnimacao animationData={AvatarImage} />
+                      )}
+                      <Box
+                        sx={({ palette }) => ({
+                          ml: 1,
+                          position: 'absolute',
+                          top: -6,
+                          right: 4,
+                          bgcolor: palette.border.main,
+                          borderRadius: '50%',
+                          p: 0.7,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          Zindex: 100000,
+                        })}
+                      >
+                        {imagePreview ? (
+                          <ModeEdit fontSize="12px" />
+                        ) : (
+                          <Camera fontSize="12px" />
+                        )}
+                      </Box>
+                    </InputLabel>
                   </Stack>
                   <MyButton isLoading={isLoading} disabled={isLoading}>
                     Cadastrar

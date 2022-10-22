@@ -13,4 +13,8 @@ export const registerSchema = yup.object({
     .string('Senha inválida')
     .min(6, 'Senha deve ter no mínimo 6 caracteres')
     .required('Senha é obrigatória'),
+  passwordConfirmation: yup
+    .string('Senha inválida')
+    .min(6, 'Senha deve ter no mínimo 6 caracteres')
+    .required('Senha é obrigatória'),
 });

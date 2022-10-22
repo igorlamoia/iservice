@@ -12,6 +12,9 @@ export const getTheme = (mode) => ({
           shape: {
             main: '#d9d9d9',
           },
+          border: {
+            main: '#C3C4C4',
+          },
           primary: {
             light: 'rgba(149, 243, 180, 1)',
             main: 'rgba(43, 230, 106, 1)',
@@ -49,6 +52,9 @@ export const getTheme = (mode) => ({
           shape: {
             main: 'black',
             light: '#303030',
+          },
+          border: {
+            main: '#505051',
           },
           shadow: {
             main: 'rgba(5, 5, 5, 0.9)',
