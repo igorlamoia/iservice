@@ -24,6 +24,7 @@ import DrawerAppBar from '../../components/app-bar';
 import { MyButton, MyInput } from '../../components';
 import { loginSchema } from '../../utils/validation/login.schema';
 import iServiceLogo from '../../assets/LogoiService.svg';
+import { LoginRegisterNavbar } from './navbar';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -65,7 +66,8 @@ export default function Login() {
 
   return (
     <>
-      <DrawerAppBar />
+      {/* <DrawerAppBar /> */}
+      <LoginRegisterNavbar />
       <Container
         sx={{
           minHeight: '100vh',

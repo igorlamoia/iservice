@@ -34,7 +34,7 @@ import {
 } from '../../../utils/password-strength';
 
 // Login with google, facebook or create from zero
-export function FirstStep() {
+export function FirstStep({ handleNextStep }) {
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -362,8 +362,12 @@ export function FirstStep() {
                 </Box>
               </InputLabel>
             </Stack>
-            <MyButton isLoading={isLoading} disabled={isLoading}>
-              Cadastrar
+            <MyButton
+              onClick={handleNextStep}
+              isLoading={isLoading}
+              disabled={isLoading}
+            >
+              Avançar
             </MyButton>
           </form>
         )}

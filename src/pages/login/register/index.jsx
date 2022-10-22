@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Container,
@@ -13,16 +13,23 @@ import DrawerAppBar from '../../../components/app-bar';
 import { LogoTipo } from '..';
 import { FirstStep } from './first-step';
 import { SecondStep } from './second-step';
+import { LoginRegisterNavbar } from '../navbar';
 
 export default function Register() {
-  const [actualStep, setActualStep] = useState(1);
+  const [actualStep, setActualStep] = useState(0);
   const steps = ['Dados básicos', 'Dados de uso'];
+
+  const handleNextStep = useCallback(
+    () => setActualStep((prevStep) => prevStep + 1),
+    []
+  );
 
   console.log('renderizando');
 
   return (
     <>
-      <DrawerAppBar />
+      {/* <DrawerAppBar /> */}
+      <LoginRegisterNavbar />
       <Container
         sx={{
           minHeight: '100vh',
@@ -51,7 +58,7 @@ export default function Register() {
                 </Step>
               ))}
             </Stepper>
-            {actualStep === 0 && <FirstStep />}
+            {actualStep === 0 && <FirstStep handleNextStep={handleNextStep} />}
             {actualStep === 1 && <SecondStep />}
 
             <Typography sx={{ textAlign: 'center', mt: 2, fontSize: '0.8rem' }}>
