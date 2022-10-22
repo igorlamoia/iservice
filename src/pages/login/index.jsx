@@ -221,7 +221,6 @@ export function LogoTipo() {
       direction="row"
       // spacing={2}
       sx={{
-        display: { xs: 'none', sm: 'flex' },
         alignItems: 'center',
       }}
     >

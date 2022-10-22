@@ -58,10 +58,14 @@ export default function MyInput({
       }}
       error={Boolean(error)}
     >
-      <InputLabel htmlFor={id}>{label}</InputLabel>
+      <InputLabel shrink={rest.shrink} htmlFor={id}>
+        {label}
+      </InputLabel>
       <OutlinedInput
         id={id}
         type="text"
+        data-shrink="false"
+        shrink
         // value={values.email}
         name={id}
         // onBlur={handleBlur}

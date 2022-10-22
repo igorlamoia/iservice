@@ -15,12 +15,12 @@ const hasSpecial = (number) => new RegExp(/[!#@$%^&*)(+=._-]/).test(number);
 
 // set color based on password strength
 export const strengthColor = (count) => {
-  if (count < 2) return { label: 'Poor', color: 'red' };
-  if (count < 3) return { label: 'Weak', color: 'yellow' };
-  if (count < 4) return { label: 'Normal', color: 'blue' };
-  if (count < 5) return { label: 'Good', color: 'lightGreen' };
-  if (count < 6) return { label: 'Strong', color: 'green' };
-  return { label: 'Poor', color: 'red' };
+  if (count < 2) return { label: 'Muito Fraca', color: 'red' };
+  if (count < 3) return { label: 'Fraca', color: '#FC9700' };
+  if (count < 4) return { label: 'Normal', color: '#FED500' };
+  if (count < 5) return { label: 'Boa', color: '#96F4B5' };
+  if (count < 6) return { label: 'Forte', color: '#00C87E' };
+  return { label: 'Poor', color: 'Muito Fraca' };
 };
 
 // password strength indicator

@@ -91,6 +91,22 @@ export const getTheme = (mode) => ({
   },
 
   components: {
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          color: mode ? '#C3C4C4' : '#505051',
+        },
+      },
+    },
+    MuiStepLabel: {
+      styleOverrides: {
+        root: {
+          '.Mui-disabled': {
+            color: mode ? '#C3C4C4' : '#505051',
+          },
+        },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
