@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Alert, Box, Grid, Snackbar, Stack } from '@mui/material';
 import InputMask from 'react-input-mask';
 import { Formik } from 'formik';
 import { MyButton, MyInput } from '../../../components';
 import { registerSchemaStep2 } from '../../../utils/validation/register.schema';
 import { apiViacep } from '../../../utils/api';
-import { useState } from 'react';
+import { isEmptyObject } from '../../../utils/object';
 
 export function SecondStep() {
   const [isLoadingCep, setIsLoadingCep] = useState(false);
@@ -78,7 +78,7 @@ export function SecondStep() {
               <MyInput
                 label="Data de nascimento"
                 type="date"
-                shrink
+                shrink="true"
                 id="birthDate"
                 value={values.birthDate}
                 onBlur={handleBlur}
@@ -228,7 +228,11 @@ export function SecondStep() {
                 errorMessage={errors.complement}
               />
             </Stack>
-            <MyButton sx={{ mt: 3 }} type="submit">
+            <MyButton
+              sx={{ mt: 3 }}
+              type="submit"
+              disabled={!isEmptyObject(errors)}
+            >
               Finalizar cadastro
             </MyButton>
           </form>

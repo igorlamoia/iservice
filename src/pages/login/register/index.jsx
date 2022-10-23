@@ -15,14 +15,8 @@ import { SecondStep } from './second-step';
 import { LoginRegisterNavbar } from '../navbar';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 
-// const firebaseData = {
-//   displayName: 'John Doe',
-//   email: '',
-//   photoURL: '',
-// };
-
 export default function Register() {
-  const [actualStep, setActualStep] = useState(1);
+  const [actualStep, setActualStep] = useState(0);
   const { currentUser } = useAuthContext();
   const steps = ['Dados básicos', 'Dados de uso'];
 
@@ -31,11 +25,8 @@ export default function Register() {
     []
   );
 
-  console.log('renderizando');
-
   return (
     <>
-      {/* <DrawerAppBar /> */}
       <LoginRegisterNavbar />
       <Container
         sx={{
@@ -45,7 +36,10 @@ export default function Register() {
           placeItems: 'center',
         }}
       >
-        <Paper sx={{ p: 4, minWidth: { xs: '90vw', sm: 500 } }} elevation={4}>
+        <Paper
+          sx={{ p: 4, minWidth: { xs: '90vw', sm: 500 }, maxWidth: 500 }}
+          elevation={4}
+        >
           <Stack>
             <Stack
               spacing={1}

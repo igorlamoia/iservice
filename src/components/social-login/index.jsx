@@ -24,9 +24,9 @@ export default function SocialLogin({ setFieldValue = () => {} }) {
   };
 
   useEffect(() => {
-    if (currentUser && setFieldValue) {
+    if (currentUser?.displayName && setFieldValue) {
       setFieldValue('email', currentUser.email);
-      setFieldValue('nickname', currentUser.displayName);
+      setFieldValue('nickname', currentUser.displayName || '');
     }
   }, [currentUser]);
 

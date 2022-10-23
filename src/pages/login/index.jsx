@@ -24,6 +24,7 @@ import iServiceLogo from '../../assets/LogoiService.svg';
 import { LoginRegisterNavbar } from './navbar';
 import { useAuthContext } from '../../hooks/context/AuthContext';
 import SocialLogin from '../../components/social-login';
+import { isEmptyObject } from '../../utils/object';
 
 // const firebaseData = {
 //   displayName: 'John Doe',
@@ -169,7 +170,7 @@ export default function Login() {
                   />
                   <MyButton
                     isLoading={isLoading}
-                    disabled={isLoading}
+                    disabled={isLoading || !isEmptyObject(errors)}
                     type="submit"
                   >
                     Entrar

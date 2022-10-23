@@ -67,14 +67,8 @@ export default function MyInput({
         id={id}
         disabled={isLoading}
         type="text"
-        data-shrink="false"
-        shrink
-        // value={values.email}
         name={id}
-        // onBlur={handleBlur}
-        // onChange={handleChange}
         label={label}
-        // inputProps={{}}
         {...rest}
         endAdornment={isLoading ? <Loader /> : endAdornment}
       />
