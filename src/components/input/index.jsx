@@ -6,12 +6,14 @@ import {
   OutlinedInput,
 } from '@mui/material';
 import React from 'react';
+import Loader from '../loader';
 
 export default function MyInput({
   label,
   id,
   endAdornment,
   sx,
+  isLoading,
   error,
   errorMessage,
   ...rest
@@ -63,6 +65,7 @@ export default function MyInput({
       </InputLabel>
       <OutlinedInput
         id={id}
+        disabled={isLoading}
         type="text"
         data-shrink="false"
         shrink
@@ -73,7 +76,7 @@ export default function MyInput({
         label={label}
         // inputProps={{}}
         {...rest}
-        endAdornment={endAdornment}
+        endAdornment={isLoading ? <Loader /> : endAdornment}
       />
       {error && <FormHelperText error>{errorMessage}</FormHelperText>}
     </FormControl>
