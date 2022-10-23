@@ -22,7 +22,7 @@ import { useAuthContext } from '../../../hooks/context/AuthContext';
 // };
 
 export default function Register() {
-  const [actualStep, setActualStep] = useState(0);
+  const [actualStep, setActualStep] = useState(1);
   const { currentUser } = useAuthContext();
   const steps = ['Dados básicos', 'Dados de uso'];
 

@@ -40,6 +40,12 @@ export function AuthContextProvider({ children }) {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       console.log(user);
+      // {
+      //   displayName: 'Igor Lamoia',
+      //   email: "igorlamoia@gmail.com",
+      //   photoURL: "https://lh3.googleusercontent.com/a/ALm5wu3HsoYNb38yQsyj1N_pUVVpBu5_R8R23My1-zvaA8M=s96-c",
+      //   emailVerified: true
+      // }
     });
 
     return () => {
