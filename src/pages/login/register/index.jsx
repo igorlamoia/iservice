@@ -45,7 +45,7 @@ export default function Register() {
           placeItems: 'center',
         }}
       >
-        <Paper sx={{ p: 4, minWidth: { xs: '90vw', sm: 375 } }} elevation={4}>
+        <Paper sx={{ p: 4, minWidth: { xs: '90vw', sm: 500 } }} elevation={4}>
           <Stack>
             <Stack
               spacing={1}

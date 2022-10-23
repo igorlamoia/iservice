@@ -54,10 +54,10 @@ export const registerSchemaStep2 = yup.object({
   neighborhood: yup.string('Bairro inválido').required('Bairro é obrigatório'),
   city: yup.string('Cidade inválida').required('Cidade é obrigatória'),
   state: yup
-    .string('Estado inválido')
-    .min(2, 'Estado inválido')
-    .max(2, 'Estado inválido')
-    .required('Estado é obrigatório'),
+    .string('UF inválida')
+    .min(2, 'UF inválida')
+    .max(2, 'UF inválida')
+    .required('UF é obrigatória'),
   zipCode: yup
     .string('CEP inválido')
     .matches(/^[0-9]{5}-[0-9]{3}$/, 'CEP inváido')
