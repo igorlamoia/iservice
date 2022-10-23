@@ -12,6 +12,9 @@ export const getTheme = (mode) => ({
           shape: {
             main: '#d9d9d9',
           },
+          border: {
+            main: '#C3C4C4',
+          },
           primary: {
             light: 'rgba(149, 243, 180, 1)',
             main: 'rgba(43, 230, 106, 1)',
@@ -50,6 +53,9 @@ export const getTheme = (mode) => ({
             main: 'black',
             light: '#303030',
           },
+          border: {
+            main: '#505051',
+          },
           shadow: {
             main: 'rgba(5, 5, 5, 0.9)',
             input: 'rgba(255, 255, 255, 0.1)',
@@ -85,6 +91,51 @@ export const getTheme = (mode) => ({
   },
 
   components: {
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          color: mode ? '#C3C4C4' : '#505051',
+        },
+      },
+    },
+    MuiStepLabel: {
+      styleOverrides: {
+        root: {
+          '.Mui-disabled': {
+            color: mode ? '#C3C4C4' : '#505051',
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          // background: bgColor,
+          borderRadius: '0.5rem',
+          '&.MuiInputBase-multiline': {
+            padding: 1,
+          },
+        },
+        input: {
+          fontWeight: 500,
+          // background: bgColor,
+          padding: '15.5px 14px',
+          borderRadius: '0.5rem',
+          '&.MuiInputBase-inputSizeSmall': {
+            padding: '10px 14px',
+            '&.MuiInputBase-inputAdornedStart': {
+              paddingLeft: 0,
+            },
+          },
+        },
+        inputAdornedStart: {
+          paddingLeft: 4,
+        },
+        notchedOutline: {
+          borderRadius: '0.5rem',
+        },
+      },
+    },
     MuiListItemButton: {
       styleOverrides: {
         root: {
