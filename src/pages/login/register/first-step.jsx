@@ -67,22 +67,23 @@ export function FirstStep({ handleNextStep }) {
 
   const { currentUser, logOut } = useAuthContext();
 
-  const handleRegisterForm = async (values) => {
-    setIsLoading(true);
-    try {
-      // Create user
-      const userCreated = await createUserWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password
-      );
-      console.log('userCreated', userCreated);
+  const createUser = async (values) => {
+    console.log('createUser');
+    console.log('selectedFile', selectedFile);
+
+    // Create user
+    const userCreated = await createUserWithEmailAndPassword(
+      auth,
+      values.email,
+      values.password
+    );
+
+    if (selectedFile) {
       // Create sobrescrever a imagem do usuário Caso ele suba uma imagem
       const storageRef = ref(
         storage,
         `avatar-iserviceProfile-${values.nickname + userCreated.user.uid}`
       );
-
       const uploadTask = uploadBytesResumable(storageRef, selectedFile);
       uploadTask.on(
         'state_changed',
@@ -92,7 +93,8 @@ export function FirstStep({ handleNextStep }) {
           setProgress(progresso);
         },
         (error) => {
-          setErrorForm({ error: true, message: error?.message });
+          throw new Error(error);
+          // setErrorForm({ error: true, message: error?.message });
         },
         () =>
           getDownloadURL(storageRef).then(async (downloadURL) => {
@@ -115,12 +117,107 @@ export function FirstStep({ handleNextStep }) {
               setIsLoading(false);
               navigate('/');
             } catch (error) {
-              console.log(error);
-              setErrorForm({ error: true, message: error?.message });
-              setIsLoading(false);
+              throw new Error(error);
+              // console.log(error);
+              // setErrorForm({ error: true, message: error?.message });
+              // setIsLoading(false);
             }
           })
       );
+    } else {
+      await updateProfile(userCreated.user, {
+        displayName: values.nickname,
+      });
+      // create user on firestore
+      await setDoc(doc(db, 'users', userCreated.user.uid), {
+        uid: userCreated.user.uid,
+        displayName: values.nickname,
+        email: userCreated.user.email,
+      });
+
+      // create empty user chats on firestore
+      await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
+      setIsLoading(false);
+      navigate('/');
+    }
+  };
+
+  const createOrUpdateSocialUser = async (values) => {
+    console.log('createOrUpdateSocialUser');
+    console.log('selectedFile', selectedFile);
+    // Quer atualizar foto
+    if (selectedFile) {
+      // Create sobrescrever a imagem do usuário Caso ele suba uma imagem
+      const storageRef = ref(
+        storage,
+        `avatar-iserviceProfile-${values.nickname + currentUser.uid}`
+      );
+      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progresso =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progresso);
+        },
+        (error) => {
+          throw new Error(error);
+          // setErrorForm({ error: true, message: error?.message });
+        },
+        () =>
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              // Update profile
+              await updateProfile(currentUser, {
+                displayName: values.nickname,
+                photoURL: downloadURL,
+              });
+              // create or update user on firestore
+              await setDoc(doc(db, 'users', currentUser.uid), {
+                uid: currentUser.uid,
+                displayName: values.nickname,
+                email: currentUser.email,
+                photoURL: downloadURL,
+              });
+
+              // create empty user chats on firestore
+              await setDoc(doc(db, 'userChats', currentUser.uid), {});
+              setIsLoading(false);
+              navigate('/');
+            } catch (error) {
+              throw new Error(error);
+              // console.log(error);
+              // setErrorForm({ error: true, message: error?.message });
+              // setIsLoading(false);
+            }
+          })
+      );
+    } else {
+      await updateProfile(currentUser, {
+        displayName: values.nickname,
+      });
+      // create or Update user on firestore
+      await setDoc(doc(db, 'users', currentUser.uid), {
+        uid: currentUser.uid,
+        displayName: values.nickname,
+        email: currentUser.email,
+        photoURL: currentUser.photoURL,
+      });
+
+      // create empty user chats on firestore
+      await setDoc(doc(db, 'userChats', currentUser.uid), {});
+      setIsLoading(false);
+      navigate('/');
+    }
+  };
+
+  const handleRegisterForm = async (values) => {
+    setIsLoading(true);
+    try {
+      if (!currentUser) {
+        return createUser(values);
+      }
+      createOrUpdateSocialUser(values);
     } catch (error) {
       console.log(error);
       setErrorForm({ error: true, message: error?.message });
