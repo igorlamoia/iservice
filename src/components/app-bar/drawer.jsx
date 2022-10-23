@@ -8,6 +8,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
+import iServiceLogo from '../../assets/LogoiService.svg';
 
 const drawerWidth = 240;
 
@@ -67,7 +68,7 @@ export function LeftDrawer({
                 height: '1.5rem',
                 marginRight: '0.5rem',
               }}
-              src="/LogoiService.svg"
+              src={iServiceLogo}
               alt="Logo iService"
             />
             <Typography variant="span" color="secondary">
