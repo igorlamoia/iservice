@@ -8,13 +8,13 @@ import { ServiceCard, WorkerCard, Footer, SearchInput } from '../../components';
 import { Categorias } from './categorias';
 import ResponsiveAppBar from '../../components/app-bar';
 import { Carousel } from './carousel';
-import AboutUs from '../../components/about-us';
 
 export default function Home() {
   const {
     palette: { mode },
   } = useTheme();
   const darkmode = mode === 'dark';
+
   return (
     <>
       <ResponsiveAppBar />

@@ -25,6 +25,7 @@ import { LoginRegisterNavbar } from './navbar';
 import { useAuthContext } from '../../hooks/context/AuthContext';
 import SocialLogin from '../../components/social-login';
 import { isEmptyObject } from '../../utils/object';
+import { api } from '../../utils/api';
 
 // const firebaseData = {
 //   displayName: 'John Doe',
@@ -72,9 +73,21 @@ export default function Login() {
   };
 
   useEffect(() => {
-    console.log('user mudou');
-    console.log(currentUser);
+    if (currentUser) {
+      navigate('/login/register');
+      api
+        .get(`listar/requisitante?idFirebase=${currentUser.uid}`)
+        .then((user) => {
+          setIsLoading(false);
+          if (user.data.payload) {
+            navigate('/');
+          } else {
+            navigate('/login/register');
+          }
+        });
+    }
   }, [currentUser]);
+
   return (
     <>
       {/* <DrawerAppBar /> */}

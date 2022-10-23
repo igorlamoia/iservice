@@ -4,12 +4,18 @@ import InputMask from 'react-input-mask';
 import { Formik } from 'formik';
 import { MyButton, MyInput } from '../../../components';
 import { registerSchemaStep2 } from '../../../utils/validation/register.schema';
-import { apiViacep } from '../../../utils/api';
+import { api, apiViacep } from '../../../utils/api';
 import { isEmptyObject } from '../../../utils/object';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export function SecondStep() {
   const [isLoadingCep, setIsLoadingCep] = useState(false);
   const [errorForm, setErrorForm] = useState({ error: false });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { currentUser } = useAuthContext();
+
   const initialStateForm = {
     cpf: '',
     phone: '',
@@ -23,8 +29,33 @@ export function SecondStep() {
     birthDate: '',
   };
 
-  const handleRegisterForm = (values) => {
-    console.log(values);
+  const handleRegisterForm = async (values) => {
+    try {
+      console.log(values);
+      setIsLoading(true);
+      const { data } = await api.post('cadastrar/requisitante', {
+        nome: currentUser.displayName,
+        email: currentUser.email,
+        cpf: values.cpf,
+        numTelefone: values.phone,
+        cep: values.zipCode,
+        estado: values.state,
+        cidade: values.city,
+        bairro: values.neighborhood,
+        rua: values.address,
+        endNumero: values.number,
+        endComplemento: values.complement,
+        idFirebase: currentUser.uid,
+        // birthDate: values.birthDate,
+      });
+      console.log('data', data);
+      setIsLoading(false);
+      navigate('/');
+    } catch (err) {
+      setIsLoading(false);
+      console.log('errito', err);
+      setErrorForm({ error: true, message: 'Falha na API' });
+    }
   };
 
   const handleZipCode = async (e, setFieldValue) => {
@@ -231,7 +262,8 @@ export function SecondStep() {
             <MyButton
               sx={{ mt: 3 }}
               type="submit"
-              disabled={!isEmptyObject(errors)}
+              disabled={!isEmptyObject(errors) || isLoading}
+              isLoading={isLoading}
             >
               Finalizar cadastro
             </MyButton>

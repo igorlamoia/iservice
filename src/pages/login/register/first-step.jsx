@@ -115,7 +115,7 @@ export function FirstStep({ handleNextStep }) {
               // create empty user chats on firestore
               await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
               setIsLoading(false);
-              navigate('/');
+              // navigate('/');
             } catch (error) {
               throw new Error(error);
               // console.log(error);
@@ -138,8 +138,9 @@ export function FirstStep({ handleNextStep }) {
       // create empty user chats on firestore
       await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
       setIsLoading(false);
-      navigate('/');
+      // navigate('/');
     }
+    handleNextStep(1);
   };
 
   const createOrUpdateSocialUser = async (values) => {
@@ -183,7 +184,7 @@ export function FirstStep({ handleNextStep }) {
               // create empty user chats on firestore
               await setDoc(doc(db, 'userChats', currentUser.uid), {});
               setIsLoading(false);
-              navigate('/');
+              // navigate('/');
             } catch (error) {
               throw new Error(error);
               // console.log(error);
@@ -207,8 +208,9 @@ export function FirstStep({ handleNextStep }) {
       // create empty user chats on firestore
       await setDoc(doc(db, 'userChats', currentUser.uid), {});
       setIsLoading(false);
-      navigate('/');
+      // navigate('/');
     }
+    handleNextStep(1);
   };
 
   const handleRegisterForm = async (values) => {
