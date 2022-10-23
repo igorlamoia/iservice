@@ -19,6 +19,7 @@ import ToggleTheme from '../toggle-theme';
 import { HideOnScroll } from './hide-on-scroll';
 import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
 import { LeftDrawer } from './drawer';
+import iServiceLogo from '../../assets/LogoiService.svg';
 
 const navItems = ['Oferecer serviço', 'Quem somos', 'Contato'];
 
@@ -137,7 +138,7 @@ function LogoTipo() {
           height: '1.7rem',
           marginRight: '0.5rem',
         }}
-        src="LogoiService.svg"
+        src={iServiceLogo}
         alt="Logo iService"
       />
       <Typography variant="h6" component="div">

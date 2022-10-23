@@ -6,14 +6,16 @@ import {
   OutlinedInput,
 } from '@mui/material';
 import React from 'react';
+import Loader from '../loader';
 
 export default function MyInput({
   label,
   id,
   endAdornment,
   sx,
+  isLoading,
   error,
-  errors,
+  errorMessage,
   ...rest
 }) {
   return (
@@ -40,26 +42,37 @@ export default function MyInput({
         '& fieldset': {
           top: 0,
         },
+        '.Mui-error input': {
+          animation: 'shake .3s',
+        },
+        '@keyframes shake': {
+          '25%': {
+            transform: 'translateX(-4px)',
+          },
+          '50%': {
+            transform: 'translateX(4px)',
+          },
+          '75%': {
+            transform: 'translateX(-4px)',
+          },
+        },
         ...sx,
       }}
-      error={error}
+      error={Boolean(error)}
     >
-      <InputLabel htmlFor={id}>{label}</InputLabel>
+      <InputLabel shrink={rest.shrink} htmlFor={id}>
+        {label}
+      </InputLabel>
       <OutlinedInput
         id={id}
+        disabled={isLoading}
         type="text"
-        // value={values.email}
         name={id}
-        // onBlur={handleBlur}
-        // onChange={handleChange}
         label={label}
-        // inputProps={{}}
         {...rest}
-        endAdornment={endAdornment}
+        endAdornment={isLoading ? <Loader /> : endAdornment}
       />
-      {errors?.id && (
-        <FormHelperText error>{error?.id?.message}</FormHelperText>
-      )}
+      {error && <FormHelperText error>{errorMessage}</FormHelperText>}
     </FormControl>
   );
 }

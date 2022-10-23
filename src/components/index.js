@@ -6,6 +6,7 @@ import ToggleTheme from './toggle-theme';
 import MyPaper from './my-paper';
 import MyInput from './input';
 import MyButton from './my-button';
+import Loader from './loader';
 
 export {
   WorkerCard,
@@ -16,4 +17,5 @@ export {
   MyPaper,
   MyInput,
   MyButton,
+  Loader,
 };

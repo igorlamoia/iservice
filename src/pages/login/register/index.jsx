@@ -1,91 +1,77 @@
-import React, { useState } from 'react';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { doc, setDoc } from 'firebase/firestore';
-import { useNavigate, Link } from 'react-router-dom';
-import { auth, db, storage } from '../../../firebase';
-import Add from '../../../assets/images/addAvatar.png';
-import DrawerAppBar from '../../../components/app-bar';
-import { Container } from '@mui/material';
+import { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Container,
+  Paper,
+  Stack,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
+} from '@mui/material';
+import { LogoTipo } from '..';
+import { FirstStep } from './first-step';
+import { SecondStep } from './second-step';
+import { LoginRegisterNavbar } from '../navbar';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
 
 export default function Register() {
-  const [err, setErr] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [actualStep, setActualStep] = useState(0);
+  const { currentUser } = useAuthContext();
+  const steps = ['Dados básicos', 'Dados de uso'];
 
-  const handleSubmit = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    const displayName = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
-    const file = e.target[3].files[0];
-
-    try {
-      // Create user
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-
-      // Create a unique image name
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${displayName + date}`);
-
-      await uploadBytesResumable(storageRef, file).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            // Update profile
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
-            // create user on firestore
-            await setDoc(doc(db, 'users', res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
-
-            // create empty user chats on firestore
-            await setDoc(doc(db, 'userChats', res.user.uid), {});
-            navigate('/');
-          } catch (err) {
-            console.log(err.message);
-            setErr(true);
-            setLoading(false);
-          }
-        });
-      });
-    } catch (err) {
-      setErr(true);
-      setLoading(false);
-    }
-  };
+  const handleNextStep = useCallback(
+    () => setActualStep((prevStep) => prevStep + 1),
+    []
+  );
 
   return (
     <>
-      <DrawerAppBar />
-      <div className="formContainer">
-        <div className="formWrapper">
-          <span className="logo">Iservice</span>
-          <span className="title">Cadastre-se</span>
-          <form onSubmit={handleSubmit}>
-            <input required type="text" placeholder="display name" />
-            <input required type="email" placeholder="email" />
-            <input required type="password" placeholder="password" />
-            <input required style={{ display: 'none' }} type="file" id="file" />
-            <label htmlFor="file">
-              <img src={Add} alt="" />
-              <span>Add an avatar</span>
-            </label>
-            <button disabled={loading}>Sign up</button>
-            {loading && 'Uploading and compressing the image please wait...'}
-            {err && <span>Something went wrong</span>}
-          </form>
-          <p>
-            You do have an account? <Link to="/login">Login</Link>
-          </p>
-        </div>
-      </div>
+      <LoginRegisterNavbar />
+      <Container
+        sx={{
+          minHeight: '100vh',
+          py: 4,
+          display: 'grid',
+          placeItems: 'center',
+        }}
+      >
+        <Paper
+          sx={{ p: 4, minWidth: { xs: '90vw', sm: 500 }, maxWidth: 500 }}
+          elevation={4}
+        >
+          <Stack>
+            <Stack
+              spacing={1}
+              sx={{
+                alignItems: 'center',
+                textAlign: 'center',
+              }}
+            >
+              <LogoTipo />
+              <Typography>Olá, seja bem vindo!</Typography>
+              <Typography>
+                {currentUser
+                  ? 'Finalize seu cadastro'
+                  : 'Cadastre-se por 2 etapas'}
+              </Typography>
+            </Stack>
+            <Stepper sx={{ mt: 2 }} activeStep={actualStep} alternativeLabel>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            {actualStep === 0 && <FirstStep handleNextStep={handleNextStep} />}
+            {actualStep === 1 && <SecondStep />}
+
+            <Typography sx={{ textAlign: 'center', mt: 2, fontSize: '0.8rem' }}>
+              Já possui conta? <Link to="/login">Login</Link>
+            </Typography>
+          </Stack>
+        </Paper>
+      </Container>
     </>
   );
 }
