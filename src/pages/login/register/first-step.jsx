@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import {
   Alert,
   Box,
+  CircularProgress,
   FormControl,
   Grid,
   IconButton,
@@ -46,6 +47,7 @@ export function FirstStep({ handleNextStep }) {
   const [showPassword2, setShowPassword2] = useState(false);
   const [imagePreview, setimagePreview] = useState();
   const [selectedFile, setSelectedFile] = useState();
+  const [progress, setProgress] = useState(0);
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
@@ -81,33 +83,43 @@ export function FirstStep({ handleNextStep }) {
         `avatar-iserviceProfile-${values.nickname + userCreated.user.uid}`
       );
 
-      await uploadBytesResumable(storageRef, selectedFile).then(() =>
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            // Update profile
-            await updateProfile(userCreated.user, {
-              displayName: values.nickname,
-              photoURL: downloadURL,
-            });
-            // create user on firestore
-            await setDoc(doc(db, 'users', userCreated.user.uid), {
-              uid: userCreated.user.uid,
-              displayName: values.nickname,
-              email: userCreated.user.email,
-              photoURL: downloadURL,
-            });
+      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progresso =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progresso);
+        },
+        (error) => {
+          setErrorForm({ error: true, message: error?.message });
+        },
+        () =>
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              // Update profile
+              await updateProfile(userCreated.user, {
+                displayName: values.nickname,
+                photoURL: downloadURL,
+              });
+              // create user on firestore
+              await setDoc(doc(db, 'users', userCreated.user.uid), {
+                uid: userCreated.user.uid,
+                displayName: values.nickname,
+                email: userCreated.user.email,
+                photoURL: downloadURL,
+              });
 
-            // create empty user chats on firestore
-            await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
-            console.log('AAAAA');
-            navigate('/');
-            setIsLoading(false);
-          } catch (error) {
-            console.log(error);
-            setErrorForm({ error: true, message: error?.message });
-            setIsLoading(false);
-          }
-        })
+              // create empty user chats on firestore
+              await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
+              setIsLoading(false);
+              navigate('/');
+            } catch (error) {
+              console.log(error);
+              setErrorForm({ error: true, message: error?.message });
+              setIsLoading(false);
+            }
+          })
       );
     } catch (error) {
       console.log(error);
@@ -326,7 +338,7 @@ export function FirstStep({ handleNextStep }) {
                 onChange={onSelectFile}
               />
               <Typography sx={{ textAlign: 'center' }}>
-                Foto de perfil:
+                Foto de perfil
               </Typography>
               <InputLabel
                 htmlFor="file"
@@ -340,31 +352,33 @@ export function FirstStep({ handleNextStep }) {
                 })}
                 style={{ margin: '10px auto' }}
               >
-                {imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      borderRadius: '50%',
-                      objectFit: 'cover',
-                    }}
-                    alt="profile"
-                  />
-                ) : currentUser?.photoURL ? (
-                  <img
-                    src={currentUser?.photoURL}
-                    style={{
-                      height: '100%',
-                      width: '100%',
-                      borderRadius: '50%',
-                      objectFit: 'cover',
-                    }}
-                    alt="profile"
-                  />
-                ) : (
-                  <LottieAnimacao animationData={AvatarImage} />
-                )}
+                {isLoading && <CircularProgressWithLabel value={progress} />}
+                {!isLoading &&
+                  (imagePreview ? (
+                    <img
+                      src={imagePreview}
+                      style={{
+                        height: '100%',
+                        width: '100%',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                      }}
+                      alt="profile"
+                    />
+                  ) : currentUser?.photoURL ? (
+                    <img
+                      src={currentUser?.photoURL}
+                      style={{
+                        height: '100%',
+                        width: '100%',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                      }}
+                      alt="profile"
+                    />
+                  ) : (
+                    <LottieAnimacao animationData={AvatarImage} />
+                  ))}
                 <Box
                   sx={({ palette }) => ({
                     ml: 1,
@@ -419,5 +433,31 @@ export function FirstStep({ handleNextStep }) {
         </Alert>
       </Snackbar>
     </>
+  );
+}
+
+function CircularProgressWithLabel(props) {
+  return (
+    <Box sx={{ position: 'relative', display: 'flex' }}>
+      <CircularProgress variant="determinate" {...props} size={100} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography
+          variant="caption"
+          component="div"
+          color="text.secondary"
+        >{`${Math.round(props.value)}%`}</Typography>
+      </Box>
+    </Box>
   );
 }
