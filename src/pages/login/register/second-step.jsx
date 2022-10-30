@@ -14,7 +14,7 @@ export function SecondStep() {
   const [errorForm, setErrorForm] = useState({ error: false });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { currentUser } = useAuthContext();
+  const { currentUser, logUserInApi } = useAuthContext();
 
   const initialStateForm = {
     cpf: '',
@@ -33,7 +33,7 @@ export function SecondStep() {
     try {
       console.log(values);
       setIsLoading(true);
-      const { data } = await api.post('cadastrar/requisitante', {
+      await api.post('cadastrar/usuario', {
         nome: currentUser.displayName,
         email: currentUser.email,
         cpf: values.cpf,
@@ -46,9 +46,11 @@ export function SecondStep() {
         endNumero: values.number,
         endComplemento: values.complement,
         idFirebase: currentUser.uid,
-        // birthDate: values.birthDate,
+        dataNascimento: values.birthDate,
+        linkFoto: currentUser.photoURL,
       });
-      console.log('data', data);
+      logUserInApi(currentUser.uid);
+      // console.log('data', data);
       setIsLoading(false);
       navigate('/');
     } catch (err) {

@@ -47,6 +47,11 @@ a {
 	color: #535bf2;
 } */
 
+::selection {
+  color: black;
+  background: #95f3b4;
+}
+
 body {
   min-width: 320px;
   min-height: 100vh;

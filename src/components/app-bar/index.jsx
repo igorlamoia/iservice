@@ -13,6 +13,7 @@ import {
   Toolbar,
   Typography,
   Button,
+  CircularProgress,
 } from '@mui/material';
 
 import ToggleTheme from '../toggle-theme';
@@ -21,45 +22,27 @@ import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
 import { LeftDrawer } from './drawer';
 import iServiceLogo from '../../assets/LogoiService.svg';
 import { useAuthContext } from '../../hooks/context/AuthContext';
-import { api } from '../../utils/api';
 
 const navItems = ['Oferecer serviço', 'Quem somos', 'Contato'];
 
 function DrawerAppBar(props) {
   const { palette } = useTheme();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [userLoged, setUserLoged] = React.useState(null);
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const { currentUser, logOut } = useAuthContext();
+  const { logedUser, logOut, isLoading } = useAuthContext();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleUserInformation = async () => {
-    setIsLoading(true);
-    try {
-      const { data } = await api.get(
-        `listar/requisitante?idFirebase=${currentUser.uid}`
-      );
-      setUserLoged(data.payload);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    if (currentUser?.uid) {
-      handleUserInformation();
-    }
-  }, [currentUser]);
+  console.log('logedUser NAVBAR', logedUser);
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const navigate = useNavigate();
+
+  console.log('isLoading', isLoading);
+
   return (
     <Box>
       <Toolbar id="back-to-top-anchor" />
@@ -101,12 +84,14 @@ function DrawerAppBar(props) {
               ))}
             </Box>
             <div style={{ width: 202, display: 'flex', gap: 2 }}>
-              {!userLoged && (
+              {!logedUser?.nome ? (
                 <Button
                   variant="contained"
                   sx={{
                     borderRadius: '1rem',
                     ml: 'auto',
+                    minWidth: '6rem',
+                    minHeight: '2rem',
                     boxShadow: `1px 2px 10px 2px ${
                       palette.mode === 'light'
                         ? palette.primary.light
@@ -129,13 +114,14 @@ function DrawerAppBar(props) {
                     });
                   }}
                   disableElevation
+                  disabled={isLoading}
                 >
-                  Entrar
+                  {isLoading ? <CircularProgress size={20} /> : 'Entrar'}
                 </Button>
-              )}
-              {userLoged && (
+              ) : null}
+              {logedUser?.nome ? (
                 <>
-                  {currentUser && (
+                  {!!logedUser?.nome && (
                     <Stack alignItems="center">
                       <img
                         style={{
@@ -144,11 +130,11 @@ function DrawerAppBar(props) {
                           borderRadius: '50%',
                           objectFit: 'cover',
                         }}
-                        src={currentUser?.photoURL}
+                        src={logedUser?.linkFoto}
                         alt=""
                       />
                       <Typography sx={{ fontSize: 12 }}>
-                        {userLoged?.nome}
+                        {logedUser?.nome}
                       </Typography>
                     </Stack>
                   )}
@@ -156,13 +142,12 @@ function DrawerAppBar(props) {
                     sx={{ '&:hover': { bgcolor: 'transparent' } }}
                     onClick={() => {
                       logOut();
-                      setUserLoged(null);
                     }}
                   >
                     Sair
                   </Button>
                 </>
-              )}
+              ) : null}
             </div>
           </Toolbar>
         </AppBar>
