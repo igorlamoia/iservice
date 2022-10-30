@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import './style.scss';
 // import SearchSVG from '../../assets/search-icon.svg';
 import {
@@ -13,16 +13,60 @@ import {
   useTheme,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { api } from '../../utils/api';
 
 export default function SearchInput() {
   const [loading, setLoading] = useState(false);
-
+  const [services, setServices] = useState([]);
+  const [search, setSearch] = useState(null);
   const { palette } = useTheme();
+
+  const handleServiceSearch = async (event) => {
+    try {
+      setLoading(true);
+      const { data } = await api.get(
+        `listar/servicos?search=${event.target.value}`
+      );
+      setServices(data.payload);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
+  const debounce = (func) => {
+    let timer;
+    return (event) => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(func, 500, event);
+    };
+  };
+
+  const handleServiceSearchDebounce = useCallback(
+    debounce(handleServiceSearch),
+    []
+  );
+
+  const handleSelect = (value) => {
+    console.log('NAVEGOU', value);
+  };
+
   return (
     <StyledAutocomplete
-      // disablePortal
-      options={top100Films.map((option) => option.label)}
+      options={services}
+      // options={services.map((option) => option.nomeEspecialidade)}
+      groupBy={(option) => option.nomeCategoria}
+      getOptionLabel={(option) =>
+        `${option.nomeEspecialidade}: ${option.descricao}`
+      }
+      loading={loading}
       noOptionsText="..."
+      loadingText="Carregando..."
+      onChange={(event, value) => {
+        handleSelect(value);
+      }}
+      value={search}
       sx={{
         width: { xs: '100%', sm: '100%', md: 480 },
         mt: 2,
@@ -32,10 +76,10 @@ export default function SearchInput() {
         transition: 'all 5s ease',
       }}
       PaperComponent={CustomPaper}
-      // freeSolo
       renderInput={(params) => (
         <TextField
           {...params}
+          onChange={handleServiceSearchDebounce}
           // shrink={true}
           label="Encontrar serviço"
           InputLabelProps={{
@@ -108,12 +152,3 @@ const StyledAutocomplete = styled(Autocomplete)({
     },
   },
 });
-const top100Films = [
-  { label: 'Dona Cida (Milene)', year: 1994 },
-  { label: 'Delícia da RBM', year: 1957 },
-  { label: '+ A (orgulho)', year: 1972 },
-  { label: 'Sorriso Yago', year: 1974 },
-  { label: 'AnaL', year: 2008 },
-  { label: 'Fabão da VM', year: 1993 },
-  { label: 'É o Igão e o Jão', year: 1994 },
-];

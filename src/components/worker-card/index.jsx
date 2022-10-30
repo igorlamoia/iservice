@@ -26,6 +26,7 @@ export default function WorkerCard() {
           className="profile-img"
           src="https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100"
           alt="mecanico trabalhando"
+          loading="lazy"
         />
         <div className="profile-info">
           <h5 className="profile-name">Chaulim</h5>
