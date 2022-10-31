@@ -23,9 +23,9 @@ export function MyRoutes() {
           <Route
             path="worker/register"
             element={
-              <ProtectedRoute>
-                <WorkerRegister />
-              </ProtectedRoute>
+              // <ProtectedRoute>
+              <WorkerRegister />
+              // </ProtectedRoute>
             }
           />
           <Route path="search/service" element={<SearchService />} />
