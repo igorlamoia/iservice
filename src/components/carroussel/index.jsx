@@ -6,26 +6,53 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
+import 'swiper/css/effect-coverflow';
 import './styles.css';
 
 // import required modules
 
-import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
+import {
+  EffectCoverflow,
+  Navigation,
+  Pagination,
+  Mousewheel,
+  Keyboard,
+} from 'swiper';
 import WorkerCard from '../worker-card';
 export default function Carroussel() {
   return (
     <>
       <Swiper
+        //
+        effect={'coverflow'}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={'auto'}
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
+        }}
+        //
+        loop={true}
+        virtual={false}
         navigation={true}
         keyboard={true}
         mousewheel={true}
-        slidesPerView={3}
-        spaceBetween={30}
-        pagination={{
-          dynamicBullets: true,
-        }}
-        modules={[Navigation, Pagination, Mousewheel, Keyboard]}
+        spaceBetween={10}
+        // pagination={{
+        //   dynamicBullets: true,
+        // }}
+        pagination={true}
+        modules={[
+          EffectCoverflow,
+          Navigation,
+          Pagination,
+          Mousewheel,
+          Keyboard,
+        ]}
         className="mySwiper"
         breakpoints={{
           0: {
@@ -55,7 +82,9 @@ export default function Carroussel() {
         <SwiperSlide>
           <WorkerCard></WorkerCard>
         </SwiperSlide>
-        <SwiperSlide></SwiperSlide>
+        <SwiperSlide>
+          <WorkerCard></WorkerCard>
+        </SwiperSlide>
         <SwiperSlide>
           <WorkerCard></WorkerCard>
         </SwiperSlide>
