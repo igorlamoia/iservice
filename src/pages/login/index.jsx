@@ -76,7 +76,7 @@ export default function Login() {
     if (currentUser) {
       navigate('/login/register');
       api
-        .get(`listar/dados-usuario?idFirebase=${currentUser.uid}`)
+        .get(`listar/dados-usuario?idFirebase=${currentUser?.uid}`)
         .then((user) => {
           setIsLoading(false);
           if (user.data.payload) {

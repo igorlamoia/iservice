@@ -72,7 +72,7 @@ export function AuthContextProvider({ children }) {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       // localStorage.setItem('@iservice:firebase:uid', user.uid);
-      logUserInApi(user.uid);
+      logUserInApi(user?.uid);
       // {
       //   displayName: 'Igor Lamoia',
       //   email: "igorlamoia@gmail.com",
