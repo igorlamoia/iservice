@@ -4,9 +4,8 @@ import LottieAnimacao from 'lottie-react';
 import { Container, Typography, useTheme } from '@mui/material';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import darkIServiceLottie from '../../assets/dark-iservice-lottie.json';
-import { ServiceCard, WorkerCard, Footer } from '../../components';
+import { ServiceCard, WorkerCard, Footer, Navbar } from '../../components';
 import { Categorias } from './categorias';
-import ResponsiveAppBar from '../../components/app-bar';
 import { Carousel } from './carousel';
 import SearchInput from './search-input';
 
@@ -18,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      <ResponsiveAppBar />
+      <Navbar />
       <main>
         <Container className="caixainicial">
           <div className="textoinicial">

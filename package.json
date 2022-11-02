@@ -28,6 +28,7 @@
     "react-input-mask": "^2.0.4",
     "react-lazy-load-image-component": "^1.5.5",
     "react-router-dom": "^6.4.2",
+    "react-window": "^1.8.8",
     "uuid": "^9.0.0",
     "vite-plugin-svgr": "^2.2.1",
     "yup": "^0.32.11"

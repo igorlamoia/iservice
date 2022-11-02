@@ -7,6 +7,8 @@ import MyPaper from './my-paper';
 import MyInput from './input';
 import MyButton from './my-button';
 import Loader from './loader';
+import MultipleSearchInput from './multiple-search-input';
+import Navbar from './app-bar';
 
 export {
   WorkerCard,
@@ -18,4 +20,6 @@ export {
   MyInput,
   MyButton,
   Loader,
+  MultipleSearchInput,
+  Navbar,
 };
