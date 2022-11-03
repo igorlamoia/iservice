@@ -1,3 +1,5 @@
+import { ptBR } from '@mui/material/locale';
+
 const darkColorElevation1 = 'rgba(155,155,155,0.2)';
 const darkColorElevation2 = 'rgba(155,155,155,0.14)';
 const darkColorElevation3 = 'rgba(155,155,155,0.12)';
@@ -11,6 +13,8 @@ export const getTheme = (mode) => ({
           background: { paper: 'rgba(255,255,255, 0.6)', default: '#fafafa' },
           shape: {
             main: '#d9d9d9',
+            select: '#B3FFBD',
+            selectLight: '#F3FCF4',
           },
           border: {
             main: '#C3C4C4',
@@ -52,6 +56,7 @@ export const getTheme = (mode) => ({
           shape: {
             main: 'black',
             light: '#303030',
+            select: 'rgba(0, 200, 126, 1)',
           },
           border: {
             main: '#505051',
@@ -232,6 +237,7 @@ export const getTheme = (mode) => ({
       `0px 11px 15px -7px ${darkColorElevation1},0px 24px 38px 3px ${darkColorElevation2},0px 9px 46px 8px ${darkColorElevation3}`,
     ],
   }),
+  ptBR,
 });
 
 // rgb(17 24 39)
