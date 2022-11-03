@@ -68,6 +68,7 @@ export default function LocationInputs() {
           label: 'Estado de atuação',
         }}
         autocompleteProps={{
+          sx: { width: '100%' },
           onFocus: handleState,
           loading,
           // value: services,
@@ -88,6 +89,7 @@ export default function LocationInputs() {
           }}
           autocompleteProps={{
             loading,
+            sx: { width: '100%' },
             // value: services,
             options: cities,
             onChange: (event, value) => {

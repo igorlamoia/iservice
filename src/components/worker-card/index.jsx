@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { ReactComponent as LocationSVG } from '../../assets/location.svg';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 
-export default function WorkerCard() {
+export default function WorkerCard({ user = {} }) {
   const { palette } = useTheme();
 
   return (
@@ -29,8 +29,10 @@ export default function WorkerCard() {
           loading="lazy"
         />
         <div className="profile-info">
-          <h5 className="profile-name">Chaulim</h5>
-          <strong className="profession">Açougueiro</strong>
+          <h5 className="profile-name">{user.nome ?? 'Chaulim'}</h5>
+          <strong className="profession">
+            {user.profissao ?? 'Açougueiro'}
+          </strong>
           <Rating
             name="half-rating"
             defaultValue={4.5}
@@ -40,15 +42,19 @@ export default function WorkerCard() {
           />
           <div className="location">
             <LocationSVG />
-            <strong>Cataguases-MG</strong>
+            <strong>
+              {/* {!user.cidades?.lenght && 'Cataguases'} */}
+              {user.cidades?.map((cidade) => cidade.nome)}
+            </strong>
           </div>
         </div>
       </header>
       <div className="description">
         <h5>Descrição do profissional</h5>
         <p>
-          Faço serviços relacionados a Televisão, Ar condicionado, geladeira
-          local ...
+          {user.descricao ??
+            `Faço serviços relacionados a Televisão, Ar condicionado, geladeira
+          local ...`}
           <span>ver mais</span>
         </p>
       </div>
