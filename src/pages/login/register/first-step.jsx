@@ -37,7 +37,6 @@ import { useAuthContext } from '../../../hooks/context/AuthContext';
 import SocialLogin from '../../../components/social-login';
 import { isEmptyObject } from '../../../utils/object';
 import { FotoComponent } from './photo-component';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // Login with google, facebook or create from zero
 export function FirstStep({ handleNextStep }) {

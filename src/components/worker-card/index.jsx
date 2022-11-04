@@ -1,16 +1,20 @@
 import React from 'react';
 import './style.scss';
 import {
+  Badge,
   Box,
   Button,
   Chip,
-  Grid,
   IconButton,
   Paper,
   Rating,
+  Stack,
+  Typography,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { ReactComponent as LocationSVG } from '../../assets/location.svg';
+import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
+import AtendimentoLocationIcon from '@mui/icons-material/WhereToVoteRounded';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 
 const DEFAULT_IMAGE =
@@ -31,21 +35,32 @@ export default function WorkerCard({ user = {} }) {
         minWidth: 290,
       }}
       className="card-body"
-      mode={palette.mode}
       elevation={4}
     >
       <header className="profile">
-        <img
+        <LazyLoadImage
           className="profile-img"
+          height="100%"
+          effect="blur"
           src={user.fotoUrl ?? DEFAULT_IMAGE}
-          alt="mecanico trabalhando"
-          loading="lazy"
+          width="100%"
+          style={{ borderRadius: '50%', objectFit: 'cover' }}
         />
         <div className="profile-info">
           <h5 className="profile-name">{user.nome ?? 'Chaulim'}</h5>
           <strong className="profession">
             {user.profissao ?? 'Açougueiro'}
           </strong>
+          <Typography
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              fontSize: '0.9rem',
+              gap: 1,
+            }}
+          >
+            <QueryBuilderIcon fontSize="small" /> 12:33 - 18:22
+          </Typography>
           <Rating
             name="half-rating"
             defaultValue={4.5}
@@ -54,33 +69,70 @@ export default function WorkerCard({ user = {} }) {
             readOnly
           />
           <div className="location">
-            <LocationSVG />
+            <Badge
+              overlap="circular"
+              sx={{
+                '.MuiBadge-badge': {
+                  height: 10,
+                  p: '6px',
+                  width: 10,
+                  minWidth: 10,
+                  borderRadius: '50%',
+                  border: `1px solid ${palette.border.main}`,
+                  bgcolor: palette.border.main,
+                },
+              }}
+              badgeContent={user.cidades?.length ?? 1}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <AtendimentoLocationIcon
+              // fontSize="small"
+              />
+            </Badge>
             {user.cidades?.map((cidade) => (
-              <Chip label={cidade.nome} size="small" variant="outlined" />
+              <Chip
+                key={cidade}
+                label={cidade.nome}
+                size="small"
+                variant="outlined"
+              />
             ))}
           </div>
         </div>
       </header>
-      <Grid container>
-        {daysOfWeek.map((day, index) => (
-          <Grid item key={index}>
+      <Stack
+        sx={{
+          justifyContent: 'center',
+        }}
+        direction="row"
+      >
+        <Stack direction="row" spacing={0.4}>
+          {daysOfWeek.map((day, index) => (
             <Chip
-              sx={{ height: 29, width: 29 }}
+              key={index}
+              sx={{
+                height: 26,
+                width: 26,
+                '.MuiChip-label': { fontSize: 10 },
+              }}
               label={day}
               variant="outlined"
               size="small"
               color={user.workDays?.includes(index + 1) ? 'primary' : 'default'}
             />
-          </Grid>
-        ))}
-      </Grid>
+          ))}
+        </Stack>
+      </Stack>
       <div className="description">
         <h5>Descrição do profissional</h5>
         <p>
           {user.descricao ??
             `Faço serviços relacionados a Televisão, Ar condicionado, geladeira
-          local ...`}
-          <span>ver mais</span>
+          local`}
+          <span>... ver mais</span>
         </p>
       </div>
       <Box
