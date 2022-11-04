@@ -45,7 +45,7 @@ export default function WorkerRegister() {
           }}
           spacing={5}
         >
-          <Paper sx={{ p: 2, maxWidth: 375, borderRadius: 3 }} elevation={6}>
+          <Paper sx={{ p: 2, maxWidth: 375, borderRadius: 3 }} elevation={3}>
             <Stack spacing={3} sx={{ mt: 2 }}>
               <LocationInputs />
               <LocalizationProvider
@@ -94,8 +94,9 @@ export default function WorkerRegister() {
           <WorkerCard
             user={{
               nome: 'Igor',
-              cidades: [{ nome: 'Cataguases' }, { nome: 'Rio de Janeiro' }],
+              cidades: [{ nome: 'Cataguases' }],
               descricao: 'Sou um cara legal',
+              workDays: [1, 4, 7],
             }}
           />
         </Stack>

@@ -1,9 +1,22 @@
 import React from 'react';
 import './style.scss';
-import { Box, Button, IconButton, Paper, Rating } from '@mui/material';
+import {
+  Box,
+  Button,
+  Chip,
+  Grid,
+  IconButton,
+  Paper,
+  Rating,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { ReactComponent as LocationSVG } from '../../assets/location.svg';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
+
+const DEFAULT_IMAGE =
+  'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
+
+const daysOfWeek = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
 
 export default function WorkerCard({ user = {} }) {
   const { palette } = useTheme();
@@ -24,7 +37,7 @@ export default function WorkerCard({ user = {} }) {
       <header className="profile">
         <img
           className="profile-img"
-          src="https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100"
+          src={user.fotoUrl ?? DEFAULT_IMAGE}
           alt="mecanico trabalhando"
           loading="lazy"
         />
@@ -42,13 +55,25 @@ export default function WorkerCard({ user = {} }) {
           />
           <div className="location">
             <LocationSVG />
-            <strong>
-              {/* {!user.cidades?.lenght && 'Cataguases'} */}
-              {user.cidades?.map((cidade) => cidade.nome)}
-            </strong>
+            {user.cidades?.map((cidade) => (
+              <Chip label={cidade.nome} size="small" variant="outlined" />
+            ))}
           </div>
         </div>
       </header>
+      <Grid container>
+        {daysOfWeek.map((day, index) => (
+          <Grid item key={index}>
+            <Chip
+              sx={{ height: 29, width: 29 }}
+              label={day}
+              variant="outlined"
+              size="small"
+              color={user.workDays?.includes(index + 1) ? 'primary' : 'default'}
+            />
+          </Grid>
+        ))}
+      </Grid>
       <div className="description">
         <h5>Descrição do profissional</h5>
         <p>

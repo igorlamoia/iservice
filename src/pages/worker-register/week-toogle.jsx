@@ -21,6 +21,7 @@ export function ToogleWeekGroup() {
       backgroundColor: theme.palette.shape.select,
     },
     height: 40,
+    width: 40,
   }));
 
   return (
