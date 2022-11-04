@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MultipleSearchInput, SearchInput } from '../../components';
 import { Virtualize } from './virtualize-autocompleate';
 
-export default function LocationInputs() {
+export default function LocationInputs({ setLocation }) {
   const [loading, setLoading] = useState(false);
   const [states, setStates] = useState([]);
   const [stateChosed, setStateChosed] = useState({ id: 0, nome: '' });
@@ -25,29 +25,19 @@ export default function LocationInputs() {
   };
   console.log(states);
 
-  // useEffect(() => {
-  //   //
-  //   setLoading(true);
-
-  //   fetch('  https://servicodados.ibge.gov.br/api/v1/localidades/estados')
-  //     .then((dados) => dados.json())
-  //     .then((data) => {
-  //       setStates(data);
-  //       setLoading(false);
-  //     });
-  // }, []);
-
   const handleSelect = async ({ id, nome }) => {
+    if (stateChosed?.id === id) return;
     setStateChosed({ id, nome });
+    setCities([]);
+    setLocation({ state: id, cities: [] });
+
     try {
       setLoading(true);
       const { data } = await axios.get(
         `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${id}/municipios`
       );
-      const arrayCidades = data.map((city) => ({
-        id: city.id,
-        nome: city.nome,
-      }));
+      const arrayCidades = data.map((city) => city.nome);
+
       setCities(arrayCidades);
       setLoading(false);
     } catch (error) {
@@ -57,7 +47,7 @@ export default function LocationInputs() {
   };
 
   const handleSelectCity = (citiesChosed) => {
-    console.log(citiesChosed);
+    setLocation((old) => ({ ...old, cities: citiesChosed }));
   };
 
   return (

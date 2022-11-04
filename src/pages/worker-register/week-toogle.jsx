@@ -7,12 +7,10 @@ import {
   Typography,
 } from '@mui/material';
 
-export function ToogleWeekGroup() {
-  const [days, setDays] = React.useState([]);
-
+export function ToogleWeekGroup({ mudarDias, dias }) {
   const handleFormat = (event, newFormats) => {
     // setFormats(newFormats);
-    setDays(newFormats);
+    mudarDias(newFormats);
     console.log('newFormats:', newFormats);
   };
 
@@ -26,7 +24,7 @@ export function ToogleWeekGroup() {
 
   return (
     <ToggleButtonGroup
-      value={days}
+      value={dias}
       onChange={handleFormat}
       aria-label="text formatting"
     >

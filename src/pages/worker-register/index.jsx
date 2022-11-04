@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Container, Paper, TextareaAutosize } from '@mui/material';
+import { Container, Paper, TextareaAutosize } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -10,13 +10,22 @@ import { ptBR } from 'date-fns/locale';
 import { Navbar, WorkerCard } from '../../components';
 import LocationInputs from './location-search';
 import { ToogleWeekGroup } from './week-toogle';
+import { formatarHora } from '../../utils/format';
 
 export default function WorkerRegister() {
   const [value, setValue] = useState(null);
   const [hourDe, setHourDe] = useState(null);
   const [hourAte, setHourAte] = useState(null);
+  const [location, setLocation] = useState({
+    state: 0,
+    cities: [],
+  });
 
+  const [descricao, setDescricao] = useState(null);
+  const [days, setDays] = useState([]);
   console.log('value kkk:', value);
+  console.log('hourDe kkk:', hourDe);
+  console.log('hourAte kkk:', hourAte);
 
   const handleChangeDe = (newValue) => {
     setHourDe(newValue);
@@ -47,7 +56,7 @@ export default function WorkerRegister() {
         >
           <Paper sx={{ p: 2, maxWidth: 375, borderRadius: 3 }} elevation={3}>
             <Stack spacing={3} sx={{ mt: 2 }}>
-              <LocationInputs />
+              <LocationInputs setLocation={setLocation} />
               <LocalizationProvider
                 dateAdapter={AdapterDateFns}
                 adapterLocale={ptBR}
@@ -75,9 +84,10 @@ export default function WorkerRegister() {
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </Stack>
-                <ToogleWeekGroup />
+                <ToogleWeekGroup mudarDias={setDays} dias={days} />
                 <TextareaAutosize
                   aria-label="minimum height"
+                  onChange={(e) => setDescricao(e.target.value)}
                   minRows={3}
                   placeholder="Descreva suas habilidades e experiências"
                   style={{
@@ -94,9 +104,11 @@ export default function WorkerRegister() {
           <WorkerCard
             user={{
               nome: 'Igor',
-              cidades: [{ nome: 'Cataguases' }],
-              descricao: 'Sou um cara legal',
-              workDays: [1, 4, 7],
+              descricao,
+              workDays: days,
+              cidades: location?.cities,
+              horaDe: formatarHora(hourDe),
+              horaAte: formatarHora(hourAte),
             }}
           />
         </Stack>

@@ -59,7 +59,7 @@ export default function WorkerCard({ user = {} }) {
               gap: 1,
             }}
           >
-            <QueryBuilderIcon fontSize="small" /> 12:33 - 18:22
+            <QueryBuilderIcon fontSize="small" /> {user.horaDe} - {user.horaAte}
           </Typography>
           <Rating
             name="half-rating"
@@ -92,14 +92,22 @@ export default function WorkerCard({ user = {} }) {
               // fontSize="small"
               />
             </Badge>
-            {user.cidades?.map((cidade) => (
-              <Chip
-                key={cidade}
-                label={cidade.nome}
-                size="small"
-                variant="outlined"
-              />
-            ))}
+            <Chip
+              size="small"
+              variant="outlined"
+              sx={{
+                'span.MuiChip-label': {
+                  maxWidth: '100px',
+                  // backgroundColor: 'red',
+                  // bgcolor: 'red',
+                },
+              }}
+              label={user.cidades?.map((cidade, index) => (
+                <Typography key={cidade} variant="span">
+                  {index === 0 ? cidade : `, ${cidade}`}
+                </Typography>
+              ))}
+            />
           </div>
         </div>
       </header>
@@ -121,7 +129,11 @@ export default function WorkerCard({ user = {} }) {
               label={day}
               variant="outlined"
               size="small"
-              color={user.workDays?.includes(index + 1) ? 'primary' : 'default'}
+              color={
+                user.workDays?.includes((index + 1).toString())
+                  ? 'primary'
+                  : 'default'
+              }
             />
           ))}
         </Stack>
