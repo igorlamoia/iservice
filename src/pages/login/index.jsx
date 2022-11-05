@@ -45,7 +45,7 @@ export default function Login() {
     try {
       setIsLoading(true);
       await signInWithEmailAndPassword(auth, values.email, values.password);
-      navigate('/chat');
+      // navigate('/login/register');
     } catch (err) {
       if (err.code === 'auth/wrong-password') {
         return seterrorForm({

@@ -110,19 +110,12 @@ export function SecondStep() {
           setFieldValue,
         }) => (
           <form onSubmit={handleSubmit}>
-            {console.log(
-              'errors',
-              errors,
-              'touched',
-              touched,
-              'values',
-              values
-            )}
             <Box sx={{ flexGrow: 1, mt: 3 }}>
               <MobileDatePicker
                 onChange={(value) => setFieldValue('birthDate', value, true)}
                 value={values.birthDate}
                 onBlur={handleBlur}
+                toolbarTitle="Selecione sua data de nascimento"
                 renderInput={(params) => (
                   <MyInput
                     {...params}

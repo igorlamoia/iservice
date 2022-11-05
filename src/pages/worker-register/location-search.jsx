@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { MultipleSearchInput, SearchInput } from '../../components';
+import { MultipleSearchInputForm, SearchInputForm } from '../../components';
 import { Virtualize } from './virtualize-autocompleate';
 
 export default function LocationInputs({ setLocation, location = {} }) {
@@ -51,7 +51,7 @@ export default function LocationInputs({ setLocation, location = {} }) {
 
   return (
     <>
-      <SearchInput
+      <SearchInputForm
         loading={loading}
         textFieldProps={{
           label: 'Estado de atuação',
@@ -69,7 +69,7 @@ export default function LocationInputs({ setLocation, location = {} }) {
         }}
       />
       <Virtualize>
-        <MultipleSearchInput
+        <MultipleSearchInputForm
           disableListWrap
           loading={loading}
           textFieldProps={{
