@@ -7,12 +7,14 @@ import './style.scss';
 import {
   Badge,
   Box,
+  Breadcrumbs,
   Button,
   Chip,
   IconButton,
   Paper,
   Rating,
   Stack,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -21,6 +23,7 @@ import AtendimentoLocationIcon from '@mui/icons-material/WhereToVoteRounded';
 import styled from '@emotion/styled';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
+import { MyPopover } from '..';
 
 const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
@@ -29,6 +32,12 @@ const daysOfWeek = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
 
 export default function WorkerCard({ user = {} }) {
   const { palette } = useTheme();
+
+  const especialides = user.especialidades?.map((especialidade, index) => (
+    <Typography key={especialidade} variant="span">
+      {index === 0 ? especialidade : `, ${especialidade}`}
+    </Typography>
+  ));
 
   return (
     <Paper
@@ -164,6 +173,29 @@ export default function WorkerCard({ user = {} }) {
       </Stack>
       <div className="description">
         <h5>Descrição do profissional</h5>
+
+        <Breadcrumbs separator="›" aria-label="breadcrumb">
+          <MyPopover title={user.profissao}>
+            <Chip
+              sx={{
+                height: 23,
+                maxWidth: 110,
+                '.MuiChip-label': { fontSize: 12 },
+              }}
+              label={user.profissao}
+            />
+          </MyPopover>
+          <MyPopover title={especialides}>
+            <Chip
+              sx={{
+                height: 23,
+                maxWidth: 110,
+                '.MuiChip-label': { fontSize: 12 },
+              }}
+              label={especialides}
+            />
+          </MyPopover>
+        </Breadcrumbs>
         <p>
           {user.descricao ??
             `Faço serviços relacionados a Televisão, Ar condicionado, geladeira
@@ -197,10 +229,17 @@ export default function WorkerCard({ user = {} }) {
         </IconButton>
         <h5>Avaliação mais recente</h5>
         <div className="review">
-          <p>
-            <strong>Roberto Silva:</strong> Excelentes profissionais, rápidos,
-            honestos e com bom preços. Recomendo muito
-          </p>
+          {user.avaliacaoMaisRecente ? (
+            <p>
+              <strong>Roberto Silva:</strong> Excelentes profissionais, rápidos,
+              honestos e com bom preços. Recomendo muito
+            </p>
+          ) : (
+            <p>
+              <strong>{user.nome}</strong> ainda não possui avaliações. Seja o
+              primeiro a avaliar
+            </p>
+          )}
         </div>
         <Button
           variant="contained"

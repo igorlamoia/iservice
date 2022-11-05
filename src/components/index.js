@@ -10,6 +10,7 @@ import Loader from './loader';
 import MultipleSearchInputForm from './form/multiple-search-input';
 import SearchInputForm from './form/search-input';
 import Navbar from './app-bar';
+import MyPopover from './popover';
 
 export {
   WorkerCard,
@@ -24,4 +25,5 @@ export {
   MultipleSearchInputForm,
   SearchInputForm,
   Navbar,
+  MyPopover,
 };

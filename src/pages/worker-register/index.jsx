@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Paper, TextareaAutosize } from '@mui/material';
+import { Container, Paper, TextareaAutosize, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
@@ -7,8 +7,14 @@ import { Navbar, WorkerCard } from '../../components';
 import LocationInputs from './location-search';
 import { ToogleWeekGroup } from './week-toogle';
 import { formatarHora } from '../../utils/format';
+import Profession from './profession';
 
 export default function WorkerRegister() {
+  const [profissionValues, setProfissionValues] = useState({
+    codCategoria: '',
+    profissao: '',
+    especialidades: [],
+  });
   const [value, setValue] = useState(null);
   const [hourDe, setHourDe] = useState(null);
   const [hourAte, setHourAte] = useState(null);
@@ -50,23 +56,41 @@ export default function WorkerRegister() {
         >
           <Paper sx={{ p: 2, maxWidth: 375, borderRadius: 3 }} elevation={3}>
             <Stack spacing={3} sx={{ mt: 2 }}>
-              <LocationInputs setLocation={setLocation} location={location} />
+              <div>
+                <Typography gutterBottom>
+                  Selecione os locais atuação
+                </Typography>
+                <Stack spacing={1}>
+                  <LocationInputs
+                    setLocation={setLocation}
+                    location={location}
+                  />
+                </Stack>
+              </div>
 
-              <Stack direction="row" spacing={3}>
-                <TimePicker
-                  label="De"
-                  value={hourDe}
-                  onChange={handleChangeDe}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                <TimePicker
-                  label="Até"
-                  value={hourAte}
-                  onChange={handleChangeAte}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-              </Stack>
-              <ToogleWeekGroup mudarDias={setDays} dias={days} />
+              <div>
+                <Typography gutterBottom>Horários de atuação</Typography>
+                <Stack direction="row" spacing={3}>
+                  <TimePicker
+                    label="De"
+                    value={hourDe}
+                    onChange={handleChangeDe}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                  <TimePicker
+                    label="Até"
+                    value={hourAte}
+                    onChange={handleChangeAte}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </Stack>
+              </div>
+              <div>
+                <Typography gutterBottom>
+                  Dias da semana que irá atender
+                </Typography>
+                <ToogleWeekGroup mudarDias={setDays} dias={days} />
+              </div>
               <TextareaAutosize
                 aria-label="minimum height"
                 onChange={(e) => setDescricao(e.target.value)}
@@ -79,6 +103,8 @@ export default function WorkerRegister() {
                   padding: 10,
                 }}
               />
+
+              <Profession setProfissionValues={setProfissionValues} />
             </Stack>
           </Paper>
 
@@ -90,6 +116,8 @@ export default function WorkerRegister() {
               cidades: location?.cities,
               horaDe: formatarHora(hourDe),
               horaAte: formatarHora(hourAte),
+              profissao: profissionValues.profissao,
+              especialidades: profissionValues.especialidades,
             }}
           />
         </Stack>

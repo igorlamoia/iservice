@@ -42,24 +42,29 @@ export default function MultipleSearchInput({
         // py: 3,
         border: 'none',
         borderRadius: 10,
-        transition: 'all 5s ease',
         ...autocompleteProps.sx,
       }}
       PaperComponent={CustomPaper}
       multiple
       disableCloseOnSelect
-      getOptionLabel={(option) => option?.nome ?? option}
+      getOptionLabel={(option) =>
+        option[autocompleteProps.label] ?? option?.nome ?? option
+      }
       renderOption={(props, option, { selected }) => {
         if (!virtualizeProps.virtualize) {
           return (
-            <li {...props} {...(option?.id && { key: option.id })}>
+            <li
+              {...props}
+              {...(option?.id && { key: option.id })}
+              {...(!option?.key && { key: option[autocompleteProps.key] })}
+            >
               <Checkbox
                 icon={icon}
                 checkedIcon={checkedIcon}
                 style={{ marginRight: 8 }}
                 checked={selected}
               />
-              {option?.nome ?? option}
+              {option[autocompleteProps.label] ?? option?.nome ?? option}
             </li>
           );
         }
@@ -72,7 +77,7 @@ export default function MultipleSearchInput({
               style={{ marginRight: 8 }}
               checked={selected}
             />
-            {option?.nome ?? option}
+            {option[autocompleteProps.label] ?? option?.nome ?? option}
           </>,
         ];
       }}
@@ -88,7 +93,7 @@ export default function MultipleSearchInput({
             sx: {
               position: 'absolute',
               left: '10px',
-              backdropFilter: 'blur(20px)',
+              // backdropFilter: 'blur(20px)',
             },
           }}
           InputProps={{

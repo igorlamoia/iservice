@@ -20,9 +20,8 @@ export default function SearchInput({
   loading,
   autocompleteProps = {},
   textFieldProps = {},
+  virtualizeProps = {},
 }) {
-  const { palette } = useTheme();
-
   const handleSearchDebounce = useCallback(debounce(handleSearch), []);
 
   return (
@@ -30,15 +29,7 @@ export default function SearchInput({
       noOptionsText="..."
       loadingText="Carregando..."
       {...autocompleteProps}
-      // sx={{
-      //   width: { xs: '100%', sm: '100%', md: 480 },
-      //   // mt: 1,
-      //   py: 2,
-      //   border: 'none',
-      //   // borderRadius: 10,
-      //   // transition: 'all 5s ease',
-      //   ...autocompleteProps.sx,
-      // }}
+      {...virtualizeProps}
       PaperComponent={CustomPaper}
       renderInput={(params) => (
         <TextField
