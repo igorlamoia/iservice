@@ -7,14 +7,12 @@ import './style.scss';
 import {
   Badge,
   Box,
-  Breadcrumbs,
   Button,
   Chip,
   IconButton,
   Paper,
   Rating,
   Stack,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -33,10 +31,24 @@ const daysOfWeek = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
 export default function WorkerCard({ user = {} }) {
   const { palette } = useTheme();
 
-  const especialides = user.especialidades?.map((especialidade, index) => (
+  const especialidesLabel = user.especialidades?.map((especialidade, index) => (
     <Typography key={especialidade} variant="span">
-      {index === 0 ? especialidade : `, ${especialidade}`}
+      {index === 0 ? especialidade : ` - ${especialidade}`}
     </Typography>
+  ));
+  const especialidades = user.especialidades?.map((especialidade, index) => (
+    <>
+      {index !== 0 ? ' ' : null}
+      <Chip
+        sx={{
+          height: 23,
+          maxWidth: 100,
+          // ml: 0.1,
+          '.MuiChip-label': { fontSize: 12 },
+        }}
+        label={especialidade}
+      />
+    </>
   ));
 
   return (
@@ -62,9 +74,18 @@ export default function WorkerCard({ user = {} }) {
         />
         <div className="profile-info">
           <h5 className="profile-name">{user.nome ?? 'Chaulim'}</h5>
-          <strong className="profession">
-            {user.profissao ?? 'Açougueiro'}
-          </strong>
+          <MyPopover title={user.profissao}>
+            <Chip
+              sx={{
+                maxWidth: 120,
+                textAlign: 'left',
+                my: 0.5,
+              }}
+              size="small"
+              label={user.profissao ?? 'Açougueiro'}
+            />
+          </MyPopover>
+
           <Typography
             sx={{
               alignItems: 'center',
@@ -136,7 +157,7 @@ export default function WorkerCard({ user = {} }) {
                 }}
                 label={user.cidades?.map((cidade, index) => (
                   <Typography key={cidade} variant="span">
-                    {index === 0 ? cidade : `, ${cidade}`}
+                    {index === 0 ? cidade : ` - ${cidade}`}
                   </Typography>
                 ))}
               />
@@ -173,29 +194,10 @@ export default function WorkerCard({ user = {} }) {
       </Stack>
       <div className="description">
         <h5>Descrição do profissional</h5>
+        <div className="especialidades">
+          <MyPopover title={especialidesLabel}>{especialidades}</MyPopover>
+        </div>
 
-        <Breadcrumbs separator="›" aria-label="breadcrumb">
-          <MyPopover title={user.profissao}>
-            <Chip
-              sx={{
-                height: 23,
-                maxWidth: 110,
-                '.MuiChip-label': { fontSize: 12 },
-              }}
-              label={user.profissao}
-            />
-          </MyPopover>
-          <MyPopover title={especialides}>
-            <Chip
-              sx={{
-                height: 23,
-                maxWidth: 110,
-                '.MuiChip-label': { fontSize: 12 },
-              }}
-              label={especialides}
-            />
-          </MyPopover>
-        </Breadcrumbs>
         <p>
           {user.descricao ??
             `Faço serviços relacionados a Televisão, Ar condicionado, geladeira

@@ -57,7 +57,7 @@ export default function WorkerRegister() {
           <Paper sx={{ p: 2, maxWidth: 375, borderRadius: 3 }} elevation={3}>
             <Stack spacing={3} sx={{ mt: 2 }}>
               <div>
-                <Typography gutterBottom>
+                <Typography sx={{ mb: 1.5 }}>
                   Selecione os locais atuação
                 </Typography>
                 <Stack spacing={1}>
@@ -69,7 +69,7 @@ export default function WorkerRegister() {
               </div>
 
               <div>
-                <Typography gutterBottom>Horários de atuação</Typography>
+                <Typography sx={{ mb: 1.5 }}>Horários de atuação</Typography>
                 <Stack direction="row" spacing={3}>
                   <TimePicker
                     label="De"
@@ -86,7 +86,7 @@ export default function WorkerRegister() {
                 </Stack>
               </div>
               <div>
-                <Typography gutterBottom>
+                <Typography sx={{ mb: 1.5 }}>
                   Dias da semana que irá atender
                 </Typography>
                 <ToogleWeekGroup mudarDias={setDays} dias={days} />

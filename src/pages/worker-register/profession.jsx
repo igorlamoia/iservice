@@ -75,7 +75,7 @@ export default function Profession({ setProfissionValues = () => {} }) {
 
   return (
     <Stack spacing={1}>
-      <Typography>Especialidade(s) </Typography>
+      <Typography sx={{ mb: 0.5 }}>Especialidade(s) </Typography>
       <Stack spacing={2}>
         <SearchInputForm
           loading={loading}

@@ -27,7 +27,7 @@ export default function MyPopover({ children, title }) {
       <Popover
         sx={{
           pointerEvents: 'none',
-          mt: 1,
+          mt: 0.6,
         }}
         open={open}
         anchorEl={anchorEl}

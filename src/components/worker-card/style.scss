@@ -53,6 +53,14 @@ div.card-body {
       }
     }
   }
+  .especialidades {
+    margin-top: 0.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .description {
     text-align: left;
     padding: 0 1.5rem 1rem;
