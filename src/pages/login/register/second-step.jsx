@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Alert, Box, Grid, Snackbar, Stack } from '@mui/material';
 import InputMask from 'react-input-mask';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
+import { MobileDatePicker } from '@mui/x-date-pickers';
+
 import { MyButton, MyInput } from '../../../components';
 import { registerSchemaStep2 } from '../../../utils/validation/register.schema';
 import { api, apiViacep } from '../../../utils/api';
 import { isEmptyObject } from '../../../utils/object';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { removeSymbols } from '../../../utils/format';
 
 export function SecondStep() {
   const [isLoadingCep, setIsLoadingCep] = useState(false);
@@ -36,9 +39,9 @@ export function SecondStep() {
       await api.post('cadastrar/usuario', {
         nome: currentUser.displayName,
         email: currentUser.email,
-        cpf: values.cpf,
-        numTelefone: values.phone,
-        cep: values.zipCode,
+        cpf: removeSymbols(values.cpf),
+        numTelefone: removeSymbols(values.phone),
+        cep: removeSymbols(values.zipCode),
         estado: values.state,
         cidade: values.city,
         bairro: values.neighborhood,
@@ -107,17 +110,29 @@ export function SecondStep() {
           setFieldValue,
         }) => (
           <form onSubmit={handleSubmit}>
+            {console.log(
+              'errors',
+              errors,
+              'touched',
+              touched,
+              'values',
+              values
+            )}
             <Box sx={{ flexGrow: 1, mt: 3 }}>
-              <MyInput
-                label="Data de nascimento"
-                type="date"
-                shrink="true"
-                id="birthDate"
+              <MobileDatePicker
+                onChange={(value) => setFieldValue('birthDate', value, true)}
                 value={values.birthDate}
                 onBlur={handleBlur}
-                onChange={handleChange}
-                error={Boolean(errors.birthDate && touched.birthDate)}
-                errorMessage={errors.birthDate}
+                renderInput={(params) => (
+                  <MyInput
+                    {...params}
+                    label="Data de nascimento"
+                    id="birthDate"
+                    onBlur={handleBlur}
+                    error={Boolean(errors.birthDate && touched.birthDate)}
+                    errorMessage={errors.birthDate}
+                  />
+                )}
               />
               <Grid container columnSpacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -191,7 +206,6 @@ export function SecondStep() {
                   />
                 </Grid>
               </Grid>
-
               <Grid container columnSpacing={2}>
                 <Grid item xs={6}>
                   <MyInput

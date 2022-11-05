@@ -23,7 +23,11 @@ import { LeftDrawer } from './drawer';
 import iServiceLogo from '../../assets/LogoiService.svg';
 import { useAuthContext } from '../../hooks/context/AuthContext';
 
-const navItems = ['Oferecer serviço', 'Quem somos', 'Contato'];
+const navItems = [
+  { label: 'Quem somos', path: '' },
+  { label: 'Contato', path: '' },
+  { label: 'Oferecer serviço', path: 'worker/register' },
+];
 
 function DrawerAppBar(props) {
   const { palette } = useTheme();
@@ -63,7 +67,9 @@ function DrawerAppBar(props) {
               <MenuIcon />
             </IconButton>
             <Stack direction="row" sx={{ width: 202 }}>
-              <LogoTipo />
+              <Button onClick={() => navigate('/')}>
+                <LogoTipo />
+              </Button>
               <ToggleTheme />
             </Stack>
             <Box
@@ -76,10 +82,11 @@ function DrawerAppBar(props) {
             >
               {navItems.map((item) => (
                 <Button
+                  onClick={() => navigate(`/${item.path}`)}
                   sx={{ '&:hover': { bgcolor: 'transparent' } }}
-                  key={item}
+                  key={item.label}
                 >
-                  <Typography color="buttonText">{item}</Typography>
+                  <Typography color="buttonText">{item.label}</Typography>
                 </Button>
               ))}
             </Box>
@@ -170,6 +177,7 @@ function LogoTipo() {
     <Stack
       direction="row"
       spacing={2}
+      onClick={() => {}}
       sx={{
         display: { xs: 'none', sm: 'flex' },
         alignItems: 'center',

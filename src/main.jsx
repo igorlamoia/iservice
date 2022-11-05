@@ -1,6 +1,10 @@
 /* eslint-disable import/no-named-as-default */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { ptBR } from 'date-fns/locale';
+
 import './reset.css';
 import './chat.scss';
 import './index.css';
@@ -15,7 +19,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ColorModeProvider>
       <AuthContextProvider>
         <ChatContextProvider>
-          <MyRoutes />
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            adapterLocale={ptBR}
+          >
+            <MyRoutes />
+          </LocalizationProvider>
           {/* <RouterProvider router={routes} /> */}
         </ChatContextProvider>
       </AuthContextProvider>

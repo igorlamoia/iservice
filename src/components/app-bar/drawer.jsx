@@ -8,6 +8,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import iServiceLogo from '../../assets/LogoiService.svg';
 
 const drawerWidth = 240;
@@ -21,7 +22,7 @@ export function LeftDrawer({
   const { window } = props;
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
+  const navigate = useNavigate();
   return (
     <Box component="nav">
       <Drawer
@@ -79,11 +80,15 @@ export function LeftDrawer({
           <Divider />
           <List>
             {navItems.map((item) => (
-              <ListItem key={item} disablePadding>
+              <ListItem key={item.label} disablePadding>
                 <ListItemButton
+                  onClick={() => navigate(`/${item.path}`)}
                   sx={{ textAlign: 'center', color: 'primary.main' }}
                 >
-                  <ListItemText sx={{ color: 'buttonText' }} primary={item} />
+                  <ListItemText
+                    sx={{ color: 'buttonText' }}
+                    primary={item.label}
+                  />
                 </ListItemButton>
               </ListItem>
             ))}
