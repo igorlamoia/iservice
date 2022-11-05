@@ -25,11 +25,8 @@ export function registerSchema(hasAuthUser) {
 
 export const registerSchemaStep2 = yup.object({
   birthDate: yup
-    .string('Data de nascimento inválida')
-    .matches(
-      /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
-      'Data de nascimento inválida'
-    )
+    .date()
+    .max(new Date(Date.now() - 567648000000), 'Você deve ter mais de 18 anos')
     .required('Data de nascimento é obrigatória'),
   cpf: yup
     .string('CPF inválido')

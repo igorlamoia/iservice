@@ -13,6 +13,7 @@ import {
   Toolbar,
   Typography,
   Button,
+  CircularProgress,
 } from '@mui/material';
 
 import ToggleTheme from '../toggle-theme';
@@ -20,20 +21,32 @@ import { HideOnScroll } from './hide-on-scroll';
 import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
 import { LeftDrawer } from './drawer';
 import iServiceLogo from '../../assets/LogoiService.svg';
+import { useAuthContext } from '../../hooks/context/AuthContext';
 
-const navItems = ['Oferecer serviço', 'Quem somos', 'Contato'];
+const navItems = [
+  { label: 'Quem somos', path: '' },
+  { label: 'Contato', path: '' },
+  { label: 'Oferecer serviço', path: 'worker/register' },
+];
 
 function DrawerAppBar(props) {
   const { palette } = useTheme();
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+  const { logedUser, logOut, isLoading } = useAuthContext();
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  console.log('logedUser NAVBAR', logedUser);
+
   // eslint-disable-next-line react/no-unstable-nested-components
   const navigate = useNavigate();
+
+  console.log('isLoading', isLoading);
+
   return (
     <Box>
       <Toolbar id="back-to-top-anchor" />
@@ -54,7 +67,9 @@ function DrawerAppBar(props) {
               <MenuIcon />
             </IconButton>
             <Stack direction="row" sx={{ width: 202 }}>
-              <LogoTipo />
+              <Button onClick={() => navigate('/')}>
+                <LogoTipo />
+              </Button>
               <ToggleTheme />
             </Stack>
             <Box
@@ -67,44 +82,79 @@ function DrawerAppBar(props) {
             >
               {navItems.map((item) => (
                 <Button
+                  onClick={() => navigate(`/${item.path}`)}
                   sx={{ '&:hover': { bgcolor: 'transparent' } }}
-                  key={item}
+                  key={item.label}
                 >
-                  <Typography color="buttonText">{item}</Typography>
+                  <Typography color="buttonText">{item.label}</Typography>
                 </Button>
               ))}
             </Box>
-            <div style={{ width: 202, display: 'flex' }}>
-              <Button
-                variant="contained"
-                sx={{
-                  borderRadius: '1rem',
-                  ml: 'auto',
-                  boxShadow: `1px 2px 10px 2px ${
-                    palette.mode === 'light'
-                      ? palette.primary.light
-                      : palette.primary.main
-                  }`,
-                  transition: 'transform .2s ease-in-out',
-                  '&:hover': {
-                    backgroundColor: palette.primary.main,
+            <div style={{ width: 202, display: 'flex', gap: 2 }}>
+              {!logedUser?.nome ? (
+                <Button
+                  variant="contained"
+                  sx={{
+                    borderRadius: '1rem',
+                    ml: 'auto',
+                    minWidth: '6rem',
+                    minHeight: '2rem',
                     boxShadow: `1px 2px 10px 2px ${
                       palette.mode === 'light'
                         ? palette.primary.light
                         : palette.primary.main
                     }`,
-                    transform: 'scale(0.95)',
-                  },
-                }}
-                onClick={() => {
-                  navigate('/login', {
-                    state: { name: 'delicia', idade: 23 },
-                  });
-                }}
-                disableElevation
-              >
-                Entrar
-              </Button>
+                    transition: 'transform .2s ease-in-out',
+                    '&:hover': {
+                      backgroundColor: palette.primary.main,
+                      boxShadow: `1px 2px 10px 2px ${
+                        palette.mode === 'light'
+                          ? palette.primary.light
+                          : palette.primary.main
+                      }`,
+                      transform: 'scale(0.95)',
+                    },
+                  }}
+                  onClick={() => {
+                    navigate('/login', {
+                      state: { name: 'delicia', idade: 23 },
+                    });
+                  }}
+                  disableElevation
+                  disabled={isLoading}
+                >
+                  {isLoading ? <CircularProgress size={20} /> : 'Entrar'}
+                </Button>
+              ) : null}
+              {logedUser?.nome ? (
+                <>
+                  {!!logedUser?.nome && (
+                    <Stack alignItems="center">
+                      <img
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: '50%',
+                          objectFit: 'cover',
+                        }}
+                        src={logedUser?.linkFoto}
+                        alt=""
+                      />
+                      <Typography sx={{ fontSize: 12 }}>
+                        {logedUser?.nome}
+                      </Typography>
+                    </Stack>
+                  )}
+                  <Button
+                    sx={{ '&:hover': { bgcolor: 'transparent' } }}
+                    onClick={() => {
+                      logOut();
+                    }}
+                  >
+                    Sair
+                  </Button>
+                </>
+              ) : null}
             </div>
           </Toolbar>
         </AppBar>
@@ -127,6 +177,7 @@ function LogoTipo() {
     <Stack
       direction="row"
       spacing={2}
+      onClick={() => {}}
       sx={{
         display: { xs: 'none', sm: 'flex' },
         alignItems: 'center',

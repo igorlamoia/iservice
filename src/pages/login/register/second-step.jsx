@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import { Alert, Box, Grid, Snackbar, Stack } from '@mui/material';
 import InputMask from 'react-input-mask';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
+import { MobileDatePicker } from '@mui/x-date-pickers';
+
 import { MyButton, MyInput } from '../../../components';
 import { registerSchemaStep2 } from '../../../utils/validation/register.schema';
-import { apiViacep } from '../../../utils/api';
+import { api, apiViacep } from '../../../utils/api';
 import { isEmptyObject } from '../../../utils/object';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
+import { removeSymbols } from '../../../utils/format';
 
 export function SecondStep() {
   const [isLoadingCep, setIsLoadingCep] = useState(false);
   const [errorForm, setErrorForm] = useState({ error: false });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { currentUser, logUserInApi } = useAuthContext();
+
   const initialStateForm = {
     cpf: '',
     phone: '',
@@ -23,8 +32,35 @@ export function SecondStep() {
     birthDate: '',
   };
 
-  const handleRegisterForm = (values) => {
-    console.log(values);
+  const handleRegisterForm = async (values) => {
+    try {
+      console.log(values);
+      setIsLoading(true);
+      await api.post('cadastrar/usuario', {
+        nome: currentUser.displayName,
+        email: currentUser.email,
+        cpf: removeSymbols(values.cpf),
+        numTelefone: removeSymbols(values.phone),
+        cep: removeSymbols(values.zipCode),
+        estado: values.state,
+        cidade: values.city,
+        bairro: values.neighborhood,
+        rua: values.address,
+        endNumero: values.number,
+        endComplemento: values.complement,
+        idFirebase: currentUser.uid,
+        dataNascimento: values.birthDate,
+        linkFoto: currentUser.photoURL,
+      });
+      logUserInApi(currentUser.uid);
+      // console.log('data', data);
+      setIsLoading(false);
+      navigate('/');
+    } catch (err) {
+      setIsLoading(false);
+      console.log('errito', err);
+      setErrorForm({ error: true, message: 'Falha na API' });
+    }
   };
 
   const handleZipCode = async (e, setFieldValue) => {
@@ -74,17 +110,29 @@ export function SecondStep() {
           setFieldValue,
         }) => (
           <form onSubmit={handleSubmit}>
+            {console.log(
+              'errors',
+              errors,
+              'touched',
+              touched,
+              'values',
+              values
+            )}
             <Box sx={{ flexGrow: 1, mt: 3 }}>
-              <MyInput
-                label="Data de nascimento"
-                type="date"
-                shrink="true"
-                id="birthDate"
+              <MobileDatePicker
+                onChange={(value) => setFieldValue('birthDate', value, true)}
                 value={values.birthDate}
                 onBlur={handleBlur}
-                onChange={handleChange}
-                error={Boolean(errors.birthDate && touched.birthDate)}
-                errorMessage={errors.birthDate}
+                renderInput={(params) => (
+                  <MyInput
+                    {...params}
+                    label="Data de nascimento"
+                    id="birthDate"
+                    onBlur={handleBlur}
+                    error={Boolean(errors.birthDate && touched.birthDate)}
+                    errorMessage={errors.birthDate}
+                  />
+                )}
               />
               <Grid container columnSpacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -158,7 +206,6 @@ export function SecondStep() {
                   />
                 </Grid>
               </Grid>
-
               <Grid container columnSpacing={2}>
                 <Grid item xs={6}>
                   <MyInput
@@ -231,7 +278,8 @@ export function SecondStep() {
             <MyButton
               sx={{ mt: 3 }}
               type="submit"
-              disabled={!isEmptyObject(errors)}
+              disabled={!isEmptyObject(errors) || isLoading}
+              isLoading={isLoading}
             >
               Finalizar cadastro
             </MyButton>

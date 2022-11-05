@@ -1,11 +1,33 @@
+// import Box from '@mui/material/Box';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+
 import React from 'react';
 import './style.scss';
-import { Box, Button, IconButton, Paper, Rating } from '@mui/material';
+import {
+  Badge,
+  Box,
+  Button,
+  Chip,
+  IconButton,
+  Paper,
+  Rating,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { ReactComponent as LocationSVG } from '../../assets/location.svg';
+import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
+import AtendimentoLocationIcon from '@mui/icons-material/WhereToVoteRounded';
+import styled from '@emotion/styled';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 
-export default function WorkerCard() {
+const DEFAULT_IMAGE =
+  'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
+
+const daysOfWeek = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+
+export default function WorkerCard({ user = {} }) {
   const { palette } = useTheme();
 
   return (
@@ -18,18 +40,32 @@ export default function WorkerCard() {
         minWidth: 290,
       }}
       className="card-body"
-      mode={palette.mode}
       elevation={4}
     >
       <header className="profile">
-        <img
+        <LazyLoadImage
           className="profile-img"
-          src="https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100"
-          alt="mecanico trabalhando"
+          height="100%"
+          effect="blur"
+          src={user.fotoUrl ?? DEFAULT_IMAGE}
+          width="100%"
+          style={{ borderRadius: '50%', objectFit: 'cover' }}
         />
         <div className="profile-info">
-          <h5 className="profile-name">Chaulim</h5>
-          <strong className="profession">Açougueiro</strong>
+          <h5 className="profile-name">{user.nome ?? 'Chaulim'}</h5>
+          <strong className="profession">
+            {user.profissao ?? 'Açougueiro'}
+          </strong>
+          <Typography
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              fontSize: '0.9rem',
+              gap: 1,
+            }}
+          >
+            <QueryBuilderIcon fontSize="small" /> {user.horaDe} - {user.horaAte}
+          </Typography>
           <Rating
             name="half-rating"
             defaultValue={4.5}
@@ -38,17 +74,101 @@ export default function WorkerCard() {
             readOnly
           />
           <div className="location">
-            <LocationSVG />
-            <strong>Cataguases-MG</strong>
+            <Badge
+              overlap="circular"
+              sx={{
+                '.MuiBadge-badge': {
+                  height: 10,
+                  p: '6px',
+                  width: 10,
+                  minWidth: 10,
+                  borderRadius: '50%',
+                  border: `1px solid ${palette.border.main}`,
+                  bgcolor: palette.border.main,
+                },
+              }}
+              badgeContent={user.cidades?.length ?? 1}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <AtendimentoLocationIcon
+              // fontSize="small"
+              />
+            </Badge>
+            <div style={{ position: 'relative' }}>
+              <StyledSpeedDial
+                ariaLabel="Cidades de atuação"
+                sx={{
+                  '.MuiSpeedDial-fab': {
+                    boxShadow: 0,
+                  },
+                }}
+                direction="down"
+              >
+                {user.cidades?.map((cidade) => (
+                  <SpeedDialAction
+                    key={cidade}
+                    icon={<AtendimentoLocationIcon />}
+                    tooltipTitle={cidade}
+                    tooltipOpen
+                    // onClick={() => console.log('mama')}
+                  />
+                ))}
+              </StyledSpeedDial>
+              <Chip
+                size="small"
+                variant="outlined"
+                sx={{
+                  'span.MuiChip-label': {
+                    maxWidth: '100px',
+                  },
+                }}
+                label={user.cidades?.map((cidade, index) => (
+                  <Typography key={cidade} variant="span">
+                    {index === 0 ? cidade : `, ${cidade}`}
+                  </Typography>
+                ))}
+              />
+            </div>
           </div>
         </div>
       </header>
+      <Stack
+        sx={{
+          justifyContent: 'center',
+        }}
+        direction="row"
+      >
+        <Stack direction="row" spacing={0.4}>
+          {daysOfWeek.map((day, index) => (
+            <Chip
+              key={index}
+              sx={{
+                height: 26,
+                width: 26,
+                '.MuiChip-label': { fontSize: 10 },
+              }}
+              label={day}
+              variant="outlined"
+              size="small"
+              color={
+                user.workDays?.includes((index + 1).toString())
+                  ? 'primary'
+                  : 'default'
+              }
+            />
+          ))}
+        </Stack>
+      </Stack>
       <div className="description">
         <h5>Descrição do profissional</h5>
         <p>
-          Faço serviços relacionados a Televisão, Ar condicionado, geladeira
-          local ...
-          <span>ver mais</span>
+          {user.descricao ??
+            `Faço serviços relacionados a Televisão, Ar condicionado, geladeira
+          local`}
+          <span>... ver mais</span>
         </p>
       </div>
       <Box
@@ -103,3 +223,25 @@ export default function WorkerCard() {
     </Paper>
   );
 }
+
+const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
+  position: 'absolute',
+  '&.MuiSpeedDial-directionDown': {
+    top: theme.spacing(0),
+    left: theme.spacing(0),
+  },
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 10,
+  '& .MuiButtonBase-root.MuiSpeedDial-fab': {
+    backgroundColor: 'rgba(0,0,0,0)',
+    width: '140px',
+    borderRadius: 0,
+    minHeight: '25px',
+    boxShadow: 0,
+  },
+  '.MuiSpeedDialAction-staticTooltipLabel': {
+    backgroundColor: theme.palette.shape.main,
+  },
+}));

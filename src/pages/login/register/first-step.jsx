@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -24,12 +25,10 @@ import {
   ModeEdit,
   Camera,
 } from '@mui/icons-material';
-import LottieAnimacao from 'lottie-react';
 import { auth, db, storage } from '../../../firebase';
 import { OrTag } from '..';
 import { registerSchema } from '../../../utils/validation/register.schema';
 import { MyButton, MyInput } from '../../../components';
-import AvatarImage from '../../../assets/avatar-image.json';
 import {
   strengthColor,
   strengthIndicator,
@@ -37,6 +36,7 @@ import {
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import SocialLogin from '../../../components/social-login';
 import { isEmptyObject } from '../../../utils/object';
+import { FotoComponent } from './photo-component';
 
 // Login with google, facebook or create from zero
 export function FirstStep({ handleNextStep }) {
@@ -115,7 +115,7 @@ export function FirstStep({ handleNextStep }) {
               // create empty user chats on firestore
               await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
               setIsLoading(false);
-              navigate('/');
+              // navigate('/');
             } catch (error) {
               throw new Error(error);
               // console.log(error);
@@ -138,8 +138,9 @@ export function FirstStep({ handleNextStep }) {
       // create empty user chats on firestore
       await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
       setIsLoading(false);
-      navigate('/');
+      // navigate('/');
     }
+    handleNextStep(1);
   };
 
   const createOrUpdateSocialUser = async (values) => {
@@ -183,7 +184,7 @@ export function FirstStep({ handleNextStep }) {
               // create empty user chats on firestore
               await setDoc(doc(db, 'userChats', currentUser.uid), {});
               setIsLoading(false);
-              navigate('/');
+              // navigate('/');
             } catch (error) {
               throw new Error(error);
               // console.log(error);
@@ -207,8 +208,9 @@ export function FirstStep({ handleNextStep }) {
       // create empty user chats on firestore
       await setDoc(doc(db, 'userChats', currentUser.uid), {});
       setIsLoading(false);
-      navigate('/');
+      // navigate('/');
     }
+    handleNextStep(1);
   };
 
   const handleRegisterForm = async (values) => {
@@ -280,6 +282,7 @@ export function FirstStep({ handleNextStep }) {
         </Typography>{' '}
         com:
       </Typography>
+
       <Formik
         initialValues={initialStateForm}
         validationSchema={() => registerSchema(Boolean(currentUser))}
@@ -450,32 +453,12 @@ export function FirstStep({ handleNextStep }) {
                 style={{ margin: '10px auto' }}
               >
                 {isLoading && <CircularProgressWithLabel value={progress} />}
-                {!isLoading &&
-                  (imagePreview ? (
-                    <img
-                      src={imagePreview}
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                      }}
-                      alt="profile"
-                    />
-                  ) : currentUser?.photoURL ? (
-                    <img
-                      src={currentUser?.photoURL}
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                      }}
-                      alt="profile"
-                    />
-                  ) : (
-                    <LottieAnimacao animationData={AvatarImage} />
-                  ))}
+                {!isLoading && (
+                  <FotoComponent
+                    imagePreview={imagePreview}
+                    currentUser={currentUser}
+                  />
+                )}
                 <Box
                   sx={({ palette }) => ({
                     ml: 1,
@@ -499,11 +482,7 @@ export function FirstStep({ handleNextStep }) {
                 </Box>
               </InputLabel>
             </Stack>
-            <MyButton
-              type="submit"
-              isLoading={isLoading}
-              disabled={isLoading || !isEmptyObject(errors)}
-            >
+            <MyButton type="submit" isLoading={isLoading} disabled={isLoading}>
               Avançar
             </MyButton>
           </form>
