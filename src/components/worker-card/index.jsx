@@ -1,3 +1,7 @@
+// import Box from '@mui/material/Box';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+
 import React from 'react';
 import './style.scss';
 import {
@@ -14,6 +18,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import AtendimentoLocationIcon from '@mui/icons-material/WhereToVoteRounded';
+import styled from '@emotion/styled';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 
@@ -92,22 +97,41 @@ export default function WorkerCard({ user = {} }) {
               // fontSize="small"
               />
             </Badge>
-            <Chip
-              size="small"
-              variant="outlined"
-              sx={{
-                'span.MuiChip-label': {
-                  maxWidth: '100px',
-                  // backgroundColor: 'red',
-                  // bgcolor: 'red',
-                },
-              }}
-              label={user.cidades?.map((cidade, index) => (
-                <Typography key={cidade} variant="span">
-                  {index === 0 ? cidade : `, ${cidade}`}
-                </Typography>
-              ))}
-            />
+            <div style={{ position: 'relative' }}>
+              <StyledSpeedDial
+                ariaLabel="Cidades de atuação"
+                sx={{
+                  '.MuiSpeedDial-fab': {
+                    boxShadow: 0,
+                  },
+                }}
+                direction="down"
+              >
+                {user.cidades?.map((cidade) => (
+                  <SpeedDialAction
+                    key={cidade}
+                    icon={<AtendimentoLocationIcon />}
+                    tooltipTitle={cidade}
+                    tooltipOpen
+                    // onClick={() => console.log('mama')}
+                  />
+                ))}
+              </StyledSpeedDial>
+              <Chip
+                size="small"
+                variant="outlined"
+                sx={{
+                  'span.MuiChip-label': {
+                    maxWidth: '100px',
+                  },
+                }}
+                label={user.cidades?.map((cidade, index) => (
+                  <Typography key={cidade} variant="span">
+                    {index === 0 ? cidade : `, ${cidade}`}
+                  </Typography>
+                ))}
+              />
+            </div>
           </div>
         </div>
       </header>
@@ -199,3 +223,25 @@ export default function WorkerCard({ user = {} }) {
     </Paper>
   );
 }
+
+const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
+  position: 'absolute',
+  '&.MuiSpeedDial-directionDown': {
+    top: theme.spacing(0),
+    left: theme.spacing(0),
+  },
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 10,
+  '& .MuiButtonBase-root.MuiSpeedDial-fab': {
+    backgroundColor: 'rgba(0,0,0,0)',
+    width: '140px',
+    borderRadius: 0,
+    minHeight: '25px',
+    boxShadow: 0,
+  },
+  '.MuiSpeedDialAction-staticTooltipLabel': {
+    backgroundColor: theme.palette.shape.main,
+  },
+}));

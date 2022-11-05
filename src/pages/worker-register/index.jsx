@@ -24,8 +24,6 @@ export default function WorkerRegister() {
   const [descricao, setDescricao] = useState(null);
   const [days, setDays] = useState([]);
   console.log('value kkk:', value);
-  console.log('hourDe kkk:', hourDe);
-  console.log('hourAte kkk:', hourAte);
 
   const handleChangeDe = (newValue) => {
     setHourDe(newValue);
@@ -56,7 +54,7 @@ export default function WorkerRegister() {
         >
           <Paper sx={{ p: 2, maxWidth: 375, borderRadius: 3 }} elevation={3}>
             <Stack spacing={3} sx={{ mt: 2 }}>
-              <LocationInputs setLocation={setLocation} />
+              <LocationInputs setLocation={setLocation} location={location} />
               <LocalizationProvider
                 dateAdapter={AdapterDateFns}
                 adapterLocale={ptBR}

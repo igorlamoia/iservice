@@ -6,7 +6,7 @@ export function removeSymbols(value) {
 export function formatarHora(hora) {
   if (!hora) return '';
   if (hora.toString() === 'Invalid Date') {
-    return 'Data inválida';
+    return 'Hora inválida';
   }
   return hora.toLocaleTimeString('pt-BR', {
     hour: '2-digit',

@@ -10,7 +10,7 @@ export const getTheme = (mode) => ({
     ...(mode
       ? {
           // common: { black: '#000', white: '#fff' },
-          background: { paper: 'rgba(255,255,255, 0.6)', default: '#fafafa' },
+          background: { paper: 'rgba(255,255,255, 0.8)', default: '#fafafa' },
           shape: {
             main: '#d9d9d9',
             select: '#B3FFBD',
@@ -52,7 +52,7 @@ export const getTheme = (mode) => ({
       : {
           // background-image: linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840);
           // common: { black: '#000', white: '#fff' },
-          background: { paper: 'rgba(0, 0, 0, 0.5)', default: 'rgb(9,9,10)' },
+          background: { paper: 'rgba(0, 0, 0, 0.8)', default: 'rgb(9,9,10)' },
           shape: {
             main: 'black',
             light: '#303030',

@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { MultipleSearchInput, SearchInput } from '../../components';
 import { Virtualize } from './virtualize-autocompleate';
 
-export default function LocationInputs({ setLocation }) {
+export default function LocationInputs({ setLocation, location = {} }) {
   const [loading, setLoading] = useState(false);
   const [states, setStates] = useState([]);
-  const [stateChosed, setStateChosed] = useState({ id: 0, nome: '' });
+  const [stateChoused, setStateChoused] = useState({ id: 0, nome: '' });
   const [cities, setCities] = useState([]);
 
   const handleState = async () => {
@@ -23,11 +23,10 @@ export default function LocationInputs({ setLocation }) {
       setLoading(false);
     }
   };
-  console.log(states);
 
   const handleSelect = async ({ id, nome }) => {
-    if (stateChosed?.id === id) return;
-    setStateChosed({ id, nome });
+    if (stateChoused?.id === id) return;
+    setStateChoused({ id, nome });
     setCities([]);
     setLocation({ state: id, cities: [] });
 
@@ -81,6 +80,7 @@ export default function LocationInputs({ setLocation }) {
             loading,
             sx: { width: '100%' },
             // value: services,
+            value: location.cities,
             options: cities,
             onChange: (event, value) => {
               handleSelectCity(value);
