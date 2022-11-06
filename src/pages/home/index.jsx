@@ -4,21 +4,22 @@ import LottieAnimacao from 'lottie-react';
 import { Container, Typography, useTheme } from '@mui/material';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import darkIServiceLottie from '../../assets/dark-iservice-lottie.json';
-import { ServiceCard, WorkerCard, Footer, SearchInput } from '../../components';
+import { ServiceCard, Footer, Navbar } from '../../components';
 import { Categorias } from './categorias';
-import ResponsiveAppBar from '../../components/app-bar';
 import { Carousel } from './carousel';
 import AboutUs from '../../components/about-us';
 import Carroussel from '../../components/carroussel';
+import SearchInput from './search-input';
 
 export default function Home() {
   const {
     palette: { mode },
   } = useTheme();
   const darkmode = mode === 'dark';
+
   return (
     <>
-      <ResponsiveAppBar />
+      <Navbar />
       <main>
         <Container className="caixainicial">
           <div className="textoinicial">
@@ -45,22 +46,13 @@ export default function Home() {
             className="lottie"
           />
         </Container>
-        <AboutUs></AboutUs>
         <div className="categorias-div">
           <Categorias />
         </div>
         <Container>
-          <Carroussel></Carroussel>
-          {/* <Carousel>
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-          </Carousel> */}
+          <Carroussel />
+          <AboutUs />
+
           <Carousel>
             <ServiceCard />
             <ServiceCard />
@@ -72,7 +64,6 @@ export default function Home() {
             <ServiceCard />
           </Carousel>
         </Container>
-        {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
       </main>
       <Footer />
     </>

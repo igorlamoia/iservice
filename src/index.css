@@ -29,6 +29,7 @@ html {
   --color-bk-light: #fafafa;
   --color-bk-dark: #111111;
   --color-shadow: #12a833;
+  --color-paper-dark: #161616;
 }
 input {
   font-family: 'Quicksand', Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -47,6 +48,11 @@ a {
 	color: #535bf2;
 } */
 
+::selection {
+  color: black;
+  background: #95f3b4;
+}
+
 body {
   min-width: 320px;
   min-height: 100vh;
@@ -55,6 +61,10 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+::-ms-reveal {
+  display: none !important;
 }
 
 button {

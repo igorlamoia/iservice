@@ -7,17 +7,12 @@ import {
   useTheme,
 } from '@mui/material';
 import React from 'react';
-import { LottieInteractive } from 'lottie-interactive';
 
 export default function AboutUs() {
-  const {
-    breakpoints,
-    palette: { mode },
-  } = useTheme();
-  const themeMode = mode === 'light';
+  const { breakpoints } = useTheme();
   const celular = useMediaQuery(breakpoints.down('md'));
 
-  const tamanho = celular ? 100 : 200;
+  const tamanho = celular ? 80 : 150;
 
   return (
     <Container>
@@ -26,7 +21,8 @@ export default function AboutUs() {
         sx={{
           py: 2,
           width: '100%',
-          px: 8,
+          px: { xs: 1, md: 4, lg: 8 },
+          mt: 2,
         }}
       >
         <Typography
@@ -44,84 +40,81 @@ export default function AboutUs() {
           O que é o <span style={{ color: 'var(--color-secondary)' }}>i</span>
           Service
         </Typography>
-        <Typography textAlign="center">
+        <Typography textAlign="center" sx={{ mx: 3 }}>
           iService é uma plataforma de serviços domésticos. Conectamos
           profissionais da sua região com pessoas solicitando serviço, trazendo
           mais facilidade, simplicidade e rapidez para seu dia a dia.
         </Typography>
         <Stack
-          direction={{ md: 'row', xs: 'column' }}
-          spacing={10}
-          justifyContent="center"
-          alignItems="flex-end"
+          direction={{ xs: 'row' }}
+          sx={{
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            mt: 4,
+            alignItems: 'center',
+            gap: { xs: 3, sm: 8, md: 8 },
+          }}
         >
-          <Stack>
+          <MyStackWrapper>
             <lottie-interactive
               path="Escolha.json"
               interaction="hover"
               style={{ height: tamanho, width: tamanho }}
-            ></lottie-interactive>
-            <Typography
-              sx={{
-                textAlign: 'center',
-                fontSize: {
-                  xs: '1rem',
-                  sm: '1.3rem',
-                  lg: '1.5rem',
-                },
-                mt: { xs: '3rem', md: '2rem', lg: 0 },
-                fontWeight: '600',
-              }}
-            >
-              Escolha o melhor
-            </Typography>
-          </Stack>
+            />
+            <MyTypographyLottie>Escolha o melhor</MyTypographyLottie>
+          </MyStackWrapper>
 
-          <Stack>
+          <MyStackWrapper>
             <lottie-interactive
               path="chat.json"
               interaction="hover"
-              style={{ height: celular ? 80 : 160 }}
-            ></lottie-interactive>
-            <Typography
-              sx={{
-                textAlign: 'center',
-                fontSize: {
-                  xs: '1rem',
-                  sm: '1.3rem',
-                  lg: '1.5rem',
-                },
-                mt: { xs: '3rem', md: '2rem', lg: 0 },
-                fontWeight: '600',
-              }}
-            >
-              Entre em contato
-            </Typography>
-          </Stack>
+              style={{ height: tamanho, width: tamanho }}
+            />
+            <MyTypographyLottie>Entre em contato</MyTypographyLottie>
+          </MyStackWrapper>
 
-          <Stack>
+          <MyStackWrapper>
             <lottie-interactive
               path="check.json"
               interaction="hover"
-              style={{ height: celular ? 80 : 160 }}
-            ></lottie-interactive>
-            <Typography
-              sx={{
-                textAlign: 'center',
-                fontSize: {
-                  xs: '1rem',
-                  sm: '1.3rem',
-                  lg: '1.5rem',
-                },
-                mt: { xs: '3rem', md: '2rem', lg: 0 },
-                fontWeight: '600',
-              }}
-            >
-              Conclua o Serviço
-            </Typography>
-          </Stack>
+              style={{ height: tamanho, width: tamanho }}
+            />
+            <MyTypographyLottie>Conclua o Serviço</MyTypographyLottie>
+          </MyStackWrapper>
         </Stack>
       </Paper>
     </Container>
+  );
+}
+
+function MyStackWrapper({ children }) {
+  return (
+    <Stack
+      sx={{
+        mt: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      {children}
+    </Stack>
+  );
+}
+
+function MyTypographyLottie({ children }) {
+  return (
+    <Typography
+      sx={{
+        textAlign: 'center',
+        fontSize: {
+          xs: '0.9rem',
+          sm: '1rem',
+        },
+        mt: { xs: '0.5rem', md: '1rem' },
+        fontWeight: '600',
+      }}
+    >
+      {children}
+    </Typography>
   );
 }

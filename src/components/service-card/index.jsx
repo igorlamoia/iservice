@@ -16,7 +16,7 @@ export default function ServiceCard() {
       mode={palette.mode}
     >
       <strong>Diarista</strong>
-      <img src={Diarista} alt="diarista limpando" />
+      <img src={Diarista} alt="diarista limpando" loading="lazy" />
       <Button
         variant="contained"
         sx={{

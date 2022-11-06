@@ -1,3 +1,5 @@
+import { ptBR } from '@mui/material/locale';
+
 const darkColorElevation1 = 'rgba(155,155,155,0.2)';
 const darkColorElevation2 = 'rgba(155,155,155,0.14)';
 const darkColorElevation3 = 'rgba(155,155,155,0.12)';
@@ -8,9 +10,14 @@ export const getTheme = (mode) => ({
     ...(mode
       ? {
           // common: { black: '#000', white: '#fff' },
-          background: { paper: 'rgba(255,255,255, 0.6)', default: '#fafafa' },
+          background: { paper: 'rgba(255,255,255, 0.8)', default: '#fafafa' },
           shape: {
             main: '#d9d9d9',
+            select: '#B3FFBD',
+            selectLight: '#F3FCF4',
+          },
+          border: {
+            main: '#C3C4C4',
           },
           primary: {
             light: 'rgba(149, 243, 180, 1)',
@@ -45,10 +52,14 @@ export const getTheme = (mode) => ({
       : {
           // background-image: linear-gradient(to right top, #141e1e, #162827, #183230, #1a3d38, #1d4840);
           // common: { black: '#000', white: '#fff' },
-          background: { paper: 'rgba(0, 0, 0, 0.5)', default: 'rgb(9,9,10)' },
+          background: { paper: 'rgba(0, 0, 0, 0.8)', default: 'rgb(9,9,10)' },
           shape: {
             main: 'black',
             light: '#303030',
+            select: 'rgba(0, 200, 126, 1)',
+          },
+          border: {
+            main: '#505051',
           },
           shadow: {
             main: 'rgba(5, 5, 5, 0.9)',
@@ -85,6 +96,66 @@ export const getTheme = (mode) => ({
   },
 
   components: {
+    MuiLocalizationProvider: {
+      defaultProps: {
+        localeText: {
+          cancelButtonLabel: 'Cancelar',
+          clearButtonLabel: 'Limpar',
+          confirmButtonLabel: 'Confirmar',
+          loadingText: 'Carregando...',
+          noOptionsText: 'Nenhum resultado encontrado',
+          openButtonLabel: 'Abrir',
+          placeholder: 'Selecione',
+          selectedItemsText: 'Itens selecionados',
+          todayButtonLabel: 'Hoje',
+        },
+      },
+    },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: {
+          color: mode ? '#C3C4C4' : '#505051',
+        },
+      },
+    },
+    MuiStepLabel: {
+      styleOverrides: {
+        root: {
+          '.Mui-disabled': {
+            color: mode ? '#C3C4C4' : '#505051',
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          // background: bgColor,
+          borderRadius: '0.5rem',
+          '&.MuiInputBase-multiline': {
+            padding: 1,
+          },
+        },
+        input: {
+          fontWeight: 500,
+          // background: bgColor,
+          padding: '15.5px 14px',
+          borderRadius: '0.5rem',
+          '&.MuiInputBase-inputSizeSmall': {
+            padding: '10px 14px',
+            '&.MuiInputBase-inputAdornedStart': {
+              paddingLeft: 0,
+            },
+          },
+        },
+        inputAdornedStart: {
+          paddingLeft: 4,
+        },
+        notchedOutline: {
+          borderRadius: '0.5rem',
+        },
+      },
+    },
     MuiListItemButton: {
       styleOverrides: {
         root: {
@@ -181,6 +252,7 @@ export const getTheme = (mode) => ({
       `0px 11px 15px -7px ${darkColorElevation1},0px 24px 38px 3px ${darkColorElevation2},0px 9px 46px 8px ${darkColorElevation3}`,
     ],
   }),
+  ptBR,
 });
 
 // rgb(17 24 39)

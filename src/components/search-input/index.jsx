@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import './style.scss';
 // import SearchSVG from '../../assets/search-icon.svg';
 import {
@@ -13,31 +13,39 @@ import {
   useTheme,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { debounce } from '../../utils/async';
 
-export default function SearchInput() {
-  const [loading, setLoading] = useState(false);
-
+export default function SearchInput({
+  handleSearch = () => {},
+  loading,
+  autocompleteProps = {},
+  textFieldProps = {},
+}) {
   const { palette } = useTheme();
+
+  const handleSearchDebounce = useCallback(debounce(handleSearch), []);
+
   return (
     <StyledAutocomplete
-      // disablePortal
-      options={top100Films.map((option) => option.label)}
       noOptionsText="..."
+      loadingText="Carregando..."
+      {...autocompleteProps}
       sx={{
         width: { xs: '100%', sm: '100%', md: 480 },
-        mt: 2,
-        py: 3,
+        // mt: 1,
+        py: 2,
         border: 'none',
         borderRadius: 10,
-        transition: 'all 5s ease',
+        // transition: 'all 5s ease',
+        ...autocompleteProps.sx,
       }}
       PaperComponent={CustomPaper}
-      // freeSolo
       renderInput={(params) => (
         <TextField
           {...params}
+          onChange={handleSearchDebounce}
           // shrink={true}
-          label="Encontrar serviço"
+          {...textFieldProps}
           InputLabelProps={{
             ...params.InputLabelProps,
             type: 'search',
@@ -58,7 +66,7 @@ export default function SearchInput() {
                   <SearchIcon />
                 </InputAdornment>
                 {loading ? (
-                  <CircularProgress color="inherit" size={20} />
+                  <CircularProgress color="secondary" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
               </>
@@ -76,7 +84,7 @@ export default function SearchInput() {
   );
 }
 
-function CustomPaper(props) {
+export function CustomPaper(props) {
   return (
     <Paper
       elevation={1}
@@ -85,8 +93,7 @@ function CustomPaper(props) {
     />
   );
 }
-
-const StyledAutocomplete = styled(Autocomplete)({
+export const StyledAutocomplete = styled(Autocomplete)({
   '& MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined':
     {
       backgroundColor: 'secondary.main',
@@ -108,12 +115,3 @@ const StyledAutocomplete = styled(Autocomplete)({
     },
   },
 });
-const top100Films = [
-  { label: 'Dona Cida (Milene)', year: 1994 },
-  { label: 'Delícia da RBM', year: 1957 },
-  { label: '+ A (orgulho)', year: 1972 },
-  { label: 'Sorriso Yago', year: 1974 },
-  { label: 'AnaL', year: 2008 },
-  { label: 'Fabão da VM', year: 1993 },
-  { label: 'É o Igão e o Jão', year: 1994 },
-];
