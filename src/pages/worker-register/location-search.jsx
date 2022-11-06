@@ -1,9 +1,14 @@
+import { FormHelperText } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { MultipleSearchInput, SearchInput } from '../../components';
+import { MultipleSearchInputForm, SearchInputForm } from '../../components';
 import { Virtualize } from './virtualize-autocompleate';
 
-export default function LocationInputs({ setLocation, location = {} }) {
+export default function LocationInputs({
+  setLocation,
+  location = {},
+  validationErros = {},
+}) {
   const [loading, setLoading] = useState(false);
   const [states, setStates] = useState([]);
   const [stateChoused, setStateChoused] = useState({ id: 0, nome: '' });
@@ -51,7 +56,7 @@ export default function LocationInputs({ setLocation, location = {} }) {
 
   return (
     <>
-      <SearchInput
+      <SearchInputForm
         loading={loading}
         textFieldProps={{
           label: 'Estado de atuação',
@@ -68,8 +73,11 @@ export default function LocationInputs({ setLocation, location = {} }) {
           getOptionLabel: (state) => `${state.nome} (${state.sigla})`,
         }}
       />
+      {Boolean(validationErros?.nomeCidade) && (
+        <FormHelperText error>{validationErros.nomeCidade}</FormHelperText>
+      )}
       <Virtualize>
-        <MultipleSearchInput
+        <MultipleSearchInputForm
           disableListWrap
           loading={loading}
           textFieldProps={{
@@ -79,6 +87,7 @@ export default function LocationInputs({ setLocation, location = {} }) {
           autocompleteProps={{
             loading,
             sx: { width: '100%' },
+            limitTags: 2,
             // value: services,
             value: location.cities,
             options: cities,
@@ -89,6 +98,9 @@ export default function LocationInputs({ setLocation, location = {} }) {
           }}
         />
       </Virtualize>
+      {Boolean(validationErros?.codEstado) && (
+        <FormHelperText error>{validationErros.codEstado}</FormHelperText>
+      )}
     </>
   );
 }

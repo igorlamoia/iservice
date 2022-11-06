@@ -2,7 +2,7 @@
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import './style.scss';
 import {
   Badge,
@@ -20,7 +20,9 @@ import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import AtendimentoLocationIcon from '@mui/icons-material/WhereToVoteRounded';
 import styled from '@emotion/styled';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ReactShowMoreText from 'react-show-more-text';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
+import { MyPopover } from '..';
 
 const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
@@ -29,6 +31,26 @@ const daysOfWeek = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
 
 export default function WorkerCard({ user = {} }) {
   const { palette } = useTheme();
+
+  const especialidesLabel = user.especialidades?.map((especialidade, index) => (
+    <Typography key={especialidade} variant="span">
+      {index === 0 ? especialidade : ` - ${especialidade}`}
+    </Typography>
+  ));
+  const especialidades = user.especialidades?.map((especialidade, index) => (
+    <Fragment key={especialidade.nome ?? index}>
+      {index !== 0 ? ' ' : null}
+      <Chip
+        sx={{
+          height: 23,
+          maxWidth: 100,
+          // ml: 0.1,
+          '.MuiChip-label': { fontSize: 12 },
+        }}
+        label={especialidade}
+      />
+    </Fragment>
+  ));
 
   return (
     <Paper
@@ -45,17 +67,26 @@ export default function WorkerCard({ user = {} }) {
       <header className="profile">
         <LazyLoadImage
           className="profile-img"
-          height="100%"
+          height={120}
           effect="blur"
-          src={user.fotoUrl ?? DEFAULT_IMAGE}
-          width="100%"
+          src={user.photoURL ?? DEFAULT_IMAGE}
+          width={120}
           style={{ borderRadius: '50%', objectFit: 'cover' }}
         />
         <div className="profile-info">
           <h5 className="profile-name">{user.nome ?? 'Chaulim'}</h5>
-          <strong className="profession">
-            {user.profissao ?? 'Açougueiro'}
-          </strong>
+          <MyPopover title={user.profissao}>
+            <Chip
+              sx={{
+                maxWidth: 120,
+                textAlign: 'left',
+                my: 0.5,
+              }}
+              size="small"
+              label={user.profissao ?? 'Açougueiro'}
+            />
+          </MyPopover>
+
           <Typography
             sx={{
               alignItems: 'center',
@@ -66,13 +97,18 @@ export default function WorkerCard({ user = {} }) {
           >
             <QueryBuilderIcon fontSize="small" /> {user.horaDe} - {user.horaAte}
           </Typography>
-          <Rating
-            name="half-rating"
-            defaultValue={4.5}
-            value={4.0}
-            precision={0.5}
-            readOnly
-          />
+          <MyPopover
+            title={
+              user.avaliacao ? `${user.avaliacao}/5` : 'Não possui avaliação'
+            }
+          >
+            <Rating
+              name="rating"
+              value={user.avaliacao ?? 0}
+              precision={0.1}
+              readOnly
+            />
+          </MyPopover>
           <div className="location">
             <Badge
               overlap="circular"
@@ -87,7 +123,7 @@ export default function WorkerCard({ user = {} }) {
                   bgcolor: palette.border.main,
                 },
               }}
-              badgeContent={user.cidades?.length ?? 1}
+              badgeContent={user.cidades?.length}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'left',
@@ -127,7 +163,7 @@ export default function WorkerCard({ user = {} }) {
                 }}
                 label={user.cidades?.map((cidade, index) => (
                   <Typography key={cidade} variant="span">
-                    {index === 0 ? cidade : `, ${cidade}`}
+                    {index === 0 ? cidade : ` - ${cidade}`}
                   </Typography>
                 ))}
               />
@@ -163,13 +199,69 @@ export default function WorkerCard({ user = {} }) {
         </Stack>
       </Stack>
       <div className="description">
-        <h5>Descrição do profissional</h5>
-        <p>
-          {user.descricao ??
-            `Faço serviços relacionados a Televisão, Ar condicionado, geladeira
+        <Badge
+          // overlap="circular"
+          sx={{
+            '.MuiBadge-badge': {
+              height: 5,
+              p: '6px',
+              mt: 2.2,
+              // left: 0,
+              right: -9,
+              width: 10,
+              minWidth: 10,
+              borderRadius: '50%',
+              border: `2px solid ${palette.border.main}`,
+              bgcolor: palette.border.main,
+            },
+          }}
+          badgeContent={user.especialidades?.length}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <h5>Descrição profissional</h5>
+        </Badge>
+
+        <div className="especialidades">
+          <MyPopover title={especialidesLabel}>
+            <Stack direction="row" spacing={0.4}>
+              {especialidades}
+            </Stack>
+          </MyPopover>
+        </div>
+
+        <Stack sx={{ my: 1 }}>
+          <ReactShowMoreText
+            lines={3}
+            more={
+              <Typography
+                variant="span"
+                sx={{ fontWeight: 'bold', textDecoration: 'none' }}
+              >
+                ver mais
+              </Typography>
+            }
+            less={
+              <Typography
+                variant="span"
+                sx={{ fontWeight: 'bold', textDecoration: 'none' }}
+              >
+                ver menos
+              </Typography>
+            }
+            // className="content-css"
+            keepNewLines={false}
+            anchorClass="show-more-less-clickable"
+            truncatedEndingComponent="... "
+            // width={200}
+          >
+            {user.descricao ??
+              `Faço serviços relacionados a Televisão, Ar condicionado, Faço serviços relacionados a Televisão, Ar condicionado,Faço serviços relacionados a Televisão, Ar condicionado,
           local`}
-          <span>... ver mais</span>
-        </p>
+          </ReactShowMoreText>
+        </Stack>
       </div>
       <Box
         component="footer"
@@ -197,10 +289,17 @@ export default function WorkerCard({ user = {} }) {
         </IconButton>
         <h5>Avaliação mais recente</h5>
         <div className="review">
-          <p>
-            <strong>Roberto Silva:</strong> Excelentes profissionais, rápidos,
-            honestos e com bom preços. Recomendo muito
-          </p>
+          {user.avaliacaoMaisRecente ? (
+            <p>
+              <strong>Roberto Silva:</strong> Excelentes profissionais, rápidos,
+              honestos e com bom preços. Recomendo muito
+            </p>
+          ) : (
+            <p>
+              <strong>{user.nome}</strong> ainda não possui avaliações. Seja o
+              primeiro a avaliar
+            </p>
+          )}
         </div>
         <Button
           variant="contained"

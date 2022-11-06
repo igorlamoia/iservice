@@ -6,7 +6,6 @@ import Popper from '@mui/material/Popper';
 import { useTheme, styled } from '@mui/material/styles';
 import { VariableSizeList } from 'react-window';
 import Typography from '@mui/material/Typography';
-import { MultipleSearchInput } from '../../components';
 
 const LISTBOX_PADDING = 8; // px
 

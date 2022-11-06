@@ -96,6 +96,21 @@ export const getTheme = (mode) => ({
   },
 
   components: {
+    MuiLocalizationProvider: {
+      defaultProps: {
+        localeText: {
+          cancelButtonLabel: 'Cancelar',
+          clearButtonLabel: 'Limpar',
+          confirmButtonLabel: 'Confirmar',
+          loadingText: 'Carregando...',
+          noOptionsText: 'Nenhum resultado encontrado',
+          openButtonLabel: 'Abrir',
+          placeholder: 'Selecione',
+          selectedItemsText: 'Itens selecionados',
+          todayButtonLabel: 'Hoje',
+        },
+      },
+    },
     MuiStepIcon: {
       styleOverrides: {
         root: {

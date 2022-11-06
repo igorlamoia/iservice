@@ -96,6 +96,7 @@ export function AuthContextProvider({ children }) {
       logedUser,
       isLoading,
       logUserInApi,
+      setLogedUser,
     }),
     [currentUser, logedUser, isLoading]
   );

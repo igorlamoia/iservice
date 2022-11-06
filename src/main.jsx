@@ -13,18 +13,23 @@ import { ColorModeProvider } from './hooks/useTheme';
 import { AuthContextProvider } from './hooks/context/AuthContext';
 import { ChatContextProvider } from './hooks/context/ChatContext';
 import { MyRoutes } from './routes';
+import App from './app';
+import { InteractivityContextProvider } from './hooks/context/interactivityContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ColorModeProvider>
       <AuthContextProvider>
         <ChatContextProvider>
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            adapterLocale={ptBR}
-          >
-            <MyRoutes />
-          </LocalizationProvider>
+          <InteractivityContextProvider>
+            <LocalizationProvider
+              dateAdapter={AdapterDateFns}
+              adapterLocale={ptBR}
+            >
+              <App />
+              <MyRoutes />
+            </LocalizationProvider>
+          </InteractivityContextProvider>
           {/* <RouterProvider router={routes} /> */}
         </ChatContextProvider>
       </AuthContextProvider>
