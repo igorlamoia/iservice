@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { cloneElement, useRef, useState } from 'react';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -15,13 +15,13 @@ import {
   Pagination,
   Mousewheel,
   Keyboard,
+  EffectCreative,
 } from 'swiper';
 
 // import required modules
 import { useTheme } from '@mui/material';
-import WorkerCard from '../worker-card';
 
-export default function Carroussel() {
+export default function Carroussel({ children, size }) {
   const { palette } = useTheme();
   return (
     <Swiper
@@ -38,6 +38,15 @@ export default function Carroussel() {
         modifier: 1,
         slideShadows: false,
       }}
+      // creativeEffect={{
+      //   prev: {
+      //     shadow: true,
+      //     translate: [0, 0, -400],
+      //   },
+      //   next: {
+      //     translate: ['100%', 0, 0],
+      //   },
+      // }}
       //
       loop
       virtual={false}
@@ -51,7 +60,14 @@ export default function Carroussel() {
       pagination={{
         dynamicBullets: true,
       }}
-      modules={[EffectCoverflow, Navigation, Pagination, Mousewheel, Keyboard]}
+      modules={[
+        EffectCreative,
+        EffectCoverflow,
+        Navigation,
+        Pagination,
+        Mousewheel,
+        Keyboard,
+      ]}
       className="mySwiper"
       breakpoints={{
         0: {
@@ -78,21 +94,7 @@ export default function Carroussel() {
         },
       }}
     >
-      <SwiperSlide>
-        <WorkerCard />
-      </SwiperSlide>
-      <SwiperSlide>
-        <WorkerCard />
-      </SwiperSlide>
-      <SwiperSlide>
-        <WorkerCard />
-      </SwiperSlide>
-      <SwiperSlide>
-        <WorkerCard />
-      </SwiperSlide>
-      <SwiperSlide>
-        <WorkerCard />
-      </SwiperSlide>
+      {children}
     </Swiper>
   );
 }

@@ -2,13 +2,18 @@ import React from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
 import { Container, Typography, useTheme } from '@mui/material';
+import { SwiperSlide } from 'swiper/react';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import darkIServiceLottie from '../../assets/dark-iservice-lottie.json';
-import { ServiceCard, Footer, Navbar } from '../../components';
+import {
+  ServiceCard,
+  Footer,
+  Navbar,
+  WorkerCard,
+  Carousel,
+} from '../../components';
 import { Categorias } from './categorias';
-import { Carousel } from './carousel';
 import AboutUs from '../../components/about-us';
-import Carroussel from '../../components/carroussel';
 import SearchInput from './search-input';
 
 export default function Home() {
@@ -50,18 +55,29 @@ export default function Home() {
           <Categorias />
         </div>
         <Container>
-          <Carroussel />
+          <Carousel>
+            <SwiperSlide>
+              <WorkerCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <WorkerCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <WorkerCard />
+            </SwiperSlide>
+          </Carousel>
           <AboutUs />
 
           <Carousel>
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
+            <SwiperSlide>
+              <ServiceCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ServiceCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ServiceCard />
+            </SwiperSlide>
           </Carousel>
         </Container>
       </main>
