@@ -27,6 +27,11 @@ div.card-body {
     }
     .profile-name {
       // color: var(--color-text-button);
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
       font-weight: 600;
       font-size: 1rem;
     }

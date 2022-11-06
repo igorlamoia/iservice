@@ -1,9 +1,14 @@
+import { FormHelperText } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { MultipleSearchInputForm, SearchInputForm } from '../../components';
 import { Virtualize } from './virtualize-autocompleate';
 
-export default function LocationInputs({ setLocation, location = {} }) {
+export default function LocationInputs({
+  setLocation,
+  location = {},
+  validationErros = {},
+}) {
   const [loading, setLoading] = useState(false);
   const [states, setStates] = useState([]);
   const [stateChoused, setStateChoused] = useState({ id: 0, nome: '' });
@@ -68,6 +73,9 @@ export default function LocationInputs({ setLocation, location = {} }) {
           getOptionLabel: (state) => `${state.nome} (${state.sigla})`,
         }}
       />
+      {Boolean(validationErros?.nomeCidade) && (
+        <FormHelperText error>{validationErros.nomeCidade}</FormHelperText>
+      )}
       <Virtualize>
         <MultipleSearchInputForm
           disableListWrap
@@ -90,6 +98,9 @@ export default function LocationInputs({ setLocation, location = {} }) {
           }}
         />
       </Virtualize>
+      {Boolean(validationErros?.codEstado) && (
+        <FormHelperText error>{validationErros.codEstado}</FormHelperText>
+      )}
     </>
   );
 }

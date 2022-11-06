@@ -1,11 +1,19 @@
-import { createFilterOptions, Stack, Typography } from '@mui/material';
+import {
+  createFilterOptions,
+  FormHelperText,
+  Stack,
+  Typography,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { MultipleSearchInputForm, SearchInputForm } from '../../components';
 import MultipleSearchInput from '../../components/form/multiple-search-input';
 import { api } from '../../utils/api';
 import { Virtualize } from './virtualize-autocompleate';
 
-export default function Profession({ setProfissionValues = () => {} }) {
+export default function Profession({
+  setProfissionValues = () => {},
+  validationErros = {},
+}) {
   const [categories, setCategories] = useState([]);
   const [profissoes, setProfissoes] = useState([]);
   const [especialidades, setEspecialidades] = useState([]);
@@ -78,7 +86,7 @@ export default function Profession({ setProfissionValues = () => {} }) {
 
   return (
     <Stack spacing={1}>
-      <Typography sx={{ mb: 0.5 }}>Especialidade(s) </Typography>
+      <Typography sx={{ mb: 0.5 }}>Prestação de Serviço</Typography>
       <Stack spacing={2}>
         <SearchInputForm
           loading={loading}
@@ -182,6 +190,9 @@ export default function Profession({ setProfissionValues = () => {} }) {
           />
         </Virtualize>
       </Stack>
+      {Boolean(validationErros?.especialidades) && (
+        <FormHelperText error>{validationErros.especialidades}</FormHelperText>
+      )}
     </Stack>
   );
 }

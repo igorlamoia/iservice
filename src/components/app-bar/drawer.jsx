@@ -17,6 +17,7 @@ export function LeftDrawer({
   navItems,
   handleDrawerToggle,
   mobileOpen,
+  logedUser = {},
   ...props
 }) {
   const { window } = props;
@@ -79,19 +80,22 @@ export function LeftDrawer({
           </Typography>
           <Divider />
           <List>
-            {navItems.map((item) => (
-              <ListItem key={item.label} disablePadding>
-                <ListItemButton
-                  onClick={() => navigate(`/${item.path}`)}
-                  sx={{ textAlign: 'center', color: 'primary.main' }}
-                >
-                  <ListItemText
-                    sx={{ color: 'buttonText' }}
-                    primary={item.label}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
+            {navItems.map((item) => {
+              if (logedUser?.prestador && item.hiddenPrestador) return null;
+              return (
+                <ListItem key={item.label} disablePadding>
+                  <ListItemButton
+                    onClick={() => navigate(`/${item.path}`)}
+                    sx={{ textAlign: 'center', color: 'primary.main' }}
+                  >
+                    <ListItemText
+                      sx={{ color: 'buttonText' }}
+                      primary={item.label}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
           </List>
         </Box>
       </Drawer>

@@ -27,7 +27,7 @@ import { useAuthContext } from '../../hooks/context/AuthContext';
 const navItems = [
   { label: 'Quem somos', path: '' },
   { label: 'Contato', path: '' },
-  { label: 'Oferecer serviço', path: 'worker/register' },
+  { label: 'Oferecer serviço', path: 'worker/register', hiddenPrestador: true },
 ];
 
 function DrawerAppBar({ props, navItemsProps = [] }) {
@@ -44,8 +44,6 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const navigate = useNavigate();
-
-  console.log('isLoading', isLoading);
 
   return (
     <Box>
@@ -81,15 +79,18 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                   gap: { xs: 'none', sm: 1, md: 2 },
                 }}
               >
-                {navItems.map((item) => (
-                  <Button
-                    onClick={() => navigate(`/${item.path}`)}
-                    sx={{ '&:hover': { bgcolor: 'transparent' } }}
-                    key={item.label}
-                  >
-                    <Typography color="buttonText">{item.label}</Typography>
-                  </Button>
-                ))}
+                {navItems.map((item) => {
+                  if (logedUser?.prestador && item.hiddenPrestador) return null;
+                  return (
+                    <Button
+                      onClick={() => navigate(`/${item.path}`)}
+                      sx={{ '&:hover': { bgcolor: 'transparent' } }}
+                      key={item.label}
+                    >
+                      <Typography color="buttonText">{item.label}</Typography>
+                    </Button>
+                  );
+                })}
               </Box>
               <div style={{ width: 202, display: 'flex', gap: 2 }}>
                 {!logedUser?.nome ? (
@@ -166,6 +167,7 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
         handleDrawerToggle={handleDrawerToggle}
         {...props}
         navItems={navItems}
+        logedUser={logedUser}
       />
       <ScrolltopIcon />
     </Box>
