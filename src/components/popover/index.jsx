@@ -19,6 +19,7 @@ export default function MyPopover({ children, title }) {
     <div>
       <div
         aria-haspopup="true"
+        style={{ padding: 0, display: 'flex' }}
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
       >
@@ -27,7 +28,7 @@ export default function MyPopover({ children, title }) {
       <Popover
         sx={{
           pointerEvents: 'none',
-          mt: 0.6,
+          // mt: 0.6,
         }}
         open={open}
         anchorEl={anchorEl}

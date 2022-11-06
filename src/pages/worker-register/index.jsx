@@ -41,14 +41,23 @@ export default function WorkerRegister() {
       <Container
         sx={{
           display: 'flex',
-          minHeight: '100vh',
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
+          gap: '1rem',
+
           pb: 2,
         }}
       >
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{ textAlign: 'center', mt: 2 }}
+        >
+          Consiga mais clientes sendo nosso parceiro!
+        </Typography>
         <Stack
-          direction={{ xs: 'column', sm: 'row' }}
+          direction={{ sm: 'column', md: 'row' }}
           sx={{
             mt: { xs: 2, md: 0 },
             justifyContent: 'center',
@@ -69,7 +78,12 @@ export default function WorkerRegister() {
                   />
                 </Stack>
               </div>
-
+              <div>
+                <Typography sx={{ mb: 1.5 }}>
+                  Dias da semana que irá atender
+                </Typography>
+                <ToogleWeekGroup mudarDias={setDays} dias={days} />
+              </div>
               <div>
                 <Typography sx={{ mb: 1.5 }}>Horários de atuação</Typography>
                 <Stack direction="row" spacing={3}>
@@ -87,14 +101,10 @@ export default function WorkerRegister() {
                   />
                 </Stack>
               </div>
-              <div>
-                <Typography sx={{ mb: 1.5 }}>
-                  Dias da semana que irá atender
-                </Typography>
-                <ToogleWeekGroup mudarDias={setDays} dias={days} />
-              </div>
+
+              <Profession setProfissionValues={setProfissionValues} />
               <Stack>
-                <Typography sx={{ mb: 1.5 }}>Horários de atuação</Typography>
+                <Typography sx={{ mb: 1.5 }}>Descrição profissional</Typography>
                 <TextareaAutosize
                   aria-label="minimum height"
                   onChange={(e) => setDescricao(e.target.value)}
@@ -111,24 +121,30 @@ export default function WorkerRegister() {
                   }}
                 />
               </Stack>
-
-              <Profession setProfissionValues={setProfissionValues} />
             </Stack>
           </Paper>
-
-          <WorkerCard
-            user={{
-              nome: 'Igor',
-              photoURL: currentUser?.photoURL,
-              descricao,
-              workDays: days,
-              cidades: location?.cities,
-              horaDe: formatarHora(hourDe),
-              horaAte: formatarHora(hourAte),
-              profissao: profissionValues.profissao,
-              especialidades: profissionValues.especialidades,
-            }}
-          />
+          <Stack sx={{ mt: 2, maxWidth: 375 }}>
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{ textAlign: 'center', my: 1 }}
+            >
+              Seu cartão de visitas
+            </Typography>
+            <WorkerCard
+              user={{
+                nome: 'Igor',
+                photoURL: currentUser?.photoURL,
+                descricao,
+                workDays: days,
+                cidades: location?.cities,
+                horaDe: formatarHora(hourDe),
+                horaAte: formatarHora(hourAte),
+                profissao: profissionValues.profissao,
+                especialidades: profissionValues.especialidades,
+              }}
+            />
+          </Stack>
         </Stack>
       </Container>
     </>

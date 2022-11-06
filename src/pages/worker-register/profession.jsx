@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography } from '@mui/material';
+import { createFilterOptions, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { MultipleSearchInputForm, SearchInputForm } from '../../components';
 import MultipleSearchInput from '../../components/form/multiple-search-input';
@@ -62,6 +62,7 @@ export default function Profession({ setProfissionValues = () => {} }) {
   };
 
   const handleSelectEspecialidade = (value) => {
+    setEspecialidadesChoused((old) => ({ ...old, ...value }));
     setEspecialidadesChoused(value);
   };
 
@@ -72,6 +73,8 @@ export default function Profession({ setProfissionValues = () => {} }) {
       especialidades: especialidadesChoused.map((item) => item.nome),
     });
   }, [categoryChoused, profissoesChoused, especialidadesChoused]);
+
+  const filter = createFilterOptions();
 
   return (
     <Stack spacing={1}>
@@ -105,8 +108,33 @@ export default function Profession({ setProfissionValues = () => {} }) {
             loading,
             value: profissoesChoused,
             options: profissoes,
-            onChange: (event, value) => {
-              handleSelectProfissao(value);
+            isOptionEqualToValue: (option, value) => option.nome === value.nome,
+            onChange: (event, newValue) => {
+              if (newValue === null) return;
+              if (newValue && newValue.inputValue) {
+                // Create a new value from the user input
+                handleSelectProfissao({
+                  nome: newValue.inputValue,
+                });
+              } else {
+                handleSelectProfissao({ nome: newValue.nome });
+              }
+            },
+            filterOptions: (options, params) => {
+              const filtered = filter(options, params);
+              const { inputValue } = params;
+              // Suggest the creation of a new value
+              const isExisting = options.some(
+                (option) => inputValue === option.nome
+              );
+              if (inputValue !== '' && !isExisting) {
+                filtered.push({
+                  inputValue,
+                  nome: `Adicionar profissão: "${inputValue}"`,
+                });
+              }
+
+              return filtered;
             },
             getOptionLabel: (item) => `${item.nome}`,
           }}
@@ -120,18 +148,39 @@ export default function Profession({ setProfissionValues = () => {} }) {
             }}
             autocompleteProps={{
               sx: { width: '100%' },
+              limitTags: 2,
               onFocus: handleEspecialidades,
-              // value: services,
               value: especialidadesChoused,
               options: especialidades,
-              onChange: (event, value) => {
-                handleSelectEspecialidade(value);
+              onChange: (event, newValue) => {
+                const newArrayEspecialidades = newValue.map((item) => {
+                  if (item.inputValue) return { nome: item.inputValue };
+                  return { nome: item.nome };
+                });
+                handleSelectEspecialidade(newArrayEspecialidades);
+              },
+              isOptionEqualToValue: (option, value) =>
+                option.nome === value.nome,
+              filterOptions: (options, params) => {
+                const filtered = filter(options, params);
+                const { inputValue } = params;
+                // Suggest the creation of a new value
+                const isExisting = options.some(
+                  (option) => inputValue === option.nome
+                );
+                if (inputValue !== '' && !isExisting) {
+                  filtered.push({
+                    inputValue,
+                    nome: `Adicionar: "${inputValue}"`,
+                  });
+                }
+
+                return filtered;
               },
               getOptionLabel: (city) => `${city?.nome}`,
             }}
           />
         </Virtualize>
-        <Divider />
       </Stack>
     </Stack>
   );

@@ -2,7 +2,7 @@
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import './style.scss';
 import {
   Badge,
@@ -38,7 +38,7 @@ export default function WorkerCard({ user = {} }) {
     </Typography>
   ));
   const especialidades = user.especialidades?.map((especialidade, index) => (
-    <>
+    <Fragment key={especialidade.nome ?? index}>
       {index !== 0 ? ' ' : null}
       <Chip
         sx={{
@@ -49,7 +49,7 @@ export default function WorkerCard({ user = {} }) {
         }}
         label={especialidade}
       />
-    </>
+    </Fragment>
   ));
 
   return (
@@ -97,13 +97,18 @@ export default function WorkerCard({ user = {} }) {
           >
             <QueryBuilderIcon fontSize="small" /> {user.horaDe} - {user.horaAte}
           </Typography>
-          <Rating
-            name="half-rating"
-            defaultValue={4.5}
-            value={4.0}
-            precision={0.5}
-            readOnly
-          />
+          <MyPopover
+            title={
+              user.avaliacao ? `${user.avaliacao}/5` : 'Não possui avaliação'
+            }
+          >
+            <Rating
+              name="rating"
+              value={user.avaliacao ?? 0}
+              precision={0.1}
+              readOnly
+            />
+          </MyPopover>
           <div className="location">
             <Badge
               overlap="circular"
@@ -118,7 +123,7 @@ export default function WorkerCard({ user = {} }) {
                   bgcolor: palette.border.main,
                 },
               }}
-              badgeContent={user.cidades?.length ?? 1}
+              badgeContent={user.cidades?.length}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'left',
@@ -194,12 +199,40 @@ export default function WorkerCard({ user = {} }) {
         </Stack>
       </Stack>
       <div className="description">
-        <h5>Descrição do profissional</h5>
+        <Badge
+          // overlap="circular"
+          sx={{
+            '.MuiBadge-badge': {
+              height: 5,
+              p: '6px',
+              mt: 2.2,
+              // left: 0,
+              right: -9,
+              width: 10,
+              minWidth: 10,
+              borderRadius: '50%',
+              border: `2px solid ${palette.border.main}`,
+              bgcolor: palette.border.main,
+            },
+          }}
+          badgeContent={user.especialidades?.length}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <h5>Descrição profissional</h5>
+        </Badge>
+
         <div className="especialidades">
-          <MyPopover title={especialidesLabel}>{especialidades}</MyPopover>
+          <MyPopover title={especialidesLabel}>
+            <Stack direction="row" spacing={0.4}>
+              {especialidades}
+            </Stack>
+          </MyPopover>
         </div>
 
-        <p>
+        <Stack sx={{ my: 1 }}>
           <ReactShowMoreText
             lines={3}
             more={
@@ -221,14 +254,14 @@ export default function WorkerCard({ user = {} }) {
             // className="content-css"
             keepNewLines={false}
             anchorClass="show-more-less-clickable"
-            truncatedEndingComponent={'... '}
+            truncatedEndingComponent="... "
             // width={200}
           >
             {user.descricao ??
               `Faço serviços relacionados a Televisão, Ar condicionado, Faço serviços relacionados a Televisão, Ar condicionado,Faço serviços relacionados a Televisão, Ar condicionado,
           local`}
           </ReactShowMoreText>
-        </p>
+        </Stack>
       </div>
       <Box
         component="footer"

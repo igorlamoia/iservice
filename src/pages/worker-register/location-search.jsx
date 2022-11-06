@@ -79,6 +79,7 @@ export default function LocationInputs({ setLocation, location = {} }) {
           autocompleteProps={{
             loading,
             sx: { width: '100%' },
+            limitTags: 2,
             // value: services,
             value: location.cities,
             options: cities,
