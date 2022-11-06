@@ -8,8 +8,10 @@ import LocationInputs from './location-search';
 import { ToogleWeekGroup } from './week-toogle';
 import { formatarHora } from '../../utils/format';
 import Profession from './profession';
+import { useAuthContext } from '../../hooks/context/AuthContext';
 
 export default function WorkerRegister() {
+  const { currentUser } = useAuthContext();
   const [profissionValues, setProfissionValues] = useState({
     codCategoria: '',
     profissao: '',
@@ -91,18 +93,24 @@ export default function WorkerRegister() {
                 </Typography>
                 <ToogleWeekGroup mudarDias={setDays} dias={days} />
               </div>
-              <TextareaAutosize
-                aria-label="minimum height"
-                onChange={(e) => setDescricao(e.target.value)}
-                minRows={3}
-                placeholder="Descreva suas habilidades e experiências"
-                style={{
-                  borderRadius: '5px',
-                  border: '1px solid #ccc',
-                  maxWidth: 500,
-                  padding: 10,
-                }}
-              />
+              <Stack>
+                <Typography sx={{ mb: 1.5 }}>Horários de atuação</Typography>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  onChange={(e) => setDescricao(e.target.value)}
+                  minRows={2}
+                  placeholder="Descreva suas habilidades e experiências"
+                  style={{
+                    fontFamily: 'Quicksand',
+                    borderRadius: '0.5rem',
+                    backgroundColor: 'transparent',
+                    minWidth: '100%',
+                    maxWidth: '100%',
+                    fontSize: '1rem',
+                    padding: 10,
+                  }}
+                />
+              </Stack>
 
               <Profession setProfissionValues={setProfissionValues} />
             </Stack>
@@ -111,6 +119,7 @@ export default function WorkerRegister() {
           <WorkerCard
             user={{
               nome: 'Igor',
+              photoURL: currentUser?.photoURL,
               descricao,
               workDays: days,
               cidades: location?.cities,

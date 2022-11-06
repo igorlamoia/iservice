@@ -20,6 +20,7 @@ import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import AtendimentoLocationIcon from '@mui/icons-material/WhereToVoteRounded';
 import styled from '@emotion/styled';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ReactShowMoreText from 'react-show-more-text';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 import { MyPopover } from '..';
 
@@ -66,10 +67,10 @@ export default function WorkerCard({ user = {} }) {
       <header className="profile">
         <LazyLoadImage
           className="profile-img"
-          height="100%"
+          height={120}
           effect="blur"
-          src={user.fotoUrl ?? DEFAULT_IMAGE}
-          width="100%"
+          src={user.photoURL ?? DEFAULT_IMAGE}
+          width={120}
           style={{ borderRadius: '50%', objectFit: 'cover' }}
         />
         <div className="profile-info">
@@ -199,10 +200,34 @@ export default function WorkerCard({ user = {} }) {
         </div>
 
         <p>
-          {user.descricao ??
-            `Faço serviços relacionados a Televisão, Ar condicionado, geladeira
+          <ReactShowMoreText
+            lines={3}
+            more={
+              <Typography
+                variant="span"
+                sx={{ fontWeight: 'bold', textDecoration: 'none' }}
+              >
+                ver mais
+              </Typography>
+            }
+            less={
+              <Typography
+                variant="span"
+                sx={{ fontWeight: 'bold', textDecoration: 'none' }}
+              >
+                ver menos
+              </Typography>
+            }
+            // className="content-css"
+            keepNewLines={false}
+            anchorClass="show-more-less-clickable"
+            truncatedEndingComponent={'... '}
+            // width={200}
+          >
+            {user.descricao ??
+              `Faço serviços relacionados a Televisão, Ar condicionado, Faço serviços relacionados a Televisão, Ar condicionado,Faço serviços relacionados a Televisão, Ar condicionado,
           local`}
-          <span>... ver mais</span>
+          </ReactShowMoreText>
         </p>
       </div>
       <Box
