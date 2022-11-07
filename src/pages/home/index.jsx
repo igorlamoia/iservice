@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
 import { Container, Typography, useTheme } from '@mui/material';
@@ -15,12 +15,51 @@ import {
 import { Categorias } from './categorias';
 import AboutUs from '../../components/about-us';
 import SearchInput from './search-input';
+import { api } from '../../utils/api';
+import { convertMinutesToStringTime } from '../../utils/format';
 
 export default function Home() {
   const {
     palette: { mode },
   } = useTheme();
   const darkmode = mode === 'dark';
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [prestadores, setPrestadores] = useState([]);
+
+  const handlePrestadores = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await api.get('listar/todos-prestadores');
+      console.log('prestadores antes', data.payload?.prestadores);
+      const prestadoresTratados = data.payload?.prestadores?.map(
+        (prestador) => ({
+          ...prestador,
+          profissao: prestador.especialidades[0]?.nome,
+          especialidades: prestador.especialidades.map(
+            (especialidade) => especialidade.descricao
+          ),
+          workDays: prestador.diasAtendimento?.split(','),
+          descricao: prestador.descricaoProfissional,
+          cidades: prestador.cidadesAtendimento.map((cidade) => cidade.nome),
+          horaDe: convertMinutesToStringTime(
+            prestador.horarioAtendimentoInicio
+          ),
+          horaAte: convertMinutesToStringTime(prestador.horarioAtendimentoFim),
+        })
+      );
+      // console.log('prestadoresTratados', prestadoresTratados);
+      setPrestadores(prestadoresTratados);
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handlePrestadores();
+  }, []);
 
   return (
     <>
@@ -56,12 +95,15 @@ export default function Home() {
         </div>
         <Container>
           <Carousel>
+            {prestadores?.map((prestador) => (
+              <SwiperSlide key={prestador.codPrestador}>
+                <WorkerCard user={prestador} />
+              </SwiperSlide>
+            ))}
             <SwiperSlide>
               <WorkerCard />
             </SwiperSlide>
-            <SwiperSlide>
-              <WorkerCard />
-            </SwiperSlide>
+
             <SwiperSlide>
               <WorkerCard />
             </SwiperSlide>
