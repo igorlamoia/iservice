@@ -26,6 +26,7 @@ import { useAuthContext } from '../../hooks/context/AuthContext';
 import SocialLogin from '../../components/social-login';
 import { isEmptyObject } from '../../utils/object';
 import { api } from '../../utils/api';
+import { ForgotPassword } from './modal-forgot-password';
 
 // const firebaseData = {
 //   displayName: 'John Doe',
@@ -73,7 +74,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser?.uid) {
       navigate('/login/register');
       api
         .get(`listar/dados-usuario?idFirebase=${currentUser?.uid}`)
@@ -181,6 +182,7 @@ export default function Login() {
                     error={Boolean(errors.password && touched.password)}
                     errorMessage={errors.password}
                   />
+                  <ForgotPassword />
                   <MyButton
                     isLoading={isLoading}
                     disabled={isLoading || !isEmptyObject(errors)}
@@ -192,8 +194,27 @@ export default function Login() {
               </form>
             )}
           </Formik>
-          <Typography sx={{ mt: 2 }}>
-            Ainda não tem sua conta? <Link to="/login/register">Register</Link>
+          <Typography
+            sx={{
+              mt: 2,
+              fontSize: '0.9rem',
+              display: 'flex',
+              gap: 1,
+              alignItems: 'center',
+            }}
+          >
+            Ainda não tem sua conta?{' '}
+            <Link variant="inherit" to="/login/register">
+              <Typography
+                sx={{
+                  fontSize: '0.9rem',
+                  color: 'primary.main',
+                  fontWeight: 500,
+                }}
+              >
+                Cadastrar-me
+              </Typography>
+            </Link>
           </Typography>
         </Paper>
         <Snackbar

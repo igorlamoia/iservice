@@ -28,7 +28,7 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  console.log('logedUser aqui ó', logedUser);
+  // console.log('logedUser aqui ó', logedUser);
 
   useEffect(() => {
     if (logedUser?.nome) {
@@ -77,8 +77,29 @@ export default function Register() {
             {actualStep === 0 && <FirstStep handleNextStep={handleNextStep} />}
             {actualStep === 1 && <SecondStep />}
 
-            <Typography sx={{ textAlign: 'center', mt: 2, fontSize: '0.8rem' }}>
-              Já possui conta? <Link to="/login">Login</Link>
+            <Typography
+              sx={{
+                mt: 2,
+                fontSize: '0.9rem',
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              Já possui conta?
+              <Link variant="inherit" to="/login">
+                <Typography
+                  sx={{
+                    fontSize: '0.9rem',
+                    color: 'primary.main',
+                    fontWeight: 500,
+                    textAlign: 'center',
+                  }}
+                >
+                  Entrar
+                </Typography>
+              </Link>
             </Typography>
           </Stack>
         </Paper>
