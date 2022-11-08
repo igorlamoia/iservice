@@ -12,8 +12,10 @@ import SearchInputForm from './form/search-input';
 import Navbar from './app-bar';
 import MyPopover from './popover';
 import Carousel from './carousel';
+import SkeletonWorkercard from './skeletons/worker-card';
 
 export {
+  SkeletonWorkercard,
   WorkerCard,
   ServiceCard,
   SearchInput,
