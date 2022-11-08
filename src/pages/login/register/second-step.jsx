@@ -11,6 +11,7 @@ import { api, apiViacep } from '../../../utils/api';
 import { isEmptyObject } from '../../../utils/object';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import { removeSymbols } from '../../../utils/format';
+import { useInteractivityContext } from '../../../hooks/context/interactivityContext';
 
 export function SecondStep() {
   const [isLoadingCep, setIsLoadingCep] = useState(false);
@@ -18,6 +19,9 @@ export function SecondStep() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { currentUser, logUserInApi } = useAuthContext();
+
+  const { setInteractivityError, setInteractivitySuccess } =
+    useInteractivityContext();
 
   const initialStateForm = {
     cpf: '',
@@ -34,7 +38,6 @@ export function SecondStep() {
 
   const handleRegisterForm = async (values) => {
     try {
-      console.log(values);
       setIsLoading(true);
       await api.post('cadastrar/usuario', {
         nome: currentUser.displayName,
@@ -55,10 +58,15 @@ export function SecondStep() {
       logUserInApi(currentUser.uid);
       // console.log('data', data);
       setIsLoading(false);
+      setInteractivitySuccess(
+        'Cadastro finalizado com sucesso! Seja bem-vindo(a)!'
+      );
       navigate('/');
     } catch (err) {
       setIsLoading(false);
-      console.log('errito', err);
+      if (err?.response?.data?.mensagem) {
+        return setInteractivityError(err?.response?.data?.mensagem);
+      }
       setErrorForm({ error: true, message: 'Falha na API' });
     }
   };

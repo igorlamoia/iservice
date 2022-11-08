@@ -1,4 +1,4 @@
-import * as Lottie from 'lottie-interactive';
+// import * as Lottie from 'lottie-interactive';
 import {
   Container,
   Paper,
