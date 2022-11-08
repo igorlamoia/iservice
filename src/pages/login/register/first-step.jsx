@@ -37,6 +37,7 @@ import { useAuthContext } from '../../../hooks/context/AuthContext';
 import SocialLogin from '../../../components/social-login';
 import { isEmptyObject } from '../../../utils/object';
 import { FotoComponent } from './photo-component';
+import { useInteractivityContext } from '../../../hooks/context/interactivityContext';
 
 // Login with google, facebook or create from zero
 export function FirstStep({ handleNextStep }) {
@@ -66,81 +67,97 @@ export function FirstStep({ handleNextStep }) {
   };
 
   const { currentUser, logOut } = useAuthContext();
+  const { setInteractivityError, setInteractivitySuccess } =
+    useInteractivityContext();
 
   const createUser = async (values) => {
-    console.log('createUser');
-    console.log('selectedFile', selectedFile);
-
-    // Create user
-    const userCreated = await createUserWithEmailAndPassword(
-      auth,
-      values.email,
-      values.password
-    );
-
-    if (selectedFile) {
-      // Create sobrescrever a imagem do usuário Caso ele suba uma imagem
-      const storageRef = ref(
-        storage,
-        `avatar-iserviceProfile-${values.nickname + userCreated.user.uid}`
+    try {
+      // Create user
+      const userCreated = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
       );
-      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progresso =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progresso);
-        },
-        (error) => {
-          throw new Error(error);
-          // setErrorForm({ error: true, message: error?.message });
-        },
-        () =>
-          getDownloadURL(storageRef).then(async (downloadURL) => {
-            try {
-              // Update profile
-              await updateProfile(userCreated.user, {
-                displayName: values.nickname,
-                photoURL: downloadURL,
-              });
-              // create user on firestore
-              await setDoc(doc(db, 'users', userCreated.user.uid), {
-                uid: userCreated.user.uid,
-                displayName: values.nickname,
-                email: userCreated.user.email,
-                photoURL: downloadURL,
-              });
 
-              // create empty user chats on firestore
-              await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
-              setIsLoading(false);
-              // navigate('/');
-            } catch (error) {
-              throw new Error(error);
-              // console.log(error);
-              // setErrorForm({ error: true, message: error?.message });
-              // setIsLoading(false);
-            }
-          })
-      );
-    } else {
-      await updateProfile(userCreated.user, {
-        displayName: values.nickname,
-      });
-      // create user on firestore
-      await setDoc(doc(db, 'users', userCreated.user.uid), {
-        uid: userCreated.user.uid,
-        displayName: values.nickname,
-        email: userCreated.user.email,
-      });
+      if (selectedFile) {
+        // Create sobrescrever a imagem do usuário Caso ele suba uma imagem
+        const storageRef = ref(
+          storage,
+          `avatar-iserviceProfile-${values.nickname + userCreated.user.uid}`
+        );
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progresso =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(progresso);
+          },
+          (error) => {
+            throw new Error(error);
+            // setErrorForm({ error: true, message: error?.message });
+          },
+          () =>
+            getDownloadURL(storageRef).then(async (downloadURL) => {
+              try {
+                // Update profile
+                await updateProfile(userCreated.user, {
+                  displayName: values.nickname,
+                  photoURL: downloadURL,
+                });
+                // create user on firestore
+                await setDoc(doc(db, 'users', userCreated.user.uid), {
+                  uid: userCreated.user.uid,
+                  displayName: values.nickname,
+                  email: userCreated.user.email,
+                  photoURL: downloadURL,
+                });
 
-      // create empty user chats on firestore
-      await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
+                // create empty user chats on firestore
+                await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
+                setIsLoading(false);
+                // navigate('/');
+              } catch (error) {
+                throw new Error(error);
+                // console.log(error);
+                // setErrorForm({ error: true, message: error?.message });
+                // setIsLoading(false);
+              }
+            })
+        );
+      } else {
+        await updateProfile(userCreated.user, {
+          displayName: values.nickname,
+        });
+        // create user on firestore
+        await setDoc(doc(db, 'users', userCreated.user.uid), {
+          uid: userCreated.user.uid,
+          displayName: values.nickname,
+          email: userCreated.user.email,
+        });
+
+        // create empty user chats on firestore
+        await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
+        setIsLoading(false);
+        // navigate('/');
+      }
+      setInteractivitySuccess('Usuário criado com sucesso!');
+      handleNextStep(1);
+    } catch (err) {
       setIsLoading(false);
-      // navigate('/');
+      if (err.code === 'auth/email-already-in-use') {
+        return setInteractivityError(
+          'Usuário já existe, por favor, realize o Login'
+        );
+      }
+      if (err.code === 'auth/invalid-email') {
+        return setInteractivityError(
+          'E-mail inválido, por favor, verifique o e-mail digitado'
+        );
+      }
+
+      setInteractivityError(err.message);
     }
-    handleNextStep(1);
   };
 
   const createOrUpdateSocialUser = async (values) => {

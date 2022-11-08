@@ -11,6 +11,7 @@ import MultipleSearchInputForm from './form/multiple-search-input';
 import SearchInputForm from './form/search-input';
 import Navbar from './app-bar';
 import MyPopover from './popover';
+import Carousel from './carousel';
 
 export {
   WorkerCard,
@@ -26,4 +27,5 @@ export {
   SearchInputForm,
   Navbar,
   MyPopover,
+  Carousel,
 };
