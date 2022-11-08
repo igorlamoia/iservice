@@ -98,9 +98,18 @@ export default function WorkerRegister() {
             };
           });
           setValidationErros(errors);
+          setInteractivityError(
+            'Dados inválidos, por favor confira os dados acima marcados como inválidos'
+          );
         }
       } else {
+        if (error.mensagem) {
+          return setInteractivityError(error.mensagem);
+        }
         // console.log('Outro erro');
+        else {
+          return setInteractivityError('Falha no servidor');
+        }
       }
     }
   };

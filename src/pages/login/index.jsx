@@ -40,7 +40,7 @@ export default function Login() {
   const [errorForm, seterrorForm] = useState({ error: false });
   const [isLoading, setIsLoading] = useState(false);
 
-  const { currentUser, logOut } = useAuthContext();
+  const { currentUser, logOut, setLogedUser } = useAuthContext();
 
   const handleLoginForm = async (values) => {
     try {
@@ -81,6 +81,7 @@ export default function Login() {
         .then((user) => {
           setIsLoading(false);
           if (user.data.payload) {
+            setLogedUser(user.data.payload);
             navigate('/');
           } else {
             navigate('/login/register');
