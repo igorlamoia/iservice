@@ -11,6 +11,7 @@ export default function MyBytton({
 }) {
   return (
     <Button
+      disabled={isLoading}
       variant={variant}
       sx={({ palette }) => ({
         color: 'black',

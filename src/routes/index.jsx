@@ -1,6 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, Login, Register, ChatPage } from '../pages';
+import {
+  Home,
+  Login,
+  Register,
+  ChatPage,
+  WorkerRegister,
+  SearchService,
+} from '../pages';
 import { ErrorBoundary } from './error-boundary';
 import { NotFoundPage } from './not-found';
 import { ProtectedRoute } from './protected-route-layout';
@@ -13,6 +20,15 @@ export function MyRoutes() {
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="login/register" element={<Register />} />
+          <Route
+            path="worker/register"
+            element={
+              <ProtectedRoute>
+                <WorkerRegister />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="search/service" element={<SearchService />} />
           <Route
             path="chat"
             element={

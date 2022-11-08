@@ -13,32 +13,23 @@ import {
   useTheme,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { debounce } from '../../utils/async';
+import { debounce } from '../../../utils/async';
 
 export default function SearchInput({
   handleSearch = () => {},
   loading,
   autocompleteProps = {},
   textFieldProps = {},
+  virtualizeProps = {},
 }) {
-  const { palette } = useTheme();
-
   const handleSearchDebounce = useCallback(debounce(handleSearch), []);
 
   return (
-    <StyledAutocomplete
+    <Autocomplete
       noOptionsText="..."
       loadingText="Carregando..."
       {...autocompleteProps}
-      sx={{
-        width: { xs: '100%', sm: '100%', md: 480 },
-        // mt: 1,
-        py: 2,
-        border: 'none',
-        borderRadius: 10,
-        // transition: 'all 5s ease',
-        ...autocompleteProps.sx,
-      }}
+      {...virtualizeProps}
       PaperComponent={CustomPaper}
       renderInput={(params) => (
         <TextField
@@ -49,34 +40,17 @@ export default function SearchInput({
           InputLabelProps={{
             ...params.InputLabelProps,
             type: 'search',
-            sx: {
-              position: 'absolute',
-              left: '40px',
-              backdropFilter: 'blur(20px)',
-            },
           }}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
               <>
-                <InputAdornment
-                  sx={{ position: 'absolute', ml: 1 }}
-                  position="start"
-                >
-                  <SearchIcon />
-                </InputAdornment>
                 {loading ? (
                   <CircularProgress color="secondary" size={20} />
                 ) : null}
                 {params.InputProps.endAdornment}
               </>
             ),
-          }}
-          sx={{
-            '& legend': { m: 5 },
-            '& fieldset': {
-              boxShadow: `0px 0px 10px ${palette.shadow.input}`,
-            },
           }}
         />
       )}
@@ -103,11 +77,6 @@ export const StyledAutocomplete = styled(Autocomplete)({
     // This matches the specificity of the default styles at https://github.com/mui-org/material-ui/blob/v4.11.3/packages/material-ui-lab/src/Autocomplete/Autocomplete.js#L90
     '&[class*="MuiOutlinedInput-root"] .MuiAutocomplete-input:first-of-type': {
       // Default left padding is 6px
-      paddingLeft: '45px',
-    },
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderWidth: 0,
-      borderRadius: 20,
     },
     '&:hover .MuiOutlinedInput-notchedOutline': {},
     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {

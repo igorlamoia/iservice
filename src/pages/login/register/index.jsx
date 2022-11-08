@@ -1,5 +1,6 @@
-import { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useCallback, useState, useEffect } from 'react';
+
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Container,
   Paper,
@@ -17,13 +18,23 @@ import { useAuthContext } from '../../../hooks/context/AuthContext';
 
 export default function Register() {
   const [actualStep, setActualStep] = useState(0);
-  const { currentUser } = useAuthContext();
+  const { currentUser, logedUser } = useAuthContext();
   const steps = ['Dados básicos', 'Dados de uso'];
 
   const handleNextStep = useCallback(
     () => setActualStep((prevStep) => prevStep + 1),
     []
   );
+
+  const navigate = useNavigate();
+
+  console.log('logedUser aqui ó', logedUser);
+
+  useEffect(() => {
+    if (logedUser?.nome) {
+      navigate('/');
+    }
+  }, [logedUser]);
 
   return (
     <>

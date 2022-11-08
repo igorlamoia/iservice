@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
@@ -24,12 +25,10 @@ import {
   ModeEdit,
   Camera,
 } from '@mui/icons-material';
-import LottieAnimacao from 'lottie-react';
 import { auth, db, storage } from '../../../firebase';
 import { OrTag } from '..';
 import { registerSchema } from '../../../utils/validation/register.schema';
 import { MyButton, MyInput } from '../../../components';
-import AvatarImage from '../../../assets/avatar-image.json';
 import {
   strengthColor,
   strengthIndicator,
@@ -37,6 +36,8 @@ import {
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import SocialLogin from '../../../components/social-login';
 import { isEmptyObject } from '../../../utils/object';
+import { FotoComponent } from './photo-component';
+import { useInteractivityContext } from '../../../hooks/context/interactivityContext';
 
 // Login with google, facebook or create from zero
 export function FirstStep({ handleNextStep }) {
@@ -66,79 +67,96 @@ export function FirstStep({ handleNextStep }) {
   };
 
   const { currentUser, logOut } = useAuthContext();
+  const { setInteractivityError, setInteractivitySuccess } =
+    useInteractivityContext();
 
   const createUser = async (values) => {
-    console.log('createUser');
-    console.log('selectedFile', selectedFile);
-
-    // Create user
-    const userCreated = await createUserWithEmailAndPassword(
-      auth,
-      values.email,
-      values.password
-    );
-
-    if (selectedFile) {
-      // Create sobrescrever a imagem do usuário Caso ele suba uma imagem
-      const storageRef = ref(
-        storage,
-        `avatar-iserviceProfile-${values.nickname + userCreated.user.uid}`
+    try {
+      // Create user
+      const userCreated = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
       );
-      const uploadTask = uploadBytesResumable(storageRef, selectedFile);
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          const progresso =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          setProgress(progresso);
-        },
-        (error) => {
-          throw new Error(error);
-          // setErrorForm({ error: true, message: error?.message });
-        },
-        () =>
-          getDownloadURL(storageRef).then(async (downloadURL) => {
-            try {
-              // Update profile
-              await updateProfile(userCreated.user, {
-                displayName: values.nickname,
-                photoURL: downloadURL,
-              });
-              // create user on firestore
-              await setDoc(doc(db, 'users', userCreated.user.uid), {
-                uid: userCreated.user.uid,
-                displayName: values.nickname,
-                email: userCreated.user.email,
-                photoURL: downloadURL,
-              });
 
-              // create empty user chats on firestore
-              await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
-              setIsLoading(false);
-              navigate('/');
-            } catch (error) {
-              throw new Error(error);
-              // console.log(error);
-              // setErrorForm({ error: true, message: error?.message });
-              // setIsLoading(false);
-            }
-          })
-      );
-    } else {
-      await updateProfile(userCreated.user, {
-        displayName: values.nickname,
-      });
-      // create user on firestore
-      await setDoc(doc(db, 'users', userCreated.user.uid), {
-        uid: userCreated.user.uid,
-        displayName: values.nickname,
-        email: userCreated.user.email,
-      });
+      if (selectedFile) {
+        // Create sobrescrever a imagem do usuário Caso ele suba uma imagem
+        const storageRef = ref(
+          storage,
+          `avatar-iserviceProfile-${values.nickname + userCreated.user.uid}`
+        );
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progresso =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(progresso);
+          },
+          (error) => {
+            throw new Error(error);
+            // setErrorForm({ error: true, message: error?.message });
+          },
+          () =>
+            getDownloadURL(storageRef).then(async (downloadURL) => {
+              try {
+                // Update profile
+                await updateProfile(userCreated.user, {
+                  displayName: values.nickname,
+                  photoURL: downloadURL,
+                });
+                // create user on firestore
+                await setDoc(doc(db, 'users', userCreated.user.uid), {
+                  uid: userCreated.user.uid,
+                  displayName: values.nickname,
+                  email: userCreated.user.email,
+                  photoURL: downloadURL,
+                });
 
-      // create empty user chats on firestore
-      await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
+                // create empty user chats on firestore
+                await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
+                setIsLoading(false);
+                // navigate('/');
+              } catch (error) {
+                throw new Error(error);
+                // console.log(error);
+                // setErrorForm({ error: true, message: error?.message });
+                // setIsLoading(false);
+              }
+            })
+        );
+      } else {
+        await updateProfile(userCreated.user, {
+          displayName: values.nickname,
+        });
+        // create user on firestore
+        await setDoc(doc(db, 'users', userCreated.user.uid), {
+          uid: userCreated.user.uid,
+          displayName: values.nickname,
+          email: userCreated.user.email,
+        });
+
+        // create empty user chats on firestore
+        await setDoc(doc(db, 'userChats', userCreated.user.uid), {});
+        setIsLoading(false);
+        // navigate('/');
+      }
+      setInteractivitySuccess('Usuário criado com sucesso!');
+      handleNextStep(1);
+    } catch (err) {
       setIsLoading(false);
-      navigate('/');
+      if (err.code === 'auth/email-already-in-use') {
+        return setInteractivityError(
+          'Usuário já existe, por favor, realize o Login'
+        );
+      }
+      if (err.code === 'auth/invalid-email') {
+        return setInteractivityError(
+          'E-mail inválido, por favor, verifique o e-mail digitado'
+        );
+      }
+
+      setInteractivityError(err.message);
     }
   };
 
@@ -183,7 +201,7 @@ export function FirstStep({ handleNextStep }) {
               // create empty user chats on firestore
               await setDoc(doc(db, 'userChats', currentUser.uid), {});
               setIsLoading(false);
-              navigate('/');
+              // navigate('/');
             } catch (error) {
               throw new Error(error);
               // console.log(error);
@@ -207,8 +225,9 @@ export function FirstStep({ handleNextStep }) {
       // create empty user chats on firestore
       await setDoc(doc(db, 'userChats', currentUser.uid), {});
       setIsLoading(false);
-      navigate('/');
+      // navigate('/');
     }
+    handleNextStep(1);
   };
 
   const handleRegisterForm = async (values) => {
@@ -280,6 +299,7 @@ export function FirstStep({ handleNextStep }) {
         </Typography>{' '}
         com:
       </Typography>
+
       <Formik
         initialValues={initialStateForm}
         validationSchema={() => registerSchema(Boolean(currentUser))}
@@ -450,32 +470,12 @@ export function FirstStep({ handleNextStep }) {
                 style={{ margin: '10px auto' }}
               >
                 {isLoading && <CircularProgressWithLabel value={progress} />}
-                {!isLoading &&
-                  (imagePreview ? (
-                    <img
-                      src={imagePreview}
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                      }}
-                      alt="profile"
-                    />
-                  ) : currentUser?.photoURL ? (
-                    <img
-                      src={currentUser?.photoURL}
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        borderRadius: '50%',
-                        objectFit: 'cover',
-                      }}
-                      alt="profile"
-                    />
-                  ) : (
-                    <LottieAnimacao animationData={AvatarImage} />
-                  ))}
+                {!isLoading && (
+                  <FotoComponent
+                    imagePreview={imagePreview}
+                    currentUser={currentUser}
+                  />
+                )}
                 <Box
                   sx={({ palette }) => ({
                     ml: 1,
@@ -499,11 +499,7 @@ export function FirstStep({ handleNextStep }) {
                 </Box>
               </InputLabel>
             </Stack>
-            <MyButton
-              type="submit"
-              isLoading={isLoading}
-              disabled={isLoading || !isEmptyObject(errors)}
-            >
+            <MyButton type="submit" isLoading={isLoading} disabled={isLoading}>
               Avançar
             </MyButton>
           </form>

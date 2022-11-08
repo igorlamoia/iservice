@@ -29,6 +29,7 @@ html {
   --color-bk-light: #fafafa;
   --color-bk-dark: #111111;
   --color-shadow: #12a833;
+  --color-paper-dark: #161616;
 }
 input {
   font-family: 'Quicksand', Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -46,6 +47,11 @@ a {
 /* a:hover {
 	color: #535bf2;
 } */
+
+::selection {
+  color: black;
+  background: #95f3b4;
+}
 
 body {
   min-width: 320px;

@@ -1,23 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
 import { Container, Typography, useTheme } from '@mui/material';
+import { SwiperSlide } from 'swiper/react';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import darkIServiceLottie from '../../assets/dark-iservice-lottie.json';
-import { ServiceCard, WorkerCard, Footer, SearchInput } from '../../components';
+import {
+  ServiceCard,
+  Footer,
+  Navbar,
+  WorkerCard,
+  Carousel,
+} from '../../components';
 import { Categorias } from './categorias';
-import ResponsiveAppBar from '../../components/app-bar';
-import { Carousel } from './carousel';
 import AboutUs from '../../components/about-us';
+import SearchInput from './search-input';
+import { api } from '../../utils/api';
+import { convertMinutesToStringTime } from '../../utils/format';
 
 export default function Home() {
   const {
     palette: { mode },
   } = useTheme();
   const darkmode = mode === 'dark';
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [prestadores, setPrestadores] = useState([]);
+
+  const handlePrestadores = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await api.get('listar/todos-prestadores');
+      console.log('prestadores antes', data.payload?.prestadores);
+      const prestadoresTratados = data.payload?.prestadores?.map(
+        (prestador) => ({
+          ...prestador,
+          profissao: prestador.especialidades[0]?.nome,
+          especialidades: prestador.especialidades.map(
+            (especialidade) => especialidade.descricao
+          ),
+          workDays: prestador.diasAtendimento?.split(','),
+          descricao: prestador.descricaoProfissional,
+          cidades: prestador.cidadesAtendimento.map((cidade) => cidade.nome),
+          horaDe: convertMinutesToStringTime(
+            prestador.horarioAtendimentoInicio
+          ),
+          horaAte: convertMinutesToStringTime(prestador.horarioAtendimentoFim),
+        })
+      );
+      // console.log('prestadoresTratados', prestadoresTratados);
+      setPrestadores(prestadoresTratados);
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handlePrestadores();
+  }, []);
+
   return (
     <>
-      <ResponsiveAppBar />
+      <Navbar />
       <main>
         <Container className="caixainicial">
           <div className="textoinicial">
@@ -44,33 +90,38 @@ export default function Home() {
             className="lottie"
           />
         </Container>
-        {/* <AboutUs></AboutUs> */}
         <div className="categorias-div">
           <Categorias />
         </div>
         <Container>
           <Carousel>
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
-            <WorkerCard />
+            {prestadores?.map((prestador) => (
+              <SwiperSlide key={prestador.codPrestador}>
+                <WorkerCard user={prestador} />
+              </SwiperSlide>
+            ))}
+            <SwiperSlide>
+              <WorkerCard />
+            </SwiperSlide>
+
+            <SwiperSlide>
+              <WorkerCard />
+            </SwiperSlide>
           </Carousel>
+          <AboutUs />
+
           <Carousel>
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
-            <ServiceCard />
+            <SwiperSlide>
+              <ServiceCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ServiceCard />
+            </SwiperSlide>
+            <SwiperSlide>
+              <ServiceCard />
+            </SwiperSlide>
           </Carousel>
         </Container>
-        {/* <lottie-interactive path={LottieAnimacao} interaction="hover" /> */}
       </main>
       <Footer />
     </>

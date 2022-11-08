@@ -7,6 +7,11 @@ import MyPaper from './my-paper';
 import MyInput from './input';
 import MyButton from './my-button';
 import Loader from './loader';
+import MultipleSearchInputForm from './form/multiple-search-input';
+import SearchInputForm from './form/search-input';
+import Navbar from './app-bar';
+import MyPopover from './popover';
+import Carousel from './carousel';
 
 export {
   WorkerCard,
@@ -18,4 +23,9 @@ export {
   MyInput,
   MyButton,
   Loader,
+  MultipleSearchInputForm,
+  SearchInputForm,
+  Navbar,
+  MyPopover,
+  Carousel,
 };

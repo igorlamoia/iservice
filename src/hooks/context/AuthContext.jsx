@@ -8,11 +8,14 @@ import {
   TwitterAuthProvider,
 } from 'firebase/auth';
 import { auth } from '../../firebase';
+import { api } from '../../utils/api';
 
 export const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({}); // usuário atual logado no firebase
+  const [logedUser, setLogedUser] = useState({}); // usuário logado no sistema
+  const [isLoading, setIsLoading] = useState(false);
 
   const googleSignIn = () => {
     console.log('google');
@@ -34,12 +37,42 @@ export function AuthContextProvider({ children }) {
 
   const logOut = () => {
     signOut(auth);
+    setLogedUser({});
+    // localStorage.removeItem('@iservice:firebase:uid');
   };
 
+  const logUserInApi = async (idFirebase) => {
+    try {
+      setIsLoading(true);
+      // const userFirebase = localStorage.getItem('@iservice:firebase:uid');
+      console.log('TENTANDO LOGAR');
+      console.log('userFirebase', idFirebase);
+      const { data } = await api.get(
+        `listar/dados-usuario?idFirebase=${idFirebase}`
+      );
+      // nome, cpf, email, numTelefone, dataNascimento, linkFoto, idFirebase
+      console.log('MACETANDO LOGEDUSER com:', data.payload);
+      setIsLoading(false);
+      setLogedUser(data.payload);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  };
+
+  // console.log('loggedUser', logedUser);
+
   useEffect(() => {
+    // logOut();
+    // logUserInApi();
+    // if (currentUser?.uid) {
+    //   logUserInApi(currentUser.uid);
+    // }
+
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      console.log(user);
+      // localStorage.setItem('@iservice:firebase:uid', user.uid);
+      logUserInApi(user?.uid);
       // {
       //   displayName: 'Igor Lamoia',
       //   email: "igorlamoia@gmail.com",
@@ -60,8 +93,12 @@ export function AuthContextProvider({ children }) {
       twitterSignIn,
       facebookSignIn,
       logOut,
+      logedUser,
+      isLoading,
+      logUserInApi,
+      setLogedUser,
     }),
-    [currentUser]
+    [currentUser, logedUser, isLoading]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
