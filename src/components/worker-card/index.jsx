@@ -69,7 +69,7 @@ export default function WorkerCard({ user = {} }) {
           className="profile-img"
           height={120}
           effect="blur"
-          src={user.linkFoto ?? user.photoURL ?? DEFAULT_IMAGE}
+          src={user.linkFoto || user.photoURL || DEFAULT_IMAGE}
           width={120}
           style={{ borderRadius: '50%', objectFit: 'cover' }}
         />
