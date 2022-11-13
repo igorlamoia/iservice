@@ -2,14 +2,11 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import MenuIcon from '@mui/icons-material/Menu';
-
 import {
   Stack,
   useTheme,
   AppBar,
   Box,
-  IconButton,
   Toolbar,
   Typography,
   Button,
@@ -42,12 +39,11 @@ export function LoginRegisterNavbar() {
         elevation={0}
       >
         <Toolbar>
-          <ToggleTheme />
           <Button
             variant="contained"
             sx={{
               borderRadius: '1rem',
-              ml: 'auto',
+              mr: 'auto',
               boxShadow: `1px 2px 10px 2px ${
                 palette.mode === 'light'
                   ? palette.primary.light
@@ -73,6 +69,7 @@ export function LoginRegisterNavbar() {
           >
             Página Inicial
           </Button>
+          <ToggleTheme />
         </Toolbar>
       </AppBar>
       <ScrolltopIcon />
