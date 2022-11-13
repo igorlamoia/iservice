@@ -6,17 +6,25 @@ import { getTheme } from '../global/theme';
 const ColorModeContext = createContext({});
 
 export function ColorModeProvider({ children }) {
+  const isLightMode = useMediaQuery('(prefers-color-scheme: light)');
+
   const [mode, setMode] = useState(
-    useMediaQuery('(prefers-color-scheme: light)')
+    localStorage.getItem('@iservice:mode') === 'light'
+      ? true
+      : localStorage.getItem('@iservice:mode') === 'dark'
+      ? false
+      : isLightMode
   );
+
   const valuesTheme = useMemo(
     () => ({
       toggleColorMode: () => {
+        localStorage.setItem('@iservice:mode', mode ? 'dark' : 'light');
         setMode((prevMode) => !prevMode);
       },
       mode,
     }),
-    []
+    [mode]
   );
 
   const theme = useMemo(() => createTheme(getTheme(mode)), [mode]);
