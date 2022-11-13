@@ -12,6 +12,7 @@ import SearchInputForm from './form/search-input';
 import Navbar from './app-bar';
 import MyPopover from './popover';
 import Carousel from './carousel';
+import IserviceTypography from './iservice-typography';
 
 export {
   WorkerCard,
@@ -28,4 +29,5 @@ export {
   Navbar,
   MyPopover,
   Carousel,
+  IserviceTypography,
 };

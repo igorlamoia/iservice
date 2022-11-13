@@ -2,6 +2,7 @@ import { Breadcrumbs } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { StyledLink, TypographyLink } from './styles';
+import { IserviceTypography } from '../../../components';
 
 export function BreadCrumbsMenu({ params = {} }) {
   const {
@@ -35,6 +36,11 @@ export function BreadCrumbsMenu({ params = {} }) {
       separator={<NavigateNextIcon fontSize="small" />}
       aria-label="breadcrumb"
     >
+      <StyledLink sx={{ cursor: 'default' }}>
+        <TypographyLink sx={{ color: 'text.primary' }} noWrap>
+          <IserviceTypography />
+        </TypographyLink>
+      </StyledLink>
       {!!nomeCategoria && (
         <StyledLink onClick={handleCategoria}>
           <TypographyLink>{nomeCategoria}</TypographyLink>
