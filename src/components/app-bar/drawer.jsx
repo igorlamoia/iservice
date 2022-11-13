@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Divider,
   Drawer,
   List,
@@ -10,6 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import iServiceLogo from '../../assets/LogoiService.svg';
+import IserviceTypography from '../iservice-typography';
 
 const drawerWidth = 240;
 
@@ -54,30 +56,17 @@ export function LeftDrawer({
           }}
           // color="transparent"
         >
-          <Typography
-            variant="h6"
-            component="div"
+          <ListItemButton
             sx={{
-              my: 2,
-              display: 'flex',
+              textAlign: 'center',
               justifyContent: 'center',
               alignItems: 'center',
+              py: 2,
             }}
+            onClick={() => navigate('/')}
           >
-            <img
-              style={{
-                width: '1.5rem',
-                height: '1.5rem',
-                marginRight: '0.5rem',
-              }}
-              src={iServiceLogo}
-              alt="Logo iService"
-            />
-            <Typography variant="span" color="secondary">
-              i
-            </Typography>
-            Service
-          </Typography>
+            <IserviceTypography />
+          </ListItemButton>
           <Divider />
           <List>
             {navItems.map((item) => {
