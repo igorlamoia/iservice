@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
-import { Container, Typography, useTheme } from '@mui/material';
+import { Container, Skeleton, Typography, useTheme } from '@mui/material';
 import { SwiperSlide } from 'swiper/react';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import darkIServiceLottie from '../../assets/dark-iservice-lottie.json';
@@ -11,6 +11,7 @@ import {
   Navbar,
   WorkerCard,
   Carousel,
+  SkeletonWorkercard,
 } from '../../components';
 import { Categorias } from './categorias';
 import AboutUs from '../../components/about-us';
@@ -95,6 +96,16 @@ export default function Home() {
         </div>
         <Container>
           <Carousel>
+            {/* loading ? (
+  <Skeleton>
+
+  </Skeleton>
+) : (
+  <Avatar src={data.avatar} />
+); */}
+            <SwiperSlide>
+              <SkeletonWorkercard />
+            </SwiperSlide>
             {prestadores?.map((prestador) => (
               <SwiperSlide key={prestador.codPrestador}>
                 <WorkerCard user={prestador} />

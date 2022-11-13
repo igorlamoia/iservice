@@ -13,8 +13,10 @@ import Navbar from './app-bar';
 import MyPopover from './popover';
 import Carousel from './carousel';
 import IserviceTypography from './iservice-typography';
+import SkeletonWorkercard from './skeletons/worker-card';
 
 export {
+  SkeletonWorkercard,
   WorkerCard,
   ServiceCard,
   SearchInput,
