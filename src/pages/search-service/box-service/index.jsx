@@ -25,13 +25,25 @@ export function BoxService({ service = {} }) {
   const { mode } = palette;
 
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="center">
+    <Stack
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      sx={{ mt: 2 }}
+    >
       <Stack>
         <Typography
           variant="h4"
           component="h2"
           gutterBottom
-          sx={{ textTransform: 'uppercase' }}
+          sx={{
+            textTransform: 'uppercase',
+            fontSize: {
+              xs: '1.5rem',
+              sm: '1.7rem',
+              lg: '2.2rem',
+            },
+          }}
         >
           <TitleService service={service} />
         </Typography>
@@ -41,25 +53,34 @@ export function BoxService({ service = {} }) {
       </Stack>
       <Stack
         direction="row"
-        justifyContent="center"
-        alignItems="flex-end"
-        sx={{ maxWidth: { xs: 0, md: 300 }, position: 'relative' }}
+        sx={{
+          display: { xs: 'none', sm: 'flex' },
+          width: '50%',
+          justifyContent: 'center',
+        }}
       >
-        <LottieAnimacao
-          style={{ height: 180 }}
-          animationData={
-            mode === 'light' ? LottieLightModeWorker : LottieDarkModeWorker
-          }
-        />
-        <LottieAnimacao
-          style={{
-            height: 60,
-            position: 'absolute',
-            right: -10,
-            bottom: 30,
-          }}
-          animationData={FerramentaLight}
-        />
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-end"
+          sx={{ position: 'relative' }}
+        >
+          <LottieAnimacao
+            style={{ height: 180 }}
+            animationData={
+              mode === 'light' ? LottieLightModeWorker : LottieDarkModeWorker
+            }
+          />
+          <LottieAnimacao
+            style={{
+              height: 60,
+              position: 'absolute',
+              right: -10,
+              bottom: 30,
+            }}
+            animationData={FerramentaLight}
+          />
+        </Stack>
       </Stack>
       {/* <LottieAnimacao animationData={T2} /> */}
     </Stack>

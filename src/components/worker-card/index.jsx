@@ -12,6 +12,7 @@ import {
   IconButton,
   Paper,
   Rating,
+  Skeleton,
   Stack,
   Typography,
 } from '@mui/material';
@@ -23,6 +24,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ReactShowMoreText from 'react-show-more-text';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 import { MyPopover } from '..';
+import LoadImage from '../../assets/images/LogoiService.svg';
 
 const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
@@ -71,7 +73,9 @@ export default function WorkerCard({ user = {} }) {
           effect="blur"
           src={user.linkFoto || user.photoURL || DEFAULT_IMAGE}
           width={120}
-          style={{ borderRadius: '50%', objectFit: 'cover' }}
+          style={{ borderRadius: 100, objectFit: 'cover' }}
+          placeholderSrc={LoadImage}
+          placeholder={<Skeleton variant="circular" width={120} height={120} />}
         />
         <div className="profile-info">
           <h5 className="profile-name">{user.nome ?? 'Chaulim'}</h5>
