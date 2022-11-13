@@ -1,25 +1,29 @@
 import {
   Button,
-  Container,
-  Paper,
   Stack,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
 import './style.scss';
-import AssistenciaSVG from '../../../assets/assistencia-tecnica';
-import ReparosSVG from '../../../assets/reparos';
-import HouseSVG from '../../../assets/house';
-import { MyPaper } from '../../../components';
+import { useNavigate } from 'react-router-dom';
+import { MyPaper } from '..';
+import AssistenciaSVG from '../../assets/assistencia-tecnica';
+import ReparosSVG from '../../assets/reparos';
+import HouseSVG from '../../assets/house';
 
-export function Categorias() {
+export default function Categorias() {
   const {
     breakpoints,
     palette: { mode },
   } = useTheme();
   const themeMode = mode === 'light';
   const celular = useMediaQuery(breakpoints.down('sm'));
+  const navigate = useNavigate();
+
+  const handleNavigate = (params) => {
+    navigate('/search/service', { state: params });
+  };
 
   return (
     <MyPaper
@@ -52,7 +56,14 @@ export function Categorias() {
         }}
         justifyContent="center"
       >
-        <Button>
+        <Button
+          onClick={() =>
+            handleNavigate({
+              codCategoria: 1,
+              nomeCategoria: 'Assistência Técnica',
+            })
+          }
+        >
           <Stack
             sx={{ gap: 2, py: 1 }}
             alignItems="center"
@@ -72,7 +83,14 @@ export function Categorias() {
           </Stack>
         </Button>
 
-        <Button>
+        <Button
+          onClick={() =>
+            handleNavigate({
+              codCategoria: 2,
+              nomeCategoria: 'Reformas e reparos',
+            })
+          }
+        >
           <Stack sx={{ gap: 2 }} alignItems="center" justifyContent="center">
             <ReparosSVG size={celular ? 50 : 70} light={themeMode} />
             <Typography
@@ -88,7 +106,14 @@ export function Categorias() {
           </Stack>
         </Button>
 
-        <Button>
+        <Button
+          onClick={() =>
+            handleNavigate({
+              codCategoria: 3,
+              nomeCategoria: 'Serviços gerais',
+            })
+          }
+        >
           <Stack
             sx={{
               gap: 2,
@@ -107,7 +132,7 @@ export function Categorias() {
                 },
               }}
             >
-              Serviços domésticos
+              Serviços gerais
             </Typography>
           </Stack>
         </Button>
