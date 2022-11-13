@@ -29,12 +29,6 @@ export default function SkeletonWorkercard() {
             </Stack>
             <Skeleton height={25} width="6rem" />
             <Skeleton height={25} width="6rem" sx={{ borderRadius: 1.2 }} />
-
-            {/* <Skeleton height={18} width="4.5rem" />
-            <Skeleton height={19} width="5.5rem" sx={{ ml: 0.5 }} />
-            <Skeleton height={18} width="9rem" />
-            <Skeleton height={18} width="9rem" />
-            <Skeleton height={18} width="9rem" /> */}
           </Stack>
         </Stack>
         <Stack
