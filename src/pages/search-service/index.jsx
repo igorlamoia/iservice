@@ -1,4 +1,5 @@
 import { Box, Container, Typography } from '@mui/material';
+import { isNaN } from 'formik';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SwiperSlide } from 'swiper/react';
@@ -9,17 +10,27 @@ import {
   SkeletonWorkercard,
   WorkerCard,
 } from '../../components';
+import { useInteractivityContext } from '../../hooks/context/interactivityContext';
 import { api } from '../../utils/api';
-import { convertMinutesToStringTime } from '../../utils/format';
+import {
+  convertMinutesToStringTime,
+  convertTimeStringToMinute,
+  formatarHora,
+} from '../../utils/format';
 import { BoxService } from './box-service';
 import { BreadCrumbsMenu } from './bread-crumbs-menu';
 import { FilterOptions } from './filter-options';
 import { NoParamsFilterRoute } from './no-params-filter-route';
 
+const intervaloInvalido = (horario) => horario < 0 || horario > 1439;
+
 // import T2 from '../../assets/t2.json';
 // import useGeoLocation from '../../hooks/useGeolocation';
 
 export default function SearchService() {
+  const { setInteractivityError, setInteractivitySuccess } =
+    useInteractivityContext();
+
   const { state } = useLocation();
   const [isLoadingPrestadores, setIsLoadingPrestadores] = useState(true);
   const [prestadores, setPrestadores] = useState([]);
@@ -44,26 +55,62 @@ export default function SearchService() {
 
   const handleSearchPrestador = async () => {
     try {
-      return;
+      const horarioAtendimentoInicio = service.horarioAtendimentoInicio
+        ? convertTimeStringToMinute(
+            formatarHora(service.horarioAtendimentoInicio)
+          )
+        : null;
+      const horarioAtendimentoFim = service.horarioAtendimentoFim
+        ? convertTimeStringToMinute(formatarHora(service.horarioAtendimentoFim))
+        : null;
+
+      if (
+        isNaN(horarioAtendimentoInicio) ||
+        intervaloInvalido(horarioAtendimentoInicio)
+      )
+        return setInteractivityError(
+          'Horário de início de atendimento inválido'
+        );
+      if (
+        isNaN(horarioAtendimentoFim) ||
+        intervaloInvalido(horarioAtendimentoFim)
+      )
+        return setInteractivityError('Horário de fim de atendimento inválido');
       setIsLoadingPrestadores(true);
       const { data } = await api.post('filtros/listar-prestador', {
         codCategoria: service.codCategoria || null,
         codEspecialidade: service.codEspecialidade || null,
-        idServico: service.idServico || null,
+        // idServico: service.idServico || null,
         descricao: service.descricao || null,
-        diasAtendimento: [],
+        diasAtendimento: service.diasAtendimento || [],
+        horarioAtendimentoInicio,
+        horarioAtendimentoFim,
+        codCidade: service.city?.codCidade || null,
       });
       setPrestadores(handlePrestadores(data.payload));
     } catch (error) {
       console.log(error);
+      if (error.mensagem) return setInteractivityError(error.mensagem);
+      setInteractivityError('Erro ao buscar prestadores');
     } finally {
       setIsLoadingPrestadores(false);
     }
   };
 
   useEffect(() => {
-    if (service?.codCategoria) handleSearchPrestador();
-    else setIsLoadingPrestadores(false);
+    const haveService = service || {};
+    if (
+      !haveService.codCategoria &&
+      !haveService.codEspecialidade &&
+      !haveService.idServico &&
+      !haveService.descricao &&
+      !haveService.diasAtendimento &&
+      !haveService.horarioAtendimentoInicio &&
+      !haveService.horarioAtendimentoFim &&
+      !haveService.city?.codCidade
+    ) {
+      setIsLoadingPrestadores(false);
+    } else handleSearchPrestador();
   }, [service]);
 
   return (
@@ -88,7 +135,7 @@ export default function SearchService() {
         >
           <BreadCrumbsMenu params={service ?? {}} />
           <BoxService service={service ?? {}} />
-          <FilterOptions />
+          <FilterOptions service={service ?? {}} />
           <Carousel>
             {isLoadingPrestadores
               ? [1, 2, 3, 4].map((key) => (
