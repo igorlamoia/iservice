@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {
@@ -9,18 +8,27 @@ import {
   FormHelperText,
   Stack,
   TextField,
+  Toolbar,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import { Formik, isNaN } from 'formik';
 import { TimePicker } from '@mui/x-date-pickers';
 import { useNavigate } from 'react-router-dom';
+import Slide from '@mui/material/Slide';
 import { useInteractivityContext } from '../../../hooks/context/interactivityContext';
 import { MyButton, SearchInputForm } from '../../../components';
 import { ToogleWeekGroup } from '../../worker-register/week-toogle';
-import { filterValidationSchema } from '../../../utils/validation/worker-filter.schema';
 import { api } from '../../../utils/api';
 import { FiltersSelected } from './filters-selected';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export function FilterOptions({ service }) {
   const navigate = useNavigate();
@@ -150,6 +158,9 @@ export function FilterOptions({ service }) {
     }
   };
 
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <>
       <Stack spacing={1}>
@@ -164,8 +175,10 @@ export function FilterOptions({ service }) {
 
       <div>
         <Dialog
+          fullScreen={fullScreen}
           open={open}
           onClose={handleClose}
+          TransitionComponent={Transition}
           PaperProps={{
             sx: {
               bgcolor: 'background.default',
@@ -175,9 +188,22 @@ export function FilterOptions({ service }) {
             },
           }}
         >
+          <Toolbar
+            sx={{
+              justifyContent: 'flex-end',
+            }}
+          >
+            <IconButton
+              edge="end"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+          </Toolbar>
           <Formik
             initialValues={initialValues}
-            validationSchema={filterValidationSchema}
             onSubmit={async (values) => {
               // console.log('valuesaq', values);
               handleFilterForm(values);
@@ -195,7 +221,7 @@ export function FilterOptions({ service }) {
               <form onSubmit={handleSubmit}>
                 <DialogTitle
                   sx={{
-                    fontSize: '1.7rem',
+                    fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.5rem' },
                     textAlign: 'center',
                     width: '70%',
                     margin: 'auto',
@@ -241,7 +267,8 @@ export function FilterOptions({ service }) {
                         )}
                       </Stack>
                     </Stack>
-                    <Stack spacing={1} direction="row">
+
+                    <Stack spacing={1} direction={{ xs: 'column', md: 'row' }}>
                       <>
                         <SearchInputForm
                           loading={isLoadingCategories}
@@ -334,38 +361,30 @@ export function FilterOptions({ service }) {
                       </div>
                     </Stack>
                     <Stack spacing={1}>
-                      <Typography>Horários</Typography>
+                      <Typography>Horários de Atendimento</Typography>
                       <Stack direction="row" spacing={3}>
-                        <div>
-                          <TimePicker
-                            label="Início do atendimento"
-                            type="time"
-                            onChange={(value) =>
-                              setFieldValue(
-                                'horarioAtendimentoInicio',
-                                value,
-                                true
-                              )
-                            }
-                            value={values.horarioAtendimentoInicio}
-                            renderInput={(params) => <TextField {...params} />}
-                          />
-                        </div>
-                        <div>
-                          <TimePicker
-                            label="Fim do atendimento"
-                            type="time"
-                            value={values.horarioAtendimentoFim}
-                            onChange={(value) =>
-                              setFieldValue(
-                                'horarioAtendimentoFim',
-                                value,
-                                true
-                              )
-                            }
-                            renderInput={(params) => <TextField {...params} />}
-                          />
-                        </div>
+                        <TimePicker
+                          label="Início"
+                          type="time"
+                          onChange={(value) =>
+                            setFieldValue(
+                              'horarioAtendimentoInicio',
+                              value,
+                              true
+                            )
+                          }
+                          value={values.horarioAtendimentoInicio}
+                          renderInput={(params) => <TextField {...params} />}
+                        />
+                        <TimePicker
+                          label="Fim"
+                          type="time"
+                          value={values.horarioAtendimentoFim}
+                          onChange={(value) =>
+                            setFieldValue('horarioAtendimentoFim', value, true)
+                          }
+                          renderInput={(params) => <TextField {...params} />}
+                        />
                       </Stack>
                     </Stack>
                   </Stack>
