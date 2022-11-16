@@ -13,6 +13,7 @@ import { api } from '../../utils/api';
 import { convertMinutesToStringTime } from '../../utils/format';
 import { BoxService } from './box-service';
 import { BreadCrumbsMenu } from './bread-crumbs-menu';
+import { FilterOptions } from './filter-options';
 import { NoParamsFilterRoute } from './no-params-filter-route';
 
 // import T2 from '../../assets/t2.json';
@@ -43,6 +44,7 @@ export default function SearchService() {
 
   const handleSearchPrestador = async () => {
     try {
+      return;
       setIsLoadingPrestadores(true);
       const { data } = await api.post('filtros/listar-prestador', {
         codCategoria: service.codCategoria || null,
@@ -86,7 +88,7 @@ export default function SearchService() {
         >
           <BreadCrumbsMenu params={service ?? {}} />
           <BoxService service={service ?? {}} />
-
+          <FilterOptions />
           <Carousel>
             {isLoadingPrestadores
               ? [1, 2, 3, 4].map((key) => (
