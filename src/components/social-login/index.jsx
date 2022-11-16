@@ -42,7 +42,7 @@ export default function SocialLogin({ setFieldValue = () => {} }) {
           borderRadius: 2,
         })}
       >
-        <img style={{ margin: 'auto' }} src={SocialGoogleSVG} alt="google" />
+        <img style={{ margin: 'auto' }} src={SocialGoogleSVG} alt="Google" />
       </Button>
       <Button
         onClick={handleFacebookLogin}
@@ -54,7 +54,11 @@ export default function SocialLogin({ setFieldValue = () => {} }) {
           borderRadius: 2,
         })}
       >
-        <img style={{ margin: 'auto' }} src={SocialFacebookSVG} alt="google" />
+        <img
+          style={{ margin: 'auto' }}
+          src={SocialFacebookSVG}
+          alt="Facebook"
+        />
       </Button>
       <Button
         onClick={handleTwitterLogin}
@@ -66,7 +70,7 @@ export default function SocialLogin({ setFieldValue = () => {} }) {
           borderRadius: 2,
         })}
       >
-        <img style={{ margin: 'auto' }} src={SocialTwitterkSVG} alt="google" />
+        <img style={{ margin: 'auto' }} src={SocialTwitterkSVG} alt="Twitter" />
       </Button>
     </Stack>
   );

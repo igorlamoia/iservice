@@ -27,7 +27,19 @@ export default function SearchInputHome() {
   };
 
   const handleSelect = (value) => {
-    navigate('/search/service', { state: { service: value } });
+    return navigate('/search/service', { state: value });
+    // codCategoria: "1",
+    // codEspecialidade: "2",
+    // descricao: "Serviços gerais de pintura",
+    // nomeCategoria: "Serviços gerais",
+    // nomeEspecialidade: "Pintor",
+    navigate(
+      `/search/service?nomeCategoria=${encodeURI(
+        value.nomeCategoria
+      )}&nomeEspecialidade=${encodeURI(
+        value.nomeEspecialidade
+      )}&descricao=${encodeURI(value.descricao)}`
+    );
   };
 
   return (
