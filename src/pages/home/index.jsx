@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './style.scss';
 import LottieAnimacao from 'lottie-react';
-import { Container, Skeleton, Typography, useTheme } from '@mui/material';
+import { Container, Typography, useTheme } from '@mui/material';
 import { SwiperSlide } from 'swiper/react';
 import iServiceLottie from '../../assets/iservice-lottie.json';
 import darkIServiceLottie from '../../assets/dark-iservice-lottie.json';
@@ -12,8 +12,8 @@ import {
   WorkerCard,
   Carousel,
   SkeletonWorkercard,
+  Categorias,
 } from '../../components';
-import { Categorias } from './categorias';
 import AboutUs from '../../components/about-us';
 import SearchInput from './search-input';
 import { api } from '../../utils/api';
@@ -25,24 +25,24 @@ export default function Home() {
   } = useTheme();
   const darkmode = mode === 'dark';
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPrestadores, setIsLoadingPrestadores] = useState(false);
   const [prestadores, setPrestadores] = useState([]);
 
   const handlePrestadores = async () => {
     try {
-      setIsLoading(true);
+      setIsLoadingPrestadores(true);
       const { data } = await api.get('listar/todos-prestadores');
-      console.log('prestadores antes', data.payload?.prestadores);
+      // console.log('prestadores antes', data.payload?.prestadores);
       const prestadoresTratados = data.payload?.prestadores?.map(
         (prestador) => ({
           ...prestador,
           profissao: prestador.especialidades[0]?.nome,
-          especialidades: prestador.especialidades.map(
+          especialidades: prestador.especialidades?.map(
             (especialidade) => especialidade.descricao
           ),
           workDays: prestador.diasAtendimento?.split(','),
           descricao: prestador.descricaoProfissional,
-          cidades: prestador.cidadesAtendimento.map((cidade) => cidade.nome),
+          cidades: prestador.cidadesAtendimento?.map((cidade) => cidade.nome),
           horaDe: convertMinutesToStringTime(
             prestador.horarioAtendimentoInicio
           ),
@@ -54,7 +54,7 @@ export default function Home() {
     } catch (error) {
       console.log('error', error);
     } finally {
-      setIsLoading(false);
+      setIsLoadingPrestadores(false);
     }
   };
 
@@ -96,28 +96,17 @@ export default function Home() {
         </div>
         <Container>
           <Carousel>
-            {/* loading ? (
-  <Skeleton>
-
-  </Skeleton>
-) : (
-  <Avatar src={data.avatar} />
-); */}
-            <SwiperSlide>
-              <SkeletonWorkercard />
-            </SwiperSlide>
-            {prestadores?.map((prestador) => (
-              <SwiperSlide key={prestador.codPrestador}>
-                <WorkerCard user={prestador} />
-              </SwiperSlide>
-            ))}
-            <SwiperSlide>
-              <WorkerCard />
-            </SwiperSlide>
-
-            <SwiperSlide>
-              <WorkerCard />
-            </SwiperSlide>
+            {isLoadingPrestadores
+              ? [1, 2, 3, 4].map((key) => (
+                  <SwiperSlide key={key}>
+                    <SkeletonWorkercard />
+                  </SwiperSlide>
+                ))
+              : prestadores?.map((prestador) => (
+                  <SwiperSlide key={prestador.codPrestador}>
+                    <WorkerCard user={prestador} />
+                  </SwiperSlide>
+                ))}
           </Carousel>
           <AboutUs />
 

@@ -11,7 +11,7 @@ export function ToogleWeekGroup({ mudarDias, dias }) {
   const handleFormat = (event, newFormats) => {
     // setFormats(newFormats);
     mudarDias(newFormats);
-    console.log('newFormats:', newFormats);
+    // console.log('newFormats:', newFormats);
   };
 
   const MyToggleButton = styled(ToggleButton)(({ theme }) => ({

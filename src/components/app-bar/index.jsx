@@ -65,8 +65,11 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
               >
                 <MenuIcon />
               </IconButton>
-              <Stack direction="row" sx={{ width: 202 }}>
-                <Button onClick={() => navigate('/')}>
+              <Stack direction="row" sx={{ width: 202, alignItems: 'center' }}>
+                <Button
+                  sx={{ display: { xs: 'none', sm: 'flex' } }}
+                  onClick={() => navigate('/')}
+                >
                   <LogoTipo />
                 </Button>
                 <ToggleTheme />
