@@ -146,6 +146,7 @@ export function SecondStep() {
                     {() => (
                       <MyInput
                         label="CPF"
+                        type="tel"
                         id="cpf"
                         error={Boolean(errors.cpf && touched.cpf)}
                         errorMessage={errors.cpf}
@@ -164,6 +165,7 @@ export function SecondStep() {
                       <MyInput
                         label="Celular"
                         id="phone"
+                        type="tel"
                         value={values.phone}
                         error={Boolean(errors.phone && touched.phone)}
                         errorMessage={errors.phone}
@@ -187,6 +189,7 @@ export function SecondStep() {
                       <MyInput
                         label="CEP"
                         id="zipCode"
+                        type="tel"
                         value={values.zipCode}
                         error={Boolean(errors.zipCode && touched.zipCode)}
                         errorMessage={errors.zipCode}
@@ -212,6 +215,7 @@ export function SecondStep() {
                   <MyInput
                     isLoading={isLoadingCep}
                     label="Cidade"
+                    textTransform="capitalize"
                     id="city"
                     value={values.city}
                     onBlur={handleBlur}
@@ -224,6 +228,7 @@ export function SecondStep() {
                   <MyInput
                     isLoading={isLoadingCep}
                     label="Bairro"
+                    textTransform="capitalize"
                     id="neighborhood"
                     value={values.neighborhood}
                     onBlur={handleBlur}
@@ -238,6 +243,7 @@ export function SecondStep() {
                   <MyInput
                     isLoading={isLoadingCep}
                     label="Endereço"
+                    textTransform="capitalize"
                     id="address"
                     value={values.address}
                     onBlur={handleBlur}
@@ -250,6 +256,7 @@ export function SecondStep() {
                   <MyInput
                     label="Nº"
                     id="number"
+                    type="tel"
                     value={values.number}
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -269,6 +276,7 @@ export function SecondStep() {
                 isLoading={isLoadingCep}
                 label="Complemento"
                 id="complement"
+                textTransform="capitalize"
                 value={values.complement}
                 onBlur={handleBlur}
                 onChange={handleChange}

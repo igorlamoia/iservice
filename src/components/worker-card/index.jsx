@@ -24,7 +24,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ReactShowMoreText from 'react-show-more-text';
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 import { MyPopover } from '..';
-import LoadImage from '../../assets/images/LogoiService.svg';
+import LoadImage from '../../assets/images/avatar-default.svg';
 
 const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
