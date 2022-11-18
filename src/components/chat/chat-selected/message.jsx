@@ -1,6 +1,7 @@
+import { Typography } from '@mui/material';
 import React, { useEffect, useRef } from 'react';
-import { useAuthContext } from '../../hooks/context/AuthContext';
-import { useChatContext } from '../../hooks/context/ChatContext';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
+import { useChatContext } from '../../../hooks/context/ChatContext';
 
 function Message({ message }) {
   const { currentUser } = useAuthContext();
@@ -26,10 +27,10 @@ function Message({ message }) {
           }
           alt=""
         />
-        <span>just now</span>
+        <span>Enviada</span>
       </div>
       <div className="messageContent">
-        <p>{message.text}</p>
+        <Typography>{message.text}</Typography>
         {message.img && <img src={message.img} alt="" />}
       </div>
     </div>

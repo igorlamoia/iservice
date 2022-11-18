@@ -7,14 +7,16 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { v4 as uuid } from 'uuid';
+import SendIcon from '@mui/icons-material/Send';
+import { Box, Button, Paper, TextField } from '@mui/material';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import Img from '../../assets/images/img.png';
-import Attach from '../../assets/images/attach.png';
-import { db, storage } from '../../firebase';
-import { useAuthContext } from '../../hooks/context/AuthContext';
-import { useChatContext } from '../../hooks/context/ChatContext';
+import Img from '../../../assets/images/img.png';
+import Attach from '../../../assets/images/attach.png';
+import { db, storage } from '../../../firebase';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
+import { useChatContext } from '../../../hooks/context/ChatContext';
 
-function Input() {
+function Input({ drawerWidth }) {
   const [text, setText] = useState('');
   const [img, setImg] = useState(null);
 
@@ -74,15 +76,20 @@ function Input() {
     setImg(null);
   };
   return (
-    <div className="input">
-      <input
+    <Paper
+      sx={{ ml: drawerWidth, backdropFilter: 'blur(20px)' }}
+      className="input"
+    >
+      <TextField
         type="text"
-        placeholder="Type something..."
+        placeholder="Mensagem"
+        sx={{ width: '100%' }}
         onChange={(e) => setText(e.target.value)}
+        onKeyPress={(e) => e.key === 'Enter' && handleSend()}
         value={text}
       />
       <div className="send">
-        <img src={Attach} alt="" />
+        {/* <img src={Attach} alt="" /> */}
         <input
           type="file"
           style={{ display: 'none' }}
@@ -92,9 +99,11 @@ function Input() {
         <label htmlFor="file">
           <img src={Img} alt="" />
         </label>
-        <button onClick={handleSend}>Send</button>
+        <Button onClick={handleSend}>
+          <SendIcon />
+        </Button>
       </div>
-    </div>
+    </Paper>
   );
 }
 

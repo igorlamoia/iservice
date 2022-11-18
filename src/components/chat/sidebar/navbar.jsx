@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Stack } from '@mui/material';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase';
-import { useAuthContext } from '../../hooks/context/AuthContext';
-import { LogoTipo } from '../../pages/login';
-import IserviceTypography from '../iservice-typography';
+import { auth } from '../../../firebase';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
+import { LogoTipo } from '../../../pages/login';
+import IserviceTypography from '../../iservice-typography';
 
 function Navbar() {
   const { currentUser } = useAuthContext();

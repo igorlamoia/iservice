@@ -1,8 +1,9 @@
 import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { db } from '../../firebase';
-import { useAuthContext } from '../../hooks/context/AuthContext';
-import { useChatContext } from '../../hooks/context/ChatContext';
+import { db } from '../../../firebase';
+import { useAuthContext } from '../../../hooks/context/AuthContext';
+import { useChatContext } from '../../../hooks/context/ChatContext';
+import DEFAULT_AVATAR from '../../../assets/images/avatar-default.svg';
 
 function Chats() {
   const [chats, setChats] = useState([]);
@@ -38,7 +39,7 @@ function Chats() {
             key={chat[0]}
             onClick={() => handleSelect(chat[1].userInfo)}
           >
-            <img src={chat[1].userInfo.photoURL} alt="" />
+            <img src={chat[1].userInfo.photoURL || DEFAULT_AVATAR} alt="" />
             <div className="userChatInfo">
               <span>{chat[1].userInfo.displayName}</span>
               <p>{chat[1].lastMessage?.text}</p>
