@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../../firebase';
 import { useChatContext } from '../../../hooks/context/ChatContext';
 import Message from './message';
+import backgroundChatDarkSVG from '../../../assets/images/background-chat-gradient.svg';
+import backgroundChatLightSVG from '../../../assets/images/background-chat-gradient-light.svg';
 
-function Messages() {
+function Messages({ mode }) {
   const [messages, setMessages] = useState([]);
   const { data } = useChatContext();
 
@@ -24,7 +26,11 @@ function Messages() {
   return (
     <Stack
       sx={{
-        bgcolor: 'background.paper',
+        // bgcolor: 'background.paper',
+        backgroundImage: `url(${
+          mode ? backgroundChatLightSVG : backgroundChatDarkSVG
+        })`,
+        // bgcolor: 'red',
         display: 'flex',
         flexDirection: 'column',
         flex: 1,

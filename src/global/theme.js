@@ -20,7 +20,7 @@ export const getTheme = (mode) => ({
             main: '#C3C4C4',
           },
           chatShape: {
-            main: '#F3FCF4',
+            main: 'rgba(220,220,220, 0.9)',
             translucent: 'rgba(240,240,240, 0.5)',
           },
           primary: {

@@ -60,7 +60,7 @@ export default function SocialLogin({ setFieldValue = () => {} }) {
           alt="Facebook"
         />
       </Button>
-      <Button
+      {/* <Button
         onClick={handleTwitterLogin}
         variant="outlined"
         sx={({ palette }) => ({
@@ -71,7 +71,7 @@ export default function SocialLogin({ setFieldValue = () => {} }) {
         })}
       >
         <img style={{ margin: 'auto' }} src={SocialTwitterkSVG} alt="Twitter" />
-      </Button>
+      </Button> */}
     </Stack>
   );
 }

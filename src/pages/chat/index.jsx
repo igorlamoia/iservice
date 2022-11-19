@@ -7,7 +7,7 @@ export default function ChatPage() {
   const [sideberOpen, setSideberOpen] = React.useState(false);
   const theme = useTheme();
   const celular = useMediaQuery(theme.breakpoints.down('sm'));
-  const drawerWidth = celular ? '0px' : '400px';
+  const drawerWidth = celular ? '0px' : '330px';
 
   return (
     <Box>

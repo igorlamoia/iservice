@@ -40,7 +40,7 @@ function Message({ message }) {
           style={{ borderRadius: 100, objectFit: 'cover' }}
           placeholder={<Skeleton variant="circular" width={40} height={40} />}
         />
-        <span>Enviada</span>
+        {/* <span style={{ zIndex: 200 }}>Enviada</span> */}
       </div>
       <Paper
         sx={{

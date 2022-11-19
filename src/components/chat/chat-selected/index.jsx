@@ -12,7 +12,7 @@ function Chat({ setSideberOpen, drawerWidth }) {
   return (
     <div className="chat">
       <Navbar setSideberOpen={setSideberOpen} data={data} />
-      <Messages />
+      <Messages mode={palette.mode === 'light'} />
       <Input drawerWidth={drawerWidth} palette={palette} />
     </div>
   );
