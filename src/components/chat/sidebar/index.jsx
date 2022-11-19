@@ -12,12 +12,13 @@ function Sidebar({ sideberOpen, setSideberOpen, celular, drawerWidth }) {
           width: {
             xs: 300,
             sm: drawerWidth,
+            backdropFilter: 'blur(10px)',
           },
-          bgcolor: 'background.default',
+          // bgcolor: 'background.default',
         },
       }}
       anchor="left"
-      open={sideberOpen}
+      open={drawerWidth !== '0px' || sideberOpen}
       sx={{
         width: drawerWidth,
         display: 'flex',

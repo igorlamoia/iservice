@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   collection,
   query,
@@ -10,8 +11,11 @@ import {
   serverTimestamp,
   getDoc,
 } from 'firebase/firestore';
+import { InputAdornment, Skeleton, TextField } from '@mui/material';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { db } from '../../../firebase';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
+import DEFAULT_AVATAR from '../../../assets/images/avatar-default.svg';
 
 function Search() {
   const [username, setUsername] = useState('');
@@ -80,18 +84,34 @@ function Search() {
   return (
     <div className="search">
       <div className="searchForm">
-        <input
+        <TextField
           type="text"
-          placeholder="Find a user"
+          sx={{ width: '100%' }}
+          placeholder="Encontrar usuário"
           onKeyDown={handleKey}
           onChange={(e) => setUsername(e.target.value)}
           value={username}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
         />
       </div>
-      {err && <span>User not found!</span>}
+      {err && <span>Usuário não encontrado</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
-          <img src={user.photoURL} alt="" />
+          <LazyLoadImage
+            className="profile-img"
+            height={40}
+            effect="blur"
+            src={user.photoURL || DEFAULT_AVATAR}
+            width={40}
+            style={{ borderRadius: 100, objectFit: 'cover' }}
+            placeholder={<Skeleton variant="circular" width={40} height={40} />}
+          />
           <div className="userChatInfo">
             <span>{user.displayName}</span>
           </div>

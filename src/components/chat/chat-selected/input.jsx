@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   arrayUnion,
   doc,
@@ -6,10 +6,12 @@ import {
   Timestamp,
   updateDoc,
 } from 'firebase/firestore';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { v4 as uuid } from 'uuid';
 import SendIcon from '@mui/icons-material/Send';
-import { Box, Button, Paper, TextField } from '@mui/material';
+import { Box, Button, IconButton, Paper, TextField } from '@mui/material';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Img from '../../../assets/images/img.png';
 import Attach from '../../../assets/images/attach.png';
 import { db, storage } from '../../../firebase';
@@ -20,13 +22,16 @@ function Input({ drawerWidth }) {
   const [text, setText] = useState('');
   const [img, setImg] = useState(null);
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setimagePreview] = useState(null);
+
   const { currentUser } = useAuthContext();
   const { data } = useChatContext();
 
   const handleSend = async () => {
+    if (text.trim() === '' && !img) return;
     if (img) {
       const storageRef = ref(storage, uuid());
-
       const uploadTask = uploadBytesResumable(storageRef, img);
 
       uploadTask.on(
@@ -57,7 +62,8 @@ function Input({ drawerWidth }) {
         }),
       });
     }
-
+    setSelectedFile(null);
+    setimagePreview(null);
     await updateDoc(doc(db, 'userChats', currentUser.uid), {
       [`${data.chatId}.lastMessage`]: {
         text,
@@ -75,9 +81,38 @@ function Input({ drawerWidth }) {
     setText('');
     setImg(null);
   };
+
+  // UseEffect para foto preview
+  useEffect(() => {
+    if (!selectedFile) {
+      setimagePreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setimagePreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
+
+  // change profile image
+  const onSelectFile = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+
+    // I've kept this example simple by using the first image instead of multiple
+    setSelectedFile(e.target.files[0]);
+  };
+
   return (
     <Paper
-      sx={{ ml: drawerWidth, backdropFilter: 'blur(20px)' }}
+      sx={{
+        ml: drawerWidth,
+        backdropFilter: 'blur(20px)',
+      }}
       className="input"
     >
       <TextField
@@ -94,10 +129,13 @@ function Input({ drawerWidth }) {
           type="file"
           style={{ display: 'none' }}
           id="file"
-          onChange={(e) => setImg(e.target.files[0])}
+          onChange={(e) => {
+            onSelectFile(e);
+            setImg(e.target.files[0]);
+          }}
         />
-        <label htmlFor="file">
-          <img src={Img} alt="" />
+        <label htmlFor="file" style={{ cursor: 'pointer' }}>
+          <SendPhotoComponent imagePreview={imagePreview} />
         </label>
         <Button onClick={handleSend}>
           <SendIcon />
@@ -108,3 +146,19 @@ function Input({ drawerWidth }) {
 }
 
 export default Input;
+
+function SendPhotoComponent({ imagePreview }) {
+  if (imagePreview) {
+    return (
+      <LazyLoadImage
+        effect="blur"
+        src={imagePreview} // use normal <img> attributes as props
+        width={40}
+        height={40}
+        style={{ borderRadius: '50%', objectFit: 'cover' }}
+      />
+    );
+  }
+
+  return <AddPhotoAlternateIcon />;
+}

@@ -136,7 +136,7 @@
   }
 }
 .search {
-  border-bottom: 1px solid gray;
+  // border-bottom: 1px solid gray;
 
   .searchForm {
     padding: 10px;
@@ -245,6 +245,8 @@
       .messageInfo {
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         // color: gray;
         font-weight: 300;
 
@@ -259,15 +261,18 @@
         // max-width: 80%;
         display: flex;
         flex-direction: column;
-        gap: 10px;
-
+        // gap: 10px;
         p {
-          background-color: darkgreen;
-          padding: 10px 20px;
-          border-radius: 0px 10px 10px 10px;
+          // padding: 10px 20px;
           // max-width: max-content;
+          border-radius: 0px 10px 10px 10px;
+          // background-color: var(--color-primary-dark);
+          background-color: var(--color-bk-light);
+          padding: 0.6rem;
         }
-
+        [tema='dark'] {
+          background-color: var(--color-paper-dark);
+        }
         img {
           width: 50%;
         }
@@ -279,9 +284,14 @@
         .messageContent {
           align-items: flex-end;
           p {
-            background-color: green;
+            background-color: var(--color-primary-dark);
+            // padding: 0.6rem;
             // color: white;
             border-radius: 10px 0px 10px 10px;
+            // display: none;
+          }
+          [tipo='img'] {
+            background-color: transparent;
           }
         }
       }
@@ -305,28 +315,28 @@
       // width: 100%;
       border: none;
       outline: none;
-      color: #2f2d52;
+      // color: #2f2d52;
       // font-size: 18px;
 
       // &::placeholder {
-      color: lightgray;
+      // color: lightgray;
       // }
     }
 
     .send {
       display: flex;
       align-items: center;
-      gap: 10px;
+      // gap: 10px;
 
       img {
-        height: 24px;
+        // height: 24px;
         cursor: pointer;
       }
 
       // button {
       //   border: none;
       //   padding: 10px 15px;
-      color: white;
+      // color: white;
       // background-color: green;
       //   cursor: pointer;
       // }

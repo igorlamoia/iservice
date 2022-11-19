@@ -14,15 +14,15 @@ function Navbar() {
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ p: 1, bgcolor: 'primary.main' }}
+      sx={{ p: 1, bgcolor: 'primary.main', height: 50 }}
     >
       Bate papo
-      {/* <div className="user"> */}
-      {/* <img src={currentUser.photoURL} alt="" />
+      {/* <div className="user">
+        <img src={currentUser.photoURL} alt="" />
         <span>{currentUser.displayName} Lamoia Queiroz</span> */}
       {/* <Button variant="contained" onClick={() => signOut(auth)}>
-          Sair
-        </Button> */}
+        Sair
+      </Button> */}
       {/* </div> */}
     </Stack>
   );
