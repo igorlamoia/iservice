@@ -1,9 +1,11 @@
 import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { db } from '../../../firebase';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import { useChatContext } from '../../../hooks/context/ChatContext';
 import DEFAULT_AVATAR from '../../../assets/images/avatar-default.svg';
+import { Box, Skeleton, Stack } from '@mui/material';
 
 function Chats() {
   const [chats, setChats] = useState([]);
@@ -30,23 +32,34 @@ function Chats() {
   };
 
   return (
-    <div className="chats">
+    <Box sx={{ overflowY: 'scroll' }}>
       {Object.entries(chats)
         ?.sort((a, b) => b[1].date - a[1].date)
         .map((chat) => (
-          <div
+          <Stack
+            direction="row"
+            alignItems="center"
+            // justifyContent="space-between"
             className="userChat"
             key={chat[0]}
             onClick={() => handleSelect(chat[1].userInfo)}
           >
-            <img src={chat[1].userInfo.photoURL || DEFAULT_AVATAR} alt="" />
+            <LazyLoadImage
+              className="profile-img"
+              // height={24}
+              effect="blur"
+              src={chat[1].userInfo.photoURL || DEFAULT_AVATAR}
+              // width={24}
+              style={{ borderRadius: 100, objectFit: 'cover' }}
+              placeholder={<Skeleton variant="circular" />}
+            />
             <div className="userChatInfo">
               <span>{chat[1].userInfo.displayName}</span>
               <p>{chat[1].lastMessage?.text}</p>
             </div>
-          </div>
+          </Stack>
         ))}
-    </div>
+    </Box>
   );
 }
 

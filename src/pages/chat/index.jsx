@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
-import Sidebar from '../../components/chat/sidebar';
+import LeftSidebar from '../../components/chat/left-sidebar';
 import Chat from '../../components/chat/chat-selected';
 
 export default function ChatPage() {
@@ -12,8 +12,8 @@ export default function ChatPage() {
   return (
     <Box>
       <div className="container">
-        {/* TODO - SIDEBAR responsiva */}
-        <Sidebar
+        {/* TODO - LeftSidebar responsiva */}
+        <LeftSidebar
           sideberOpen={sideberOpen}
           setSideberOpen={setSideberOpen}
           celular={celular}

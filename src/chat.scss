@@ -33,7 +33,7 @@
     .logo {
       // color: var(--color-primary-dark);
       font-weight: bold;
-      font-size: 24px;
+      // font-size: 24px;
     }
 
     .title {
@@ -50,7 +50,7 @@
         padding: 15px;
         border: none;
         width: 250px;
-        border-bottom: 1px solid var(--color-primary-medium);
+        // border-bottom: 1px solid var(--color-primary-medium);
         &::placeholder {
           // color: rgb(175, 175, 175);
         }
@@ -226,17 +226,17 @@
     gap: 10px;
 
     img {
-      height: 24px;
-      cursor: pointer;
+      // height: 24px;
+      // cursor: pointer;
     }
   }
 
   .messages {
     // background-color: var(--color-primary-shape);
-    padding: 10px;
+    padding: 70px 10px;
     // height: calc(100% - 160px);
-    overflow: scroll;
-
+    overflow-y: scroll;
+    // margin: 100px 0;
     .message {
       display: flex;
       gap: 20px;

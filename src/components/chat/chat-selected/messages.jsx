@@ -28,7 +28,8 @@ function Messages() {
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
-        height: '90%',
+        height: '100%',
+        my: '50px',
       }}
       className="messages"
     >

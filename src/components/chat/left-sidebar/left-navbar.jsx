@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Stack } from '@mui/material';
+import { Button, Paper, Stack } from '@mui/material';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../../firebase';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
@@ -10,11 +10,17 @@ function Navbar() {
   const { currentUser } = useAuthContext();
 
   return (
-    <Stack
+    <Paper
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ p: 1, bgcolor: 'primary.main', height: 50 }}
+      sx={{
+        p: 1,
+        bgcolor: 'chatShape.main',
+        height: '3.1rem',
+        borderRadius: 0,
+      }}
+      elevation={1}
     >
       Bate papo
       {/* <div className="user">
@@ -24,7 +30,7 @@ function Navbar() {
         Sair
       </Button> */}
       {/* </div> */}
-    </Stack>
+    </Paper>
   );
 }
 

@@ -18,7 +18,7 @@ import { db, storage } from '../../../firebase';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import { useChatContext } from '../../../hooks/context/ChatContext';
 
-function Input({ drawerWidth }) {
+function Input({ drawerWidth, palette }) {
   const [text, setText] = useState('');
   const [img, setImg] = useState(null);
 
@@ -111,8 +111,11 @@ function Input({ drawerWidth }) {
     <Paper
       sx={{
         ml: drawerWidth,
-        backdropFilter: 'blur(20px)',
+        backdropFilter: 'blur(2px)',
+        bgcolor: 'chatShape.main',
+        borderRadius: 0,
       }}
+      elevation={2}
       className="input"
     >
       <TextField
