@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button, Paper, Stack, Typography } from '@mui/material';
 import { signOut } from 'firebase/auth';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../../../firebase';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import { LogoTipo } from '../../../pages/login';
 import IserviceTypography from '../../iservice-typography';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const { currentUser } = useAuthContext();

@@ -1,13 +1,17 @@
 import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
+import { Box, Chip, Skeleton, Stack, Typography } from '@mui/material';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { db } from '../../../firebase';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import { useChatContext } from '../../../hooks/context/ChatContext';
 import DEFAULT_AVATAR from '../../../assets/images/avatar-default.svg';
-import { Box, Skeleton, Stack } from '@mui/material';
+import {
+  convertSecondsToDay,
+  convertSecondsToHHMM,
+} from '../../../utils/format';
 
-function Chats() {
+function Chats({ setSideberOpen }) {
   const [chats, setChats] = useState([]);
 
   const { currentUser } = useAuthContext();
@@ -15,19 +19,27 @@ function Chats() {
 
   useEffect(() => {
     const getChats = () => {
-      const unsub = onSnapshot(doc(db, 'userChats', currentUser.uid), (doc) => {
-        setChats(doc.data());
-      });
+      // Chegam 2 posições no array, o uid [0] e os dados [1] p/ cada usuário
+      const unsub = onSnapshot(
+        doc(db, 'userChats', currentUser.uid),
+        (objQuery) => {
+          setChats(objQuery.data());
+        }
+      );
 
       return () => {
         unsub();
       };
     };
-
-    currentUser.uid && getChats();
+    if (currentUser.uid) {
+      getChats();
+    }
+    // currentUser.uid && getChats();
   }, [currentUser.uid]);
 
   const handleSelect = (u) => {
+    // u = { displayName, photoURL, uid }
+    setSideberOpen(false);
     dispatch({ type: 'CHANGE_USER', payload: u });
   };
 
@@ -44,19 +56,32 @@ function Chats() {
             key={chat[0]}
             onClick={() => handleSelect(chat[1].userInfo)}
           >
-            <LazyLoadImage
-              className="profile-img"
-              // height={24}
-              effect="blur"
-              src={chat[1].userInfo.photoURL || DEFAULT_AVATAR}
-              // width={24}
-              style={{ borderRadius: 100, objectFit: 'cover' }}
-              placeholder={<Skeleton variant="circular" />}
-            />
-            <div className="userChatInfo">
-              <span>{chat[1].userInfo.displayName}</span>
-              <p>{chat[1].lastMessage?.text}</p>
-            </div>
+            <Stack direction="row" alignItems="center">
+              <LazyLoadImage
+                className="profile-img"
+                // height={24}
+                effect="blur"
+                src={chat[1].userInfo.photoURL || DEFAULT_AVATAR}
+                // width={24}
+                style={{ borderRadius: 100, objectFit: 'cover' }}
+                placeholder={<Skeleton variant="circular" />}
+              />
+              <div className="userChatInfo">
+                <span>{chat[1].userInfo.displayName}</span>
+                <p>{chat[1].lastMessage?.text}</p>
+              </div>
+            </Stack>
+            <Stack
+              className="timeDate"
+              sx={{ textAlign: 'end', color: 'border.chat' }}
+            >
+              <Typography variant="caption">
+                {convertSecondsToDay(chat[1].date?.seconds)}
+              </Typography>
+              <Typography variant="caption">
+                {convertSecondsToHHMM(chat[1].date?.seconds)}
+              </Typography>
+            </Stack>
           </Stack>
         ))}
     </Box>

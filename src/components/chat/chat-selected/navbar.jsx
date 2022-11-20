@@ -1,8 +1,9 @@
-import { IconButton, Paper, Chip, Skeleton } from '@mui/material';
+import { IconButton, Paper, Chip, Skeleton, Stack } from '@mui/material';
 import React from 'react';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import DEFAULT_AVATAR from '../../../assets/images/avatar-default.svg';
+import ToggleTheme from '../../toggle-theme';
 
 export function Navbar({ setSideberOpen, data }) {
   return (
@@ -31,22 +32,27 @@ export function Navbar({ setSideberOpen, data }) {
       >
         <PersonSearchIcon />
       </IconButton>
-      <Chip
-        variant="outlined"
-        sx={{ border: '1px solid gray' }}
-        avatar={
-          <LazyLoadImage
-            className="profile-img"
-            height={24}
-            effect="blur"
-            src={data.user?.photoURL || DEFAULT_AVATAR}
-            width={24}
-            style={{ borderRadius: 100, objectFit: 'cover' }}
-            placeholder={<Skeleton variant="circular" width={24} height={24} />}
-          />
-        }
-        label={<span>{data.user?.displayName}</span>}
-      />
+      <Stack direction="row">
+        <ToggleTheme />
+        <Chip
+          variant="outlined"
+          sx={{ border: '1px solid gray' }}
+          avatar={
+            <LazyLoadImage
+              className="profile-img"
+              height={24}
+              effect="blur"
+              src={data.user?.photoURL || DEFAULT_AVATAR}
+              width={24}
+              style={{ borderRadius: 100, objectFit: 'cover' }}
+              placeholder={
+                <Skeleton variant="circular" width={24} height={24} />
+              }
+            />
+          }
+          label={<span>{data.user?.displayName}</span>}
+        />
+      </Stack>
     </Paper>
   );
 }

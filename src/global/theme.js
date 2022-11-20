@@ -18,6 +18,7 @@ export const getTheme = (mode) => ({
           },
           border: {
             main: '#C3C4C4',
+            chat: '#505051c3',
           },
           chatShape: {
             main: 'rgba(220,220,220, 0.9)',
@@ -64,6 +65,7 @@ export const getTheme = (mode) => ({
           },
           border: {
             main: '#505051',
+            chat: '#d9d9d9a3',
           },
           shadow: {
             main: 'rgba(5, 5, 5, 0.9)',

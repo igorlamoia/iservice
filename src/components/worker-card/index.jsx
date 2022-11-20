@@ -2,13 +2,14 @@
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import './style.scss';
 import {
   Badge,
   Box,
   Button,
   Chip,
+  CircularProgress,
   IconButton,
   Paper,
   Rating,
@@ -22,9 +23,24 @@ import AtendimentoLocationIcon from '@mui/icons-material/WhereToVoteRounded';
 import styled from '@emotion/styled';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ReactShowMoreText from 'react-show-more-text';
+
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  getDoc,
+} from 'firebase/firestore';
+
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 import { MyPopover } from '..';
 import LoadImage from '../../assets/images/avatar-default.svg';
+import { useNavigate } from 'react-router-dom';
+import { db } from '../../firebase';
 
 const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
@@ -33,6 +49,47 @@ const daysOfWeek = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
 
 export default function WorkerCard({ user = {} }) {
   const { palette } = useTheme();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  // console.log('user', user);
+
+  // Preciso disso no handleSelect:
+  // displayName : "teste"
+  // email : "teste@s.com"
+  // photoURL : null
+  // uid : "IUWO8glD8qbbstrS8P9UcqzlvwZ2"
+  const handleShowMore = async () => {
+    console.log('handleShowMore');
+    try {
+      if (isLoading) return;
+      setIsLoading(true);
+      const usersRef = collection(db, 'users');
+      const q = query(usersRef, where('email', '==', user.email));
+      const querySnapshot = await getDocs(q);
+
+      // Só preciso de um usuário, então pego o primeiro
+      querySnapshot.forEach((usuario) => {
+        const prestador = usuario.data();
+        navigate('/chat', {
+          state: {
+            prestador: {
+              displayName: prestador.displayName,
+              email: prestador.email,
+              photoURL: prestador.photoURL,
+              uid: prestador.uid,
+            },
+          },
+        });
+      });
+
+      setIsLoading(false);
+      // setTimeout(() => setIsLoading(false), 1000);
+    } catch (erro) {
+      console.log('erro', erro);
+      setIsLoading(false);
+    }
+  };
 
   const especialidesLabel = user.especialidades?.map((especialidade, index) => (
     <Typography key={especialidade} variant="span">
@@ -280,6 +337,8 @@ export default function WorkerCard({ user = {} }) {
       >
         <IconButton
           className="more-info"
+          onClick={handleShowMore}
+          // disabled={!isLoading}
           sx={{
             bgcolor: palette.primary.main,
             transition: 'filter .3s ease',
@@ -289,7 +348,11 @@ export default function WorkerCard({ user = {} }) {
             },
           }}
         >
-          <MoreSVG />
+          {isLoading ? (
+            <CircularProgress color="secondary" size={20} />
+          ) : (
+            <MoreSVG />
+          )}
         </IconButton>
         <h5>Avaliação mais recente</h5>
         <div className="review">
@@ -307,6 +370,7 @@ export default function WorkerCard({ user = {} }) {
         </div>
         <Button
           variant="contained"
+          disabled={isLoading}
           sx={{
             color: 'black',
             fontWeight: 600,

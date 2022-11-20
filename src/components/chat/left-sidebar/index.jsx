@@ -30,8 +30,8 @@ function Sidebar({ sideberOpen, setSideberOpen, celular, drawerWidth }) {
       variant={!celular ? 'persistent' : 'default'}
     >
       <Navbar />
-      <Search />
-      <Chats />
+      <Search setSideberOpen={setSideberOpen} />
+      <Chats setSideberOpen={setSideberOpen} />
     </Drawer>
   );
 }

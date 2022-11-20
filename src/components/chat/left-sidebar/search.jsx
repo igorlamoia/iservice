@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   collection,
@@ -11,18 +11,31 @@ import {
   serverTimestamp,
   getDoc,
 } from 'firebase/firestore';
-import { InputAdornment, Skeleton, TextField } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  Skeleton,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useLocation } from 'react-router-dom';
 import { db } from '../../../firebase';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import DEFAULT_AVATAR from '../../../assets/images/avatar-default.svg';
+import { useChatContext } from '../../../hooks/context/ChatContext';
 
-function Search() {
+function Search({ setSideberOpen }) {
   const [username, setUsername] = useState('');
-  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const [err, setErr] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { currentUser } = useAuthContext();
+  const { dispatch } = useChatContext();
 
   const handleSearch = async () => {
     const q = query(
@@ -30,26 +43,51 @@ function Search() {
       where('displayName', '==', username)
     );
 
+    let usuarios = []; // Usuários encontrados
+
     try {
+      setLoading(true);
       const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        setUser(doc.data());
+      querySnapshot.forEach((objQuery) => {
+        usuarios = [...usuarios, objQuery.data()];
       });
-    } catch (err) {
+      setUsers(usuarios); // Pega todos os usuários encontrados
+    } catch (erro) {
+      setErr(true);
+    } finally {
+      setLoading(false);
+    }
+    // console.log('dados', usuarios);
+
+    if (usuarios.length === 0) {
       setErr(true);
     }
   };
 
   const handleKey = (e) => {
-    e.code === 'Enter' && handleSearch();
+    setErr(false);
+
+    if (e.key === 'Enter') {
+      setUsers([]);
+      handleSearch();
+    }
   };
 
-  const handleSelect = async () => {
+  // Preciso disso no handleSelect:
+  // displayName : "teste"
+  // email : "teste@s.com"
+  // photoURL : null
+  // uid : "IUWO8glD8qbbstrS8P9UcqzlvwZ2"
+  const handleSelect = async (userSelected) => {
+    console.log('chamou');
+    setErr(false);
+    // console.log('tirei o users uai');
     // check whether the group(chats in firestore) exists, if not create
+    setLoading(true);
     const combinedId =
-      currentUser.uid > user.uid
-        ? currentUser.uid + user.uid
-        : user.uid + currentUser.uid;
+      currentUser.uid > userSelected.uid
+        ? currentUser.uid + userSelected.uid
+        : userSelected.uid + currentUser.uid;
     try {
       const res = await getDoc(doc(db, 'chats', combinedId));
 
@@ -57,17 +95,17 @@ function Search() {
         // create a chat in chats collection
         await setDoc(doc(db, 'chats', combinedId), { messages: [] });
 
-        // create user chats
+        // create userSelected chats
         await updateDoc(doc(db, 'userChats', currentUser.uid), {
           [`${combinedId}.userInfo`]: {
-            uid: user.uid,
-            displayName: user.displayName,
-            photoURL: user.photoURL,
+            uid: userSelected.uid,
+            displayName: userSelected.displayName,
+            photoURL: userSelected.photoURL,
           },
           [`${combinedId}.date`]: serverTimestamp(),
         });
 
-        await updateDoc(doc(db, 'userChats', user.uid), {
+        await updateDoc(doc(db, 'userChats', userSelected.uid), {
           [`${combinedId}.userInfo`]: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
@@ -76,11 +114,34 @@ function Search() {
           [`${combinedId}.date`]: serverTimestamp(),
         });
       }
-    } catch (err) {}
+      setSideberOpen(false);
+      dispatch({
+        type: 'CHANGE_USER',
+        payload: {
+          uid: userSelected.uid,
+          displayName: userSelected.displayName,
+          photoURL: userSelected.photoURL,
+        },
+      });
+    } catch (erro) {
+      console.log(erro);
+      console.log(erro.code);
+      console.log(erro.message);
+    } finally {
+      setLoading(false);
+    }
 
-    setUser(null);
-    setUsername('');
+    setUsers([]); // Limpa a lista de usuários
+    setUsername(''); // Limpa o campo de busca
   };
+
+  const { state } = useLocation();
+
+  useEffect(() => {
+    // console.log('state?.prestador', state?.prestador);
+    if (state?.prestador) handleSelect(state?.prestador);
+  }, [state]);
+
   return (
     <div className="search">
       <div className="searchForm">
@@ -97,25 +158,45 @@ function Search() {
                 <SearchIcon />
               </InputAdornment>
             ),
+            endAdornment: loading ? (
+              <CircularProgress color="secondary" size={20} />
+            ) : null,
           }}
         />
       </div>
-      {err && <span>Usuário não encontrado</span>}
-      {user && (
-        <div className="userChat" onClick={handleSelect}>
-          <LazyLoadImage
-            className="profile-img"
-            height={40}
-            effect="blur"
-            src={user.photoURL || DEFAULT_AVATAR}
-            width={40}
-            style={{ borderRadius: 100, objectFit: 'cover' }}
-            placeholder={<Skeleton variant="circular" width={40} height={40} />}
-          />
-          <div className="userChatInfo">
-            <span>{user.displayName}</span>
-          </div>
-        </div>
+      {err && (
+        <Stack>
+          <Typography
+            variant="caption"
+            sx={{ textAlign: 'center', color: 'border.chat' }}
+          >
+            Usuário não encontrado
+          </Typography>
+        </Stack>
+      )}
+      {users.length > 0 && (
+        <Stack
+          sx={{ overflowX: 'auto', px: 4 }}
+          direction="row"
+          className="userChat"
+        >
+          {users.map((user) => (
+            <Button key={user.uid} onClick={() => handleSelect(user)}>
+              <LazyLoadImage
+                className="profile-img"
+                effect="blur"
+                src={user.photoURL || DEFAULT_AVATAR}
+                style={{ borderRadius: 100, objectFit: 'cover' }}
+                placeholder={
+                  <Skeleton variant="circular" width={30} height={30} />
+                }
+              />
+              <div className="userChatInfo">
+                <span>{user.displayName}</span>
+              </div>
+            </Button>
+          ))}
+        </Stack>
       )}
     </div>
   );
