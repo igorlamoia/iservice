@@ -1,14 +1,26 @@
 import React from 'react';
-import Sidebar from '../../components/chat/Sidebar';
-import Chat from '../../components/chat/Chat';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
+import LeftSidebar from '../../components/chat/left-sidebar';
+import Chat from '../../components/chat/chat-selected';
 
 export default function ChatPage() {
+  const [sideberOpen, setSideberOpen] = React.useState(false);
+  const theme = useTheme();
+  const celular = useMediaQuery(theme.breakpoints.down('sm'));
+  const drawerWidth = celular ? '0px' : '330px';
+
   return (
-    <div className="home">
+    <Box>
       <div className="container">
-        <Sidebar />
-        <Chat />
+        {/* TODO - LeftSidebar responsiva */}
+        <LeftSidebar
+          sideberOpen={sideberOpen}
+          setSideberOpen={setSideberOpen}
+          celular={celular}
+          drawerWidth={drawerWidth}
+        />
+        <Chat setSideberOpen={setSideberOpen} drawerWidth={drawerWidth} />
       </div>
-    </div>
+    </Box>
   );
 }

@@ -10,13 +10,11 @@ export default function ToggleTheme() {
   } = useTheme();
 
   return (
-    <>
-      <MaterialUISwitch
-        onChange={toggleColorMode}
-        checked={mode === 'dark'}
-        sx={{ mx: { xs: 0, sm: 1 } }}
-      />
-    </>
+    <MaterialUISwitch
+      onChange={toggleColorMode}
+      checked={mode === 'dark'}
+      sx={{ mx: { xs: 0, sm: 1 } }}
+    />
   );
 }
 

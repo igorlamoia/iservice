@@ -16,16 +16,16 @@ import {
   CircularProgress,
   Container,
 } from '@mui/material';
-
 import ToggleTheme from '../toggle-theme';
 import { HideOnScroll } from './hide-on-scroll';
 import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
 import { LeftDrawer } from './drawer';
 import iServiceLogo from '../../assets/LogoiService.svg';
 import { useAuthContext } from '../../hooks/context/AuthContext';
+import { FadeMenu } from './menu';
 
 const navItems = [
-  { label: 'Quem somos', path: '' },
+  { label: 'Bate papo', path: 'chat' },
   { label: 'Contato', path: '' },
   { label: 'Oferecer serviço', path: 'worker/register', hiddenPrestador: true },
 ];
@@ -40,7 +40,7 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
     setMobileOpen(!mobileOpen);
   };
 
-  console.log('logedUser NAVBAR', logedUser);
+  // console.log('logedUser NAVBAR', logedUser);
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const navigate = useNavigate();
@@ -95,7 +95,14 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                   );
                 })}
               </Box>
-              <div style={{ width: 202, display: 'flex', gap: 2 }}>
+              <div
+                style={{
+                  width: 202,
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}
+              >
                 {!logedUser?.nome ? (
                   <Button
                     variant="contained"
@@ -131,35 +138,11 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                     {isLoading ? <CircularProgress size={20} /> : 'Entrar'}
                   </Button>
                 ) : null}
-                {logedUser?.nome ? (
-                  <>
-                    {!!logedUser?.nome && (
-                      <Stack alignItems="center">
-                        <img
-                          style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: '50%',
-                            objectFit: 'cover',
-                          }}
-                          src={logedUser?.linkFoto}
-                          alt=""
-                        />
-                        <Typography sx={{ fontSize: 12 }}>
-                          {logedUser?.nome}
-                        </Typography>
-                      </Stack>
-                    )}
-                    <Button
-                      sx={{ '&:hover': { bgcolor: 'transparent' } }}
-                      onClick={() => {
-                        logOut();
-                      }}
-                    >
-                      Sair
-                    </Button>
-                  </>
-                ) : null}
+                {logedUser?.nome
+                  ? !!logedUser?.nome && (
+                      <FadeMenu dadosusuario={logedUser} logOut={logOut} />
+                    )
+                  : null}
               </div>
             </Toolbar>
           </Container>
