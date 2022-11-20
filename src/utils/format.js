@@ -37,3 +37,21 @@ export function convertMinutesToStringTime(minutesAmount) {
   const minute = minutesAmount % 60;
   return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
 }
+
+export function convertSecondsToHHMM(seconds) {
+  const date = new Date(seconds * 1000);
+  return date.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+export function convertSecondsToDay(seconds) {
+  if (!seconds) return '';
+  const date = new Date(seconds * 1000);
+  return date.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+}

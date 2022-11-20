@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from 'react';
-
+import LottieAnimacao from 'lottie-react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -14,11 +14,13 @@ import { LogoTipo } from '..';
 import { FirstStep } from './first-step';
 import { SecondStep } from './second-step';
 import { LoginRegisterNavbar } from '../navbar';
+
+import loadingSecurity from '../../../assets/loading-security.json';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 
 export default function Register() {
   const [actualStep, setActualStep] = useState(0);
-  const { currentUser, logedUser } = useAuthContext();
+  const { currentUser, logedUser, isLoading } = useAuthContext();
   const steps = ['Dados básicos', 'Dados de uso'];
 
   const handleNextStep = useCallback(
@@ -35,6 +37,24 @@ export default function Register() {
       navigate('/');
     }
   }, [logedUser]);
+
+  if (isLoading) {
+    return (
+      <Container
+        sx={{
+          height: '100vh',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {/* <Typography>Finalizando Login...</Typography> */}
+        <LottieAnimacao animationData={loadingSecurity} />
+      </Container>
+    );
+  }
 
   return (
     <>

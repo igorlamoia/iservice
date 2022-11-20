@@ -2,15 +2,18 @@ import * as React from 'react';
 
 import { Avatar, Chip, Fade, MenuItem, Menu } from '@mui/material';
 
-export function FadeMenu({ dadosusuario }) {
+export function FadeMenu({ dadosusuario, logOut }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <div>
       <Chip
@@ -30,10 +33,13 @@ export function FadeMenu({ dadosusuario }) {
         open={open}
         onClose={handleClose}
         TransitionComponent={Fade}
+        PaperProps={{
+          sx: { bgcolor: 'background.default', minWidth: 100 },
+        }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>Perfil</MenuItem>
+        {/* <MenuItem onClick={handleClose}></MenuItem> */}
+        <MenuItem onClick={logOut}>Sair</MenuItem>
       </Menu>
     </div>
   );

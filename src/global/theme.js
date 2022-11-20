@@ -12,12 +12,17 @@ export const getTheme = (mode) => ({
           // common: { black: '#000', white: '#fff' },
           background: { paper: 'rgba(255,255,255, 0.8)', default: '#fafafa' },
           shape: {
-            main: '#d9d9d9',
+            main: '#fafafa',
             select: '#B3FFBD',
             selectLight: '#F3FCF4',
           },
           border: {
             main: '#C3C4C4',
+            chat: '#505051c3',
+          },
+          chatShape: {
+            main: 'rgba(220,220,220, 0.9)',
+            translucent: 'rgba(240,240,240, 0.5)',
           },
           primary: {
             light: 'rgba(149, 243, 180, 1)',
@@ -54,16 +59,21 @@ export const getTheme = (mode) => ({
           // common: { black: '#000', white: '#fff' },
           background: { paper: 'rgba(0, 0, 0, 0.8)', default: 'rgb(9,9,10)' },
           shape: {
-            main: 'black',
+            main: '#191919',
             light: '#303030',
             select: 'rgba(0, 200, 126, 1)',
           },
           border: {
             main: '#505051',
+            chat: '#d9d9d9a3',
           },
           shadow: {
             main: 'rgba(5, 5, 5, 0.9)',
             input: 'rgba(255, 255, 255, 0.1)',
+          },
+          chatShape: {
+            main: 'rgba(0, 0, 0, .95)',
+            translucent: 'rgba(50,50,50, 0.5)',
           },
           primary: {
             light: 'rgba(43, 230, 106, 1)',

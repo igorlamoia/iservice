@@ -15,7 +15,7 @@ export const AuthContext = createContext();
 export function AuthContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({}); // usuário atual logado no firebase
   const [logedUser, setLogedUser] = useState({}); // usuário logado no sistema
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const googleSignIn = () => {
     console.log('google');

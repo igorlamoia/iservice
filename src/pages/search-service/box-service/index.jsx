@@ -3,7 +3,6 @@ import React from 'react';
 import LottieAnimacao from 'lottie-react';
 import LottieLightModeWorker from '../../../assets/lightModeWorker.json';
 import LottieDarkModeWorker from '../../../assets/darkModeWorker.json';
-import FerramentaLight from '../../../assets/ferramentaLight.json';
 
 function TitleService({ service = {} }) {
   if (service.descricao) {
@@ -29,7 +28,7 @@ export function BoxService({ service = {} }) {
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      sx={{ mt: 2 }}
+      sx={{ my: 2 }}
     >
       <Stack>
         <Typography
@@ -39,15 +38,24 @@ export function BoxService({ service = {} }) {
           sx={{
             textTransform: 'uppercase',
             fontSize: {
-              xs: '1.5rem',
-              sm: '1.7rem',
-              lg: '2.2rem',
+              xs: '1.1rem',
+              sm: '1.5rem',
+              lg: '2rem',
             },
           }}
         >
           <TitleService service={service} />
         </Typography>
-        <Typography variant="h6" sx={{ color: 'border.main' }}>
+        <Typography
+          variant="h6"
+          sx={{
+            color: 'border.main',
+            fontSize: {
+              xs: '1rem',
+              sm: '1rem',
+            },
+          }}
+        >
           Veja abaixo algumas as opções que melhor te atende
         </Typography>
       </Stack>
@@ -61,24 +69,16 @@ export function BoxService({ service = {} }) {
       >
         <Stack
           direction="row"
-          justifyContent="center"
-          alignItems="flex-end"
-          sx={{ position: 'relative' }}
+          justifyContent="flex-end"
+          alignItems="center"
+          sx={{ position: 'relative', width: '100%' }}
         >
           <LottieAnimacao
-            style={{ height: 180 }}
+            style={{ height: 200 }}
+            autoplay={false} // TODO - colocar interativo
             animationData={
               mode === 'light' ? LottieLightModeWorker : LottieDarkModeWorker
             }
-          />
-          <LottieAnimacao
-            style={{
-              height: 60,
-              position: 'absolute',
-              right: -10,
-              bottom: 30,
-            }}
-            animationData={FerramentaLight}
           />
         </Stack>
       </Stack>

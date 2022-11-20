@@ -163,7 +163,7 @@ export function FilterOptions({ service }) {
 
   return (
     <>
-      <Stack spacing={1}>
+      <Stack spacing={1} sx={{ my: { xs: 1, md: 0 } }}>
         <Chip
           label="Filtros"
           sx={{ maxWidth: 150 }}

@@ -349,6 +349,7 @@ export function FirstStep({ handleNextStep }) {
                 <MyInput
                   label="Nome/Apelido"
                   id="nickname"
+                  textTransform="capitalize"
                   {...(currentUser && { shrink: true })}
                   value={values.nickname}
                   onBlur={handleBlur}
@@ -360,6 +361,8 @@ export function FirstStep({ handleNextStep }) {
               <MyInput
                 label="E-mail"
                 id="email"
+                type="email"
+                textTransform="lowercase"
                 {...(currentUser && { disabled: true, shrink: true })}
                 value={values.email}
                 onBlur={handleBlur}

@@ -66,9 +66,12 @@ export default function MyInput({
       <OutlinedInput
         id={id}
         disabled={isLoading}
-        type="text"
+        type={rest.type ?? 'text'}
         name={id}
         label={label}
+        {...(rest.textTransform && {
+          inputProps: { style: { textTransform: rest.textTransform } },
+        })}
         {...rest}
         endAdornment={isLoading ? <Loader /> : endAdornment}
       />
