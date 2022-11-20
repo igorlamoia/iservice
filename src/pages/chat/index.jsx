@@ -4,7 +4,7 @@ import LeftSidebar from '../../components/chat/left-sidebar';
 import Chat from '../../components/chat/chat-selected';
 
 export default function ChatPage() {
-  const [sideberOpen, setSideberOpen] = React.useState(false);
+  const [sideberOpen, setSideberOpen] = React.useState(true);
   const theme = useTheme();
   const celular = useMediaQuery(theme.breakpoints.down('sm'));
   const drawerWidth = celular ? '0px' : '330px';

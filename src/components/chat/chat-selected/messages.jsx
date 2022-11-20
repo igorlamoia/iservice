@@ -21,7 +21,7 @@ function Messages({ mode }) {
     };
   }, [data.chatId]);
 
-  console.log(messages);
+  // console.log(messages);
 
   return (
     <Stack

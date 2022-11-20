@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Container,
   FormHelperText,
@@ -113,6 +113,12 @@ export default function WorkerRegister() {
       }
     }
   };
+
+  useEffect(() => {
+    if (!logedUser.nome) {
+      navigate('/login/register');
+    }
+  }, []);
 
   return (
     <>

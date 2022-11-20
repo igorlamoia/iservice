@@ -20,7 +20,7 @@ function Chats({ setSideberOpen }) {
   useEffect(() => {
     const getChats = () => {
       // Chegam 2 posições no array, o uid [0] e os dados [1] p/ cada usuário
-      console.log('currentUser', currentUser);
+      // console.log('currentUser', currentUser);
       const unsub = onSnapshot(
         doc(db, 'userChats', currentUser.uid),
         (objQuery) => {

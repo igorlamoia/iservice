@@ -19,7 +19,7 @@ function Message({ message }) {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   }, [message]);
 
-  console.log(mode);
+  // console.log(mode);
 
   return (
     <div
