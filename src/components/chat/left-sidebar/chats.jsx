@@ -20,6 +20,7 @@ function Chats({ setSideberOpen }) {
   useEffect(() => {
     const getChats = () => {
       // Chegam 2 posições no array, o uid [0] e os dados [1] p/ cada usuário
+      console.log('currentUser', currentUser);
       const unsub = onSnapshot(
         doc(db, 'userChats', currentUser.uid),
         (objQuery) => {
@@ -32,6 +33,7 @@ function Chats({ setSideberOpen }) {
       };
     };
     if (currentUser.uid) {
+      // console.log('buscando CHATTTT');
       getChats();
     }
     // currentUser.uid && getChats();
@@ -45,9 +47,9 @@ function Chats({ setSideberOpen }) {
 
   return (
     <Box sx={{ overflowY: 'scroll' }}>
-      {Object.entries(chats)
+      {Object.entries(chats || [])
         ?.sort((a, b) => b[1].date - a[1].date)
-        .map((chat) => (
+        ?.map((chat) => (
           <Stack
             direction="row"
             alignItems="center"

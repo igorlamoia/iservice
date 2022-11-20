@@ -32,12 +32,20 @@ import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
 import SpeedDialMore from './speed-more';
 
-const DEFAULT_IMAGE =
-  'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
-
 const daysOfWeek = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+const weekDays = [
+  'Segunda',
+  'Terça',
+  'Quarta',
+  'Quinta',
+  'Sexta',
+  'Sábado',
+  'Domingo',
+];
 
 export default function WorkerCard({ user = {} }) {
+  const DEFAULT_IMAGE = LoadImage;
+
   const { palette } = useTheme();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +90,11 @@ export default function WorkerCard({ user = {} }) {
   };
 
   const especialidesLabel = user.especialidades?.map((especialidade, index) => (
-    <Typography key={especialidade} variant="span">
+    <Typography
+      sx={{ textTransform: 'capitalize' }}
+      key={especialidade}
+      variant="span"
+    >
       {index === 0 ? especialidade : ` - ${especialidade}`}
     </Typography>
   ));
@@ -93,6 +105,7 @@ export default function WorkerCard({ user = {} }) {
         sx={{
           height: 23,
           maxWidth: 100,
+          textTransform: 'capitalize',
           // ml: 0.1,
           '.MuiChip-label': { fontSize: 12 },
         }}
@@ -125,16 +138,17 @@ export default function WorkerCard({ user = {} }) {
           placeholder={<Skeleton variant="circular" width={120} height={120} />}
         />
         <div className="profile-info">
-          <h5 className="profile-name">{user.nome ?? 'Chaulim'}</h5>
+          <h5 className="profile-name">{user.nome}</h5>
           <MyPopover title={user.profissao}>
             <Chip
               sx={{
                 maxWidth: 120,
                 textAlign: 'left',
                 my: 0.5,
+                textTransform: 'capitalize',
               }}
               size="small"
-              label={user.profissao ?? 'Açougueiro'}
+              label={user.profissao}
             />
           </MyPopover>
 
@@ -230,22 +244,23 @@ export default function WorkerCard({ user = {} }) {
       >
         <Stack direction="row" spacing={0.4}>
           {daysOfWeek.map((day, index) => (
-            <Chip
-              key={index}
-              sx={{
-                height: 26,
-                width: 26,
-                '.MuiChip-label': { fontSize: 10 },
-              }}
-              label={day}
-              variant="outlined"
-              size="small"
-              color={
-                user.workDays?.includes((index + 1).toString())
-                  ? 'primary'
-                  : 'default'
-              }
-            />
+            <MyPopover key={weekDays[index]} title={weekDays[index]}>
+              <Chip
+                sx={{
+                  height: 26,
+                  width: 26,
+                  '.MuiChip-label': { fontSize: 10 },
+                }}
+                label={day}
+                variant="outlined"
+                size="small"
+                color={
+                  user.workDays?.includes((index + 1).toString())
+                    ? 'primary'
+                    : 'default'
+                }
+              />
+            </MyPopover>
           ))}
         </Stack>
       </Stack>
@@ -308,9 +323,7 @@ export default function WorkerCard({ user = {} }) {
             truncatedEndingComponent="... "
             // width={200}
           >
-            {user.descricao ??
-              `Faço serviços relacionados a Televisão, Ar condicionado, Faço serviços relacionados a Televisão, Ar condicionado,Faço serviços relacionados a Televisão, Ar condicionado,
-          local`}
+            {user.descricao}
           </ReactShowMoreText>
         </Stack>
       </div>
@@ -348,13 +361,13 @@ export default function WorkerCard({ user = {} }) {
         <div className="review">
           {user.avaliacaoMaisRecente ? (
             <p>
-              <strong>Roberto Silva:</strong> Excelentes profissionais, rápidos,
-              honestos e com bom preços. Recomendo muito
+              <Typography as="strong">Roberto Silva:</Typography> Excelentes
+              profissionais, rápidos, honestos e com bom preços. Recomendo muito
             </p>
           ) : (
             <p>
-              <strong>{user.nome}</strong> ainda não possui avaliações. Seja o
-              primeiro a avaliar
+              <Typography as="strong">{user.nome}</Typography> ainda não possui
+              avaliações. Seja o primeiro a avaliar
             </p>
           )}
         </div>

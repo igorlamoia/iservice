@@ -50,7 +50,7 @@ export default function Register() {
           alignItems: 'center',
         }}
       >
-        <Typography>Finalizando Login...</Typography>
+        {/* <Typography>Finalizando Login...</Typography> */}
         <LottieAnimacao animationData={loadingSecurity} />
       </Container>
     );

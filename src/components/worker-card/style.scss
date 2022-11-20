@@ -26,6 +26,7 @@ div.card-body {
       margin-left: 0.6rem;
     }
     .profile-name {
+      text-transform: capitalize;
       // color: var(--color-text-button);
       display: -webkit-box;
       -webkit-line-clamp: 1;
@@ -96,6 +97,11 @@ div.card-body {
       font-size: 1rem;
     }
     .review {
+      p {
+        strong {
+          text-transform: capitalize;
+        }
+      }
       margin: 1rem 0 1.5rem;
     }
     .more-info {

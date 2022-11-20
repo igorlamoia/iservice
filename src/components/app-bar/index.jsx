@@ -25,7 +25,7 @@ import { useAuthContext } from '../../hooks/context/AuthContext';
 import { FadeMenu } from './menu';
 
 const navItems = [
-  { label: 'Quem somos', path: '' },
+  { label: 'Bate papo', path: 'chat' },
   { label: 'Contato', path: '' },
   { label: 'Oferecer serviço', path: 'worker/register', hiddenPrestador: true },
 ];
