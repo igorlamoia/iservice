@@ -58,7 +58,7 @@ export default function WorkerCard({ user = {} }) {
   // photoURL : null
   // uid : "IUWO8glD8qbbstrS8P9UcqzlvwZ2"
   const handleShowMore = async () => {
-    console.log('handleShowMore');
+    // console.log('handleShowMore');
     try {
       if (isLoading) return;
       setIsLoading(true);

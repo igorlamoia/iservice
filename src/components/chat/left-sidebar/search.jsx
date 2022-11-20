@@ -22,7 +22,7 @@ import {
   Typography,
 } from '@mui/material';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { db } from '../../../firebase';
 import { useAuthContext } from '../../../hooks/context/AuthContext';
 import DEFAULT_AVATAR from '../../../assets/images/avatar-default.svg';
@@ -36,6 +36,9 @@ function Search({ setSideberOpen }) {
 
   const { currentUser } = useAuthContext();
   const { dispatch } = useChatContext();
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     const q = query(
@@ -79,7 +82,8 @@ function Search({ setSideberOpen }) {
   // photoURL : null
   // uid : "IUWO8glD8qbbstrS8P9UcqzlvwZ2"
   const handleSelect = async (userSelected) => {
-    console.log('chamou');
+    navigate(location.pathname, {});
+    // console.log('chamou');
     setErr(false);
     // console.log('tirei o users uai');
     // check whether the group(chats in firestore) exists, if not create
