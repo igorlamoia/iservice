@@ -96,12 +96,12 @@ export default function Login() {
       <LoginRegisterNavbar />
       <Container
         sx={{
-          minHeight: '100vh',
+          minHeight: 'calc(100vh - 64px)',
           display: 'grid',
           placeItems: 'center',
         }}
       >
-        <Paper sx={{ p: 4, minWidth: { sm: 375 } }} elevation={4}>
+        <Paper sx={{ p: 4, minWidth: { sm: 375 }, my: 2 }} elevation={4}>
           <Stack spacing={1} sx={{ alignItems: 'center', textAlign: 'center' }}>
             <LogoTipo />
             <Typography>Olá, bem vindo de volta</Typography>

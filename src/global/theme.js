@@ -12,7 +12,7 @@ export const getTheme = (mode) => ({
           // common: { black: '#000', white: '#fff' },
           background: { paper: 'rgba(255,255,255, 0.8)', default: '#fafafa' },
           shape: {
-            main: '#d9d9d9',
+            main: '#fafafa',
             select: '#B3FFBD',
             selectLight: '#F3FCF4',
           },
@@ -59,7 +59,7 @@ export const getTheme = (mode) => ({
           // common: { black: '#000', white: '#fff' },
           background: { paper: 'rgba(0, 0, 0, 0.8)', default: 'rgb(9,9,10)' },
           shape: {
-            main: 'black',
+            main: '#191919',
             light: '#303030',
             select: 'rgba(0, 200, 126, 1)',
           },

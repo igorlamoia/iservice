@@ -10,7 +10,6 @@ import {
   Button,
   Chip,
   CircularProgress,
-  IconButton,
   Paper,
   Rating,
   Skeleton,
@@ -24,23 +23,14 @@ import styled from '@emotion/styled';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ReactShowMoreText from 'react-show-more-text';
 
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  setDoc,
-  doc,
-  updateDoc,
-  serverTimestamp,
-  getDoc,
-} from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 import { ReactComponent as MoreSVG } from '../../assets/more.svg';
 import { MyPopover } from '..';
 import LoadImage from '../../assets/images/avatar-default.svg';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
+import SpeedDialMore from './speed-more';
 
 const DEFAULT_IMAGE =
   'https://images.unsplash.com/photo-1615906655593-ad0386982a0f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=120&q=100';
@@ -335,25 +325,25 @@ export default function WorkerCard({ user = {} }) {
         className="card-footer"
         mode={palette.mode}
       >
-        <IconButton
-          className="more-info"
-          onClick={handleShowMore}
-          // disabled={!isLoading}
-          sx={{
-            bgcolor: palette.primary.main,
-            transition: 'filter .3s ease',
-            '&:hover': {
-              bgcolor: palette.primary.dark,
-              filter: `drop-shadow(0px 0px 0.6rem ${palette.primary.main})`,
-            },
-          }}
-        >
-          {isLoading ? (
+        {/* <CustomSpeedDial /> */}
+        {isLoading ? (
+          <Stack
+            sx={{
+              position: 'absolute',
+              p: '10px',
+              mt: '-20px',
+              top: 0,
+              // bgcolor: 'primary.main',
+              boxShadow: `0px 0px 5px ${palette.primary.main}`,
+              borderRadius: '50%',
+              right: '1.75rem',
+            }}
+          >
             <CircularProgress color="secondary" size={20} />
-          ) : (
-            <MoreSVG />
-          )}
-        </IconButton>
+          </Stack>
+        ) : (
+          <SpeedDialMore palette={palette} handleShowMore={handleShowMore} />
+        )}
         <h5>Avaliação mais recente</h5>
         <div className="review">
           {user.avaliacaoMaisRecente ? (
@@ -393,16 +383,15 @@ export default function WorkerCard({ user = {} }) {
 
 const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   position: 'absolute',
-  '&.MuiSpeedDial-directionDown': {
-    top: theme.spacing(0),
-    left: theme.spacing(0),
-  },
-  top: 0,
+
+  top: -10,
   bottom: 0,
   left: 0,
-  right: 10,
+  right: -10,
+
   '& .MuiButtonBase-root.MuiSpeedDial-fab': {
     backgroundColor: 'rgba(0,0,0,0)',
+
     width: '140px',
     borderRadius: 0,
     minHeight: '25px',
@@ -410,5 +399,26 @@ const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   },
   '.MuiSpeedDialAction-staticTooltipLabel': {
     backgroundColor: theme.palette.shape.main,
+    paddingBottom: 0,
+  },
+  // zIndex: 1051,
+  span: {
+    '&.MuiSpeedDialAction-staticTooltip': {
+      display: 'flex',
+      flexDirection: 'row-reverse',
+      // backgroundColor: 'red',
+      transform: 'translateX(-100px)',
+    },
+    '&.MuiSpeedDialAction-staticTooltipLabel': {
+      minWidth: '100px',
+      textAlign: 'center',
+      transform: 'translateX(195px)',
+    },
+  },
+  '&:hover': {
+    filter: `drop-shadow(0 0 0.6rem ${theme.palette.primary.main})`,
+  },
+  '& .MuiSpeedDial-actions': {
+    transform: 'translateY(-10px)',
   },
 }));
