@@ -16,13 +16,13 @@ import {
   CircularProgress,
   Container,
 } from '@mui/material';
-
 import ToggleTheme from '../toggle-theme';
 import { HideOnScroll } from './hide-on-scroll';
 import { ScrolltopIcon } from './scroll-top/scroll-to-top-icon';
 import { LeftDrawer } from './drawer';
 import iServiceLogo from '../../assets/LogoiService.svg';
 import { useAuthContext } from '../../hooks/context/AuthContext';
+import { FadeMenu } from './menu';
 
 const navItems = [
   { label: 'Quem somos', path: '' },
@@ -40,7 +40,7 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
     setMobileOpen(!mobileOpen);
   };
 
-  console.log('logedUser NAVBAR', logedUser);
+  // console.log('logedUser NAVBAR', logedUser);
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const navigate = useNavigate();
@@ -133,23 +133,7 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                 ) : null}
                 {logedUser?.nome ? (
                   <>
-                    {!!logedUser?.nome && (
-                      <Stack alignItems="center">
-                        <img
-                          style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: '50%',
-                            objectFit: 'cover',
-                          }}
-                          src={logedUser?.linkFoto}
-                          alt=""
-                        />
-                        <Typography sx={{ fontSize: 12 }}>
-                          {logedUser?.nome}
-                        </Typography>
-                      </Stack>
-                    )}
+                    {!!logedUser?.nome && <FadeMenu dadosusuario={logedUser} />}
                     <Button
                       sx={{ '&:hover': { bgcolor: 'transparent' } }}
                       onClick={() => {
