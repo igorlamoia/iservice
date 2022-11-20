@@ -150,7 +150,6 @@ export default function SearchService() {
                 ))}
           </Carousel>
 
-          <NoParamsFilterRoute service={service ?? {}} />
           <Box
             sx={{
               my: 'auto',
@@ -176,6 +175,7 @@ export default function SearchService() {
               </Typography>
             )}
           </Box>
+          <NoParamsFilterRoute service={service ?? {}} />
         </Container>
       </Box>
       <Footer />
