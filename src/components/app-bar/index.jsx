@@ -95,7 +95,14 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                   );
                 })}
               </Box>
-              <div style={{ width: 202, display: 'flex', gap: 2 }}>
+              <div
+                style={{
+                  width: 202,
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}
+              >
                 {!logedUser?.nome ? (
                   <Button
                     variant="contained"
@@ -131,19 +138,11 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                     {isLoading ? <CircularProgress size={20} /> : 'Entrar'}
                   </Button>
                 ) : null}
-                {logedUser?.nome ? (
-                  <>
-                    {!!logedUser?.nome && <FadeMenu dadosusuario={logedUser} />}
-                    <Button
-                      sx={{ '&:hover': { bgcolor: 'transparent' } }}
-                      onClick={() => {
-                        logOut();
-                      }}
-                    >
-                      Sair
-                    </Button>
-                  </>
-                ) : null}
+                {logedUser?.nome
+                  ? !!logedUser?.nome && (
+                      <FadeMenu dadosusuario={logedUser} logOut={logOut} />
+                    )
+                  : null}
               </div>
             </Toolbar>
           </Container>

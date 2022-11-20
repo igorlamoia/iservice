@@ -38,13 +38,15 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [errorForm, seterrorForm] = useState({ error: false });
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const { currentUser, logOut, setLogedUser } = useAuthContext();
+  const { currentUser, setLogedUser, isLoading } = useAuthContext();
+
+  const someThingIsLoading = isLoading || loading;
 
   const handleLoginForm = async (values) => {
     try {
-      setIsLoading(true);
+      setLoading(true);
       await signInWithEmailAndPassword(auth, values.email, values.password);
       // navigate('/login/register');
     } catch (err) {
@@ -60,7 +62,7 @@ export default function Login() {
       seterrorForm({ error: true, message: err.message });
       // setErr(true);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -79,7 +81,7 @@ export default function Login() {
       api
         .get(`listar/dados-usuario?idFirebase=${currentUser?.uid}`)
         .then((user) => {
-          setIsLoading(false);
+          setLoading(false);
           if (user.data.payload) {
             setLogedUser(user.data.payload);
             navigate('/');
@@ -185,8 +187,8 @@ export default function Login() {
                   />
                   <ForgotPassword />
                   <MyButton
-                    isLoading={isLoading}
-                    disabled={isLoading || !isEmptyObject(errors)}
+                    loading={someThingIsLoading}
+                    disabled={someThingIsLoading || !isEmptyObject(errors)}
                     type="submit"
                   >
                     Entrar
