@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MenuIcon from '@mui/icons-material/Menu';
+import Notification from '@mui/icons-material/NotificationsNoneSharp';
 
 import {
   Stack,
@@ -138,11 +139,24 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                     {isLoading ? <CircularProgress size={20} /> : 'Entrar'}
                   </Button>
                 ) : null}
-                {logedUser?.nome
-                  ? !!logedUser?.nome && (
-                      <FadeMenu dadosusuario={logedUser} logOut={logOut} />
-                    )
-                  : null}
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Stack>
+                    {logedUser?.nome
+                      ? !!logedUser?.nome && (
+                          <FadeMenu dadosusuario={logedUser} logOut={logOut} />
+                        )
+                      : null}
+                  </Stack>
+                  <Stack>
+                    {logedUser?.nome
+                      ? !!logedUser?.nome && (
+                          <Button>
+                            <Notification />
+                          </Button>
+                        )
+                      : null}
+                  </Stack>
+                </Stack>
               </div>
             </Toolbar>
           </Container>
