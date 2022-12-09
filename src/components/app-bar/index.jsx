@@ -24,6 +24,7 @@ import { LeftDrawer } from './drawer';
 import iServiceLogo from '../../assets/LogoiService.svg';
 import { useAuthContext } from '../../hooks/context/AuthContext';
 import { FadeMenu } from './menu';
+import { NotifyIcon } from './menu-button';
 
 const navItems = [
   { label: 'Bate papo', path: 'chat' },
@@ -149,11 +150,7 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                   </Stack>
                   <Stack>
                     {logedUser?.nome
-                      ? !!logedUser?.nome && (
-                          <Button>
-                            <Notification />
-                          </Button>
-                        )
+                      ? !!logedUser?.nome && <NotifyIcon />
                       : null}
                   </Stack>
                 </Stack>
