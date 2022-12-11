@@ -65,11 +65,11 @@ export default function Footer() {
             sx={{
               maxWidth: 400,
               display: { xs: 'none', sm: 'block' },
+              paddingLeft: 4,
             }}
           >
-            Ache os melhores serviços dos mais variados tipos em nossa
-            plataforma. Ou use suas habilidades e conhecimentos para fazer algum
-            dinheiro.
+            Encontre os serviços que precisa para o seu problema de forma rápida
+            e simples!
           </Typography>
           <List
             sx={{

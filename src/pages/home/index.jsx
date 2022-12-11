@@ -80,8 +80,9 @@ export default function Home() {
                 fontWeight: '600',
               }}
             >
-              Algum problema doméstico para resolver? <span>i</span>Service vai
-              até você
+              Deu problema e não tem como resolver? Fique tranquilo,{' '}
+              <span>i</span>Service tem os melhores profissionais esperando por
+              você!
             </Typography>
             <p>Conectando quem precisa com quem sabe fazer</p>
             <SearchInput />

@@ -22,7 +22,6 @@ function TitleService({ service = {} }) {
 export function BoxService({ service = {} }) {
   const { palette } = useTheme();
   const { mode } = palette;
-
   return (
     <Stack
       direction="row"
