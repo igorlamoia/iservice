@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  // baseURL: 'http://localhost/api-iservice/',
-  baseURL: 'https://iservice.projetoscomputacao.com.br/',
+  baseURL: 'http://localhost/api-iservice/',
+  // baseURL: 'https://iservice.projetoscomputacao.com.br/',
   headers: {
     Accept: 'application/json',
     'Content-type': 'application/json',
