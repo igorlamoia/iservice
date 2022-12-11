@@ -23,7 +23,8 @@ import { FilterOptions } from './filter-options';
 import { NoParamsFilterRoute } from './no-params-filter-route';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-import ListItem from '@mui/material/ListItem';
+import { Gallery } from './gallery';
+import ImageListItem from '@mui/material/ImageListItem';
 const intervaloInvalido = (horario) => horario < 0 || horario > 1439;
 
 // import T2 from '../../assets/t2.json';
@@ -138,7 +139,7 @@ export default function SearchService() {
           <BreadCrumbsMenu params={service ?? {}} />
           <BoxService service={service ?? {}} />
           <FilterOptions service={service ?? {}} />
-          <Carousel>
+          {/* <Carousel>
             {isLoadingPrestadores
               ? [1, 2, 3, 4].map((key) => (
                   <SwiperSlide key={key}>
@@ -150,7 +151,20 @@ export default function SearchService() {
                     <WorkerCard user={prestador} />
                   </SwiperSlide>
                 ))}
-          </Carousel>
+          </Carousel> */}
+          <Gallery>
+            {isLoadingPrestadores
+              ? [1, 2, 3, 4, 5, 6].map((key) => (
+                  <ImageListItem key={key}>
+                    <SkeletonWorkercard />
+                  </ImageListItem>
+                ))
+              : prestadores?.map((prestador) => (
+                  <ImageListItem key={prestador.codPrestador}>
+                    <WorkerCard user={prestador} />
+                  </ImageListItem>
+                ))}
+          </Gallery>
 
           <NoParamsFilterRoute service={service ?? {}} />
           <Box
@@ -179,9 +193,6 @@ export default function SearchService() {
             )}
           </Box>
         </Container>
-        <Stack spacing={2}>
-          <Pagination count={10} disabled />
-        </Stack>
       </Box>
 
       <Footer />

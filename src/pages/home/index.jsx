@@ -96,6 +96,24 @@ export default function Home() {
           <Categorias />
         </div>
         <Container>
+          <Typography
+            variant="h2"
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              paddingTop: 2,
+              fontSize: {
+                xs: '1rem',
+                sm: '1.3rem',
+                lg: '1.7rem',
+              },
+              mt: { xs: '3rem', md: '2rem', lg: 0 },
+              fontWeight: '400',
+            }}
+          >
+            Os melhores profissionais esperando por você!
+          </Typography>
           <Carousel>
             {isLoadingPrestadores
               ? [1, 2, 3, 4].map((key) => (

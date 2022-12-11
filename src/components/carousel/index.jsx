@@ -10,6 +10,7 @@ import 'swiper/css/effect-coverflow';
 
 import './styles.scss';
 import {
+  Autoplay,
   EffectCoverflow,
   Navigation,
   Pagination,
@@ -38,6 +39,10 @@ export default function Carroussel({ children, size }) {
         modifier: 1,
         slideShadows: false,
       }}
+      autoplay={{
+        delay: 3500,
+        disableOnInteraction: false,
+      }}
       // creativeEffect={{
       //   prev: {
       //     shadow: true,
@@ -61,6 +66,7 @@ export default function Carroussel({ children, size }) {
         dynamicBullets: true,
       }}
       modules={[
+        Autoplay,
         EffectCreative,
         EffectCoverflow,
         Navigation,
