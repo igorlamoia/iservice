@@ -12,14 +12,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import { filtrarOpcoes } from '../../utils/codigos';
 import { MenuOptions } from './menu-options';
-
-const opcoesGeraisPrestador = [
-  { id: 1, label: 'Voltar para Pendente' },
-  { id: 2, label: 'Aceitar Solicitação' },
-  { id: 3, label: 'Recusar Solicitação' },
-  { id: 4, label: 'Cancelar Solicitação' },
-  { id: 6, label: 'Finalizar Solicitação' },
-];
+import { AvaliarUsuario } from './avaliar-usuario';
 
 export default function ModalDemanda({
   demanda,
@@ -75,10 +68,19 @@ export default function ModalDemanda({
           margin: 'auto',
         }}
       >
-        Altere o status da demanda{' '}
-        <ITypography>{demanda?.codAtendimento}</ITypography>
+        {demanda.codStatus === 6 ? (
+          <>Avalie o usuário</>
+        ) : (
+          <>
+            Altere o status da demanda{' '}
+            <ITypography>{demanda?.codAtendimento}</ITypography>
+          </>
+        )}
       </DialogTitle>
       <DialogContent>
+        {demanda.codStatus === 6 && (
+          <AvaliarUsuario demanda={demanda} handleClose={handleClose} />
+        )}
         <MenuOptions
           codAtendimento={demanda?.codAtendimento}
           opcoes={opcoes}
