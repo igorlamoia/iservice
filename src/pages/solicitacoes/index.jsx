@@ -48,10 +48,10 @@ export function Solicitacoes() {
 
   const todasDemandas = demandas;
   const demandasPendentes = demandas.filter(
-    (demanda) => demanda.codStatus === 1
+    (demanda) => demanda.codStatus == 1
   );
   const demandasFinalizadas = demandas.filter(
-    (demanda) => demanda.codStatus === 6
+    (demanda) => demanda.codStatus == 6
   );
 
   useEffect(() => {

@@ -22,7 +22,7 @@ export function NotificationItem({
       const { data } = await api.put('notificacao/visualizar', {
         idNotificacao: id,
       });
-      setNotification(notification.filter((item) => item.idNotificacao !== id));
+      setNotification(notification.filter((item) => item.idNotificacao != id));
       setInteractivitySuccess(data.mensagem);
     } catch (error) {
       setInteractivityError(error.response?.data?.mensagem || 'Falha na api');

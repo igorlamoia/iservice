@@ -32,10 +32,10 @@ export function NotifyIcon({ logedUser }) {
   };
 
   const demandasPendentes = demandas.filter(
-    (demanda) => demanda.codStatus === 1
+    (demanda) => demanda.codStatus == 1
   );
   const notificationPendentes = notification.filter(
-    (demanda) => demanda.visualizada === 0
+    (demanda) => demanda.visualizada == 0
   );
 
   // const getSolicitacoes = async () => {
