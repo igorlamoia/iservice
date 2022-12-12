@@ -14,6 +14,7 @@ import MyPopover from './popover';
 import Carousel from './carousel';
 import IserviceTypography from './iservice-typography';
 import SkeletonWorkercard from './skeletons/worker-card';
+import StarRating from './rating';
 import Categorias from './categorias';
 
 export {
@@ -34,4 +35,5 @@ export {
   Carousel,
   IserviceTypography,
   Categorias,
+  StarRating,
 };

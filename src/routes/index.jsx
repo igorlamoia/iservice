@@ -8,6 +8,8 @@ import {
   WorkerRegister,
   SearchService,
 } from '../pages';
+import { Demandas } from '../pages/demandas';
+import { Solicitacoes } from '../pages/solicitacoes';
 import { ErrorBoundary } from './error-boundary';
 import { NotFoundPage } from './not-found';
 import { ProtectedRoute } from './protected-route-layout';
@@ -25,6 +27,22 @@ export function MyRoutes() {
             element={
               <ProtectedRoute>
                 <WorkerRegister />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="demandas"
+            element={
+              <ProtectedRoute>
+                <Demandas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="solicitacoes"
+            element={
+              <ProtectedRoute>
+                <Solicitacoes />
               </ProtectedRoute>
             }
           />

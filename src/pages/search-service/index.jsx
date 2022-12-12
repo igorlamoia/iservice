@@ -179,9 +179,9 @@ export default function SearchService() {
             )}
           </Box>
         </Container>
-        <Stack spacing={2}>
+        {/* <Stack spacing={2}>
           <Pagination count={10} disabled />
-        </Stack>
+        </Stack> */}
       </Box>
 
       <Footer />
