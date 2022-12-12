@@ -65,10 +65,8 @@ export default function CardList({
     if (avaliado) return;
     onClick();
   };
-  console.log('codStatus', codStatus);
 
   const { corMui, descricao: statusDescricao } = codStatusDescricao(codStatus);
-  console.log('statusDescricao', statusDescricao);
   return (
     <>
       <Button
