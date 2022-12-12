@@ -21,7 +21,9 @@ import { BoxService } from './box-service';
 import { BreadCrumbsMenu } from './bread-crumbs-menu';
 import { FilterOptions } from './filter-options';
 import { NoParamsFilterRoute } from './no-params-filter-route';
-
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import ListItem from '@mui/material/ListItem';
 const intervaloInvalido = (horario) => horario < 0 || horario > 1439;
 
 // import T2 from '../../assets/t2.json';
@@ -177,7 +179,11 @@ export default function SearchService() {
             )}
           </Box>
         </Container>
+        {/* <Stack spacing={2}>
+          <Pagination count={10} disabled />
+        </Stack> */}
       </Box>
+
       <Footer />
     </>
   );

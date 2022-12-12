@@ -55,3 +55,9 @@ export function convertSecondsToDay(seconds) {
     year: 'numeric',
   });
 }
+
+export function showDate(date) {
+  if (!date) return '';
+  const [data, hora] = date.split(' ');
+  return `${data.split('-').reverse().join('/')} ${hora}`;
+}

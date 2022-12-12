@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Avatar, Chip, Fade, MenuItem, Menu } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export function FadeMenu({ dadosusuario, logOut }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -13,6 +14,8 @@ export function FadeMenu({ dadosusuario, logOut }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -37,7 +40,15 @@ export function FadeMenu({ dadosusuario, logOut }) {
           sx: { bgcolor: 'background.default', minWidth: 100 },
         }}
       >
-        <MenuItem onClick={handleClose}>Perfil</MenuItem>
+        <MenuItem onClick={() => navigate('/solicitacoes')}>
+          Solicitações Feitas
+        </MenuItem>
+        {Boolean(dadosusuario.prestador) && (
+          <MenuItem onClick={() => navigate('/demandas')}>
+            Atendimentos
+          </MenuItem>
+        )}
+
         {/* <MenuItem onClick={handleClose}></MenuItem> */}
         <MenuItem onClick={logOut}>Sair</MenuItem>
       </Menu>

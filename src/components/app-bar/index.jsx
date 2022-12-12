@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import MenuIcon from '@mui/icons-material/Menu';
+import Notification from '@mui/icons-material/NotificationsNoneSharp';
 
 import {
   Stack,
@@ -23,6 +24,7 @@ import { LeftDrawer } from './drawer';
 import iServiceLogo from '../../assets/LogoiService.svg';
 import { useAuthContext } from '../../hooks/context/AuthContext';
 import { FadeMenu } from './menu';
+import { NotifyIcon } from './notification-button';
 
 const navItems = [
   { label: 'Bate papo', path: 'chat' },
@@ -138,11 +140,22 @@ function DrawerAppBar({ props, navItemsProps = [] }) {
                     {isLoading ? <CircularProgress size={20} /> : 'Entrar'}
                   </Button>
                 ) : null}
-                {logedUser?.nome
-                  ? !!logedUser?.nome && (
-                      <FadeMenu dadosusuario={logedUser} logOut={logOut} />
-                    )
-                  : null}
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Stack>
+                    {logedUser?.nome
+                      ? !!logedUser?.nome && (
+                          <FadeMenu dadosusuario={logedUser} logOut={logOut} />
+                        )
+                      : null}
+                  </Stack>
+                  <Stack>
+                    {logedUser?.nome
+                      ? !!logedUser?.nome && (
+                          <NotifyIcon logedUser={logedUser} />
+                        )
+                      : null}
+                  </Stack>
+                </Stack>
               </div>
             </Toolbar>
           </Container>
