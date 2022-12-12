@@ -40,7 +40,9 @@ export function FadeMenu({ dadosusuario, logOut }) {
           sx: { bgcolor: 'background.default', minWidth: 100 },
         }}
       >
-        <MenuItem onClick={() => navigate('/')}>Solicitações Feitas</MenuItem>
+        <MenuItem onClick={() => navigate('/solicitacoes')}>
+          Solicitações Feitas
+        </MenuItem>
         {Boolean(dadosusuario.prestador) && (
           <MenuItem onClick={() => navigate('/demandas')}>
             Atendimentos

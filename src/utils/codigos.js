@@ -73,3 +73,15 @@ export function filtrarOpcoes(demanda) {
 
   return opcoes;
 }
+export function filtrarOpcoesUsuario(demanda) {
+  let opcoes = [];
+  switch (demanda.codStatus) {
+    case 1:
+      opcoes = [{ id: 5, label: 'Cancelar Solicitação' }];
+      break;
+    default:
+      break;
+  }
+
+  return opcoes;
+}

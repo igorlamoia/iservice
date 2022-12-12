@@ -175,13 +175,11 @@ export default function WorkerCard({ user = {}, botoesDesabilitados = false }) {
               {user.horaAte}
             </Typography>
             <MyPopover
-              title={
-                user.avaliacao ? `${user.avaliacao}/5` : 'Não possui avaliação'
-              }
+              title={user.nota ? `${user.nota}/5` : 'Não possui avaliação'}
             >
               <Rating
                 name="rating"
-                value={user.avaliacao ?? 0}
+                value={user.nota ?? 0}
                 precision={0.1}
                 readOnly
               />
@@ -372,11 +370,7 @@ export default function WorkerCard({ user = {}, botoesDesabilitados = false }) {
           <h5>Avaliação mais recente</h5>
           <div className="review">
             {user.avaliacaoMaisRecente ? (
-              <p>
-                <Typography as="strong">Roberto Silva:</Typography> Excelentes
-                profissionais, rápidos, honestos e com bom preços. Recomendo
-                muito
-              </p>
+              <p>{user.avaliacaoMaisRecente}</p>
             ) : (
               <p>
                 <Typography as="strong">{user.nome}</Typography> ainda não
