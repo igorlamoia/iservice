@@ -68,7 +68,7 @@ export default function ModalDemanda({
           margin: 'auto',
         }}
       >
-        {demanda.codStatus === 6 ? (
+        {demanda.codStatus == 6 ? (
           <>Avalie o usuário</>
         ) : (
           <>
@@ -78,7 +78,7 @@ export default function ModalDemanda({
         )}
       </DialogTitle>
       <DialogContent>
-        {demanda.codStatus === 6 && (
+        {demanda.codStatus == 6 && (
           <AvaliarUsuario demanda={demanda} handleClose={handleClose} />
         )}
         <MenuOptions
