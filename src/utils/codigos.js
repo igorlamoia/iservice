@@ -73,6 +73,7 @@ export function filtrarOpcoes(demanda) {
 
   return opcoes;
 }
+
 export function filtrarOpcoesUsuario(demanda) {
   let opcoes = [];
   const { codStatus } = demanda;
