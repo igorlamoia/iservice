@@ -66,7 +66,7 @@ export function Solicitacoes() {
       <Navbar />
 
       <Typography variant="h5" sx={{ mt: 2 }}>
-        Demandas
+        Solicitações feitas por você
       </Typography>
       <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -90,7 +90,7 @@ export function Solicitacoes() {
           ))}
           {demandasPendentes?.length === 0 && !isLoadingNotification && (
             <Typography variant="h6" sx={{ mt: 2 }}>
-              Você não possui demandas Pendente
+              Você não possui solicitações pendentes (aguardando prestador)
             </Typography>
           )}
         </TabPanel>
@@ -104,7 +104,7 @@ export function Solicitacoes() {
           ))}
           {todasDemandas?.length === 0 && !isLoadingNotification && (
             <Typography variant="h6" sx={{ mt: 2 }}>
-              Você não possui demandas
+              Você não possui solicitações
             </Typography>
           )}
         </TabPanel>
@@ -118,7 +118,7 @@ export function Solicitacoes() {
           ))}
           {demandasFinalizadas?.length === 0 && !isLoadingNotification && (
             <Typography variant="h6" sx={{ mt: 2 }}>
-              Você não possui demandas concluídas
+              Você não possui solicitações concluídas
             </Typography>
           )}
         </TabPanel>
